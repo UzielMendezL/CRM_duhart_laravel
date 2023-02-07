@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Material;
+use App\Models\Materials;
 use Illuminate\Http\Request;
 
-class MaterialController extends Controller
+class MaterialsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Materials $model)
     {
-        //
+        return view('laravel.inventory.index', ['items' => $model->all()]);
     }
 
     /**

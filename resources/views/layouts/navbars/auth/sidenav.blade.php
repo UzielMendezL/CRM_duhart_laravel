@@ -159,7 +159,7 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link  {{ str_contains(request()->url(), 'datatables') == true ? 'active' : '' }}" href="{{ route('applications', ['page' => 'datatables']) }}">
+                            <a class="nav-link  {{ str_contains(request()->url(), 'datatables') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
                                 <span class="sidenav-mini-icon"> D </span>
                                 <span class="sidenav-normal"> Materiales </span>
                             </a>

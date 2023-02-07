@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MaterialsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/item-management/edit/{id}', 'edit')->name('item-edit');
         Route::post('/item-management/edit/{id}', 'update')->name('item-edit.update');
         Route::post('/item-delete/{id}', 'destroy')->name('item-destroy');
+    });
+
+    //Inventory
+    Route::controller(MaterialsController::class)->group(function() {
+        Route::get('/inventory', 'index')->name('material-management');
+        Route::get('/inventory/new-material', 'create')->name('material-new');
+        Route::post('/inventory/new-materials', 'store')->name('material-new.store');
+        Route::get('/inventory/material/edit/{id}', 'edit')->name('material-edit');
+        Route::post('/inventory-material-update/edit/{id}', 'update')->name('material-edit.update');
+        Route::post('/inventory-material-delete/{id}', 'destroy')->name('material-destroy');
     });
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
