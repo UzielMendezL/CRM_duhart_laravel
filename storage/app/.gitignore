@@ -1,0 +1,13 @@
+*
+!public/
+!/img/avatars/
+!public//img/avatars/team-1.jpg
+!public//img/avatars/team-2.jpg
+!public//img/avatars/team-3.jpg
+
+!items/
+!public/items/home-decor-1.jpg
+!public/items/home-decor-2.jpg
+!public/items/home-decor-3.jpg
+!public/items/jordan.jpg
+!.gitignore
