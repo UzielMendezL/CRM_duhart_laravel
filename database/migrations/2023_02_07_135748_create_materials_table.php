@@ -28,6 +28,13 @@ return new class extends Migration
             $table->mediumText('photo')->nullable();
             $table->integer('stock')->nullable();
             $table->mediumText('note')->nullable();
+            $table->double('stockMinimum')->nullable();
+            $table->string('unity')->nullable();
+            $table->string('editor')->nullable();
+            $table->string('editionStatus')->nullable();
+            $table->string('alias')->nullable();
+            $table->date('date')->nullable();
+            $table->integer('providerActual')->nullable();
 
         });
     }
