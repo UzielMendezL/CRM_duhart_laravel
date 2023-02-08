@@ -12,7 +12,7 @@
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur"
         data-scroll="false">
         <div class="container-fluid py-1 px-3">
-            @include('layouts.navbars.auth.topnav', ['title' => 'Inventarios','secondTitle' => 'Lista de materiales'])
+            @include('layouts.navbars.auth.topnav', ['title' => 'Inventarios','secondTitle' => 'Materiales Faltantes'])
             <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
                 <a href="javascript:;" class="nav-link p-0">
                     <div class="sidenav-toggler-inner">
@@ -26,7 +26,7 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                     <div class="input-group">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="Type here...">
+                        <input type="text" class="form-control" placeholder="Escribe aquí...">
                     </div>
                 </div>
                 <ul class="navbar-nav  justify-content-end">
@@ -143,15 +143,13 @@
                     <div class="card-header pb-0">
                         <div class="d-lg-flex">
                             <div>
-                                <h5 class="mb-0">Materiales</h5>
+                                <h5 class="mb-0">Revisión material</h5>
                                 <p class="text-sm mb-0">
-                                   materiales existentes
+                                   List de materiales con stock mínimos
                                 </p>
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
-                                    <a href="./inventory/new-material" class="btn bg-gradient-primary btn-sm mb-0"
-                                        target="_blank">+&nbsp; Nuevo material</a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
@@ -196,22 +194,20 @@
                             <table class="table table-flush" id="products-list">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Imagen</th>
                                         <th>Id</th>
                                         <th>Nombre</th>
-                                        <th>Categoria</th>
                                         <th>Inventario</th>
                                         <th>Unidad</th>
                                         <th>Stock</th>
                                         <th>Stock Minimo</th>
-                                        <th>Acciones</th>
+                                        <th>Estatus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach ($items as $item)
                                     <tr>
-                                        <td>
+                                        {{-- <td>
                                             <div class="d-flex">
                                                 <div class="form-check my-auto">
                                                     <input class="form-check-input" type="checkbox" id="customCheck1"
@@ -222,39 +218,34 @@
                                                 {{-- @empty($items->photo)
                                                  <img src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
                                                  @endempty --}}
-                                                 <img loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
-                                              
-                                                {{-- <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6> --}}
+                                                 {{-- <img src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
+                                               --}}
+                                                {{-- <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6> 
                                             </div>
-                                        </td>
-                                        <td>{{$item->idMaterial}}</td>
+                                        </td> --}}
+                                        <td class = "col-md-02">{{$item->idMaterial}}</td>
                                         {{-- <td>{{$item->nameMaterial}}</td> --}}
                                         {{-- <td>	<button  onclick="return getInfoMaterial({{$item->idMaterial}});" id= 'btnEditMaterial' data-target="#editModal" data-whatever="@mdo" data-toggle="modal" type="button" class="editMaterial btn btn-edit">{{$item->nameMaterial}}</button> --}}
                                            
-                                           <td>
+                                        <td class="col-md-4">
                                             <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                        data-bs-target="#editModal">
-                                        {{$item->nameMaterial}}
-                                    </button>
+                                                data-bs-target="#editModal">
+                                                {{$item->nameMaterial}}
+                                            </button>
                                         </td>
-                                        <td>{{$item->category}}</td>
-                                        <td>{{$item->inventory}}</td>
-                                        <td>{{$item->unity}}</td>
-                                        <td>{{$item->stock}}</td>
-                                        <td>{{$item->stockMinimum}}</td> 
-                                        <td class="text-sm">
-                                            <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Visualizar material">
-                                                <i class="fas fa-eye text-secondary"></i>
-                                            </a>
-                                            <a href="javascript:;" class="mx-3" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Editar material">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a>
-                                            <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Borrar material">
-                                                <i class="fas fa-trash text-secondary"></i>
-                                            </a>
+                                        <td class = "col-md-4">{{$item->inventory}}</td>
+                                        <td class = "col-md-4">{{$item->unity}}</td>
+                                        <td class = "col-md-4">{{$item->stock}}</td>
+                                        <td class = "col-md-4">{{$item->stockMinimum}}</td>
+                                    
+                                        <td>
+                                            @if ($item->stock > $item->stockMinimum )
+                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-success badge-sm">En stock</span>
+                                            
+                                            @else
+                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-danger badge-sm">Fuera de stock</span>
+                                            @endif
+                                            
                                         </td>
                                     </tr>
                                     @endforeach
@@ -279,42 +270,11 @@
         @include('layouts.footers.auth.footer')
     </div>
 {{-- Modal Edit --}}
-
-<div class="modal fade" id="editModasl" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog mt-lg-10">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Import CSV</h5>
-                <i class="fas fa-upload ms-3"></i>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>You can browse your computer for a file.</p>
-                <input type="text" placeholder="Browse file..."
-                    class="form-control mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=""
-                        id="importCheck" checked="">
-                    <label class="custom-control-label" for="importCheck">I accept the
-                        terms and conditions</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn bg-gradient-secondary btn-sm"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button"
-                    class="btn bg-gradient-primary btn-sm">Upload</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div  class="modal-dialog size-modal" role="document">
 	  <div class="modal-content">
 		<div class="modal-header">
-		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle del material</h5>
+		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle de stock real</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
@@ -374,10 +334,8 @@
                 searchable: true,
                 fixedHeight: false,
                 perPage: 5,
-                serverSide: true,
-              //  deferLoading: [ 10, 100 ]
-                search: {
-                    search: "my_filter"
+                language: {
+                    search: 'buscar'
                 }
             });
 

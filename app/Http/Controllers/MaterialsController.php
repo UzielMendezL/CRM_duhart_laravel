@@ -25,7 +25,9 @@ class MaterialsController extends Controller
      */
     public function create()
     {
-        //
+        
+        $materials = Materials::all();
+        return view('laravel.inventory.create', compact('materials'));
     }
 
     /**
@@ -36,7 +38,43 @@ class MaterialsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+          $attributes = request()->validate([
+            'nameMaterial' => ['required', 'unique:items']
+
+        ]);
+
+        $item = Materials::create([
+            'nameMaterial' => $request->get('name'),
+            'inventory' => $request->get('inventroy'),
+            'category' => $request->get('category'),
+            'category_id' => $request->get('choices-category'),
+            'group3' => $request->get('group3'),
+            'group4' => $request->get('group4'),
+            'group5' => $request->get('group5'),
+            'group6' => $request->get('group6'),
+            'group7' => $request->get('group7'),        
+            'mark' => $request->get('mark'),
+            'unitaryPrice' => $request->get('unitaryPrice'),
+            'stock' => $request->get('stock'),
+            'note' => $request->get('note'),
+            'stockMinimum' => $request->get('stockMinimum'),
+            'unity' => $request->get('unity'),
+            'editor' => $request->get('editor'),
+            'editionStatus' => $request->get('editionStatus'),
+            'alias' => $request->get('alias'),
+            'date' => $request->get('date'),
+            'providerActual' => $request->get('providerActual')
+        ]);
+
+   //     $item->tags()->attach($request->get('tags'));
+
+        if($request->file('picture')) {
+            $item->update([
+                'photo' => $request->file('picture')->store('/', 'items')
+            ]);
+        }
+
+        return redirect()->route('inventory-management')->with('succes', 'Masterial guardado exitosamente');
     }
 
     /**
@@ -105,4 +143,18 @@ class MaterialsController extends Controller
     {
         //
     }
+    public function stockReal(Materials $model)
+    {
+        $loading = true;
+        $article = Materials::where('stock','>',0)->get();
+        return view('laravel.inventory.index-stock-real', ['items' => $article,'loading' => $loading] );
+    }
+    
+    public function requireMaterial(Materials $model)
+    {
+        $loading = true;
+        $article = Materials::where('stockMinimum','>', 'stock')->get();
+        return view('laravel.inventory.index-revisition-material', ['items' => $article,'loading' => $loading] );
+    }
+
 }

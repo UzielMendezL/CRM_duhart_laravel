@@ -5,8 +5,8 @@
                 <i class="ni ni-box-2"></i>
             </a>
         </li>
-        <li class="breadcrumb-item text-sm text-white"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm text-white"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">{{ $title }}</li>
     </ol>
-    <h6 class="font-weight-bolder mb-0 text-white">{{ $title }}</h6>
+    <h6 class="font-weight-bolder mb-0 text-white">{{ $secondTitle }}</h6>
 </nav>

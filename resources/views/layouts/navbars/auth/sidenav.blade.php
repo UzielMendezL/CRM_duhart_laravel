@@ -135,7 +135,7 @@
             </li>
 
             <li class="nav-item mt-3">
-                <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PAGES</h6>
+                <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PAGINAS</h6>
             </li>
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link {{ Route::currentRouteName() == 'applications' ? 'active' : '' }}"
@@ -159,19 +159,19 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link  {{ str_contains(request()->url(), 'datatables') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
+                            <a class="nav-link  {{ str_contains(request()->url(), 'material') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
                                 <span class="sidenav-mini-icon"> D </span>
                                 <span class="sidenav-normal"> Materiales </span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'calendar') == true ? 'active' : '' }}" href="{{ route('applications', ['page' => 'calendar']) }}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'real') == true ? 'active' : '' }}" href="{{ route('material-stock-real-management') }}">
                                 <span class="sidenav-mini-icon"> C </span>
                                 <span class="sidenav-normal"> Stock Real </span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'analytics') == true ? 'active' : '' }}" href="{{ route('applications', ['page' => 'analytics']) }}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'minimum') == true ? 'active' : '' }}" href="{{ route('material-stock-minimum-management') }}">
                                 <span class="sidenav-mini-icon"> A </span>
                                 <span class="sidenav-normal"> Materiales faltantes </span>
                             </a>

@@ -96,8 +96,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Inventory
     Route::controller(MaterialsController::class)->group(function() {
         Route::get('/inventory', 'index')->name('material-management');
+        Route::get('/inventory/stock-real', 'stockReal')->name('material-stock-real-management');
+        Route::get('/inventory/stock-minimum', 'requireMaterial')->name('material-stock-minimum-management');
         Route::get('/inventory/new-material', 'create')->name('material-new');
-        Route::post('/inventory/new-materials', 'store')->name('material-new.store');
+        Route::post('/inventory/new-material', 'store')->name('material-new.store');
         Route::get('/inventory/material/edit/{id}', 'edit')->name('material-edit');
         Route::post('/inventory-material-update/edit/{id}', 'update')->name('material-edit.update');
         Route::post('/inventory-material-delete/{id}', 'destroy')->name('material-destroy');
