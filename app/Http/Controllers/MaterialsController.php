@@ -14,7 +14,8 @@ class MaterialsController extends Controller
      */
     public function index(Materials $model)
     {
-        return view('laravel.inventory.index', ['items' => $model->all()]);
+        $loading = true;
+        return view('laravel.inventory.index', ['items' => $model->all(),'loading' => $loading] );
     }
 
     /**
@@ -55,9 +56,31 @@ class MaterialsController extends Controller
      * @param  \App\Models\Material  $material
      * @return \Illuminate\Http\Response
      */
-    public function edit(Material $material)
+    public function edit($materialId)
     {
-        //
+      //  $item = Materials::find($id);
+        //return view('laravel.materials.edit', compact('item'));
+
+        $editMaterial = null;
+        $editAllMaterial = Materials::select('materials.*','material_suppliers.materialCode','material_suppliers.supplierPrice','providers.nameCommercial')
+             ->join('material_suppliers', 'material_suppliers.idMaterial', '=', 'materials.idMaterial')
+             ->join('providers', 'material_suppliers.idProvider', '=', 'providers.idProvider')
+             ->where( 'materials.idMaterial', $materialId  )
+             ->first();         
+
+             if($editAllMaterial == null ){
+              $editOnlyMaterial = Materials::select('materials.*')
+              ->where( 'materials.idMaterial', $materialId  )
+              ->first();
+
+              $editMaterial = $editOnlyMaterial;
+             }else{
+              $editMaterial = $editAllMaterial;
+             }
+          
+           $loading = false;
+           view('laravel.inventory.index',compact('loading'));
+           return  $editMaterial;
     }
 
     /**

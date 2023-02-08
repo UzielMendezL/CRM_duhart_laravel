@@ -53,6 +53,7 @@
     <link href="{{ asset('assets/css/argon-dashboard.css') }}"  rel="stylesheet" />
 
     @stack('css')
+    @yield('scriptsMaterial')
 
 </head>
 

@@ -31551,3 +31551,110 @@ svg.leaflet-image-layer.leaflet-interactive path {
   transition-delay: 0s;
   transform: scale(1);
 }
+
+.box-container {
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+}
+
+.box-container-img {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  margin-top: 9%;
+}
+
+.box-menu {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  height: 100%;
+}
+
+.container-menu {
+  display: flex;
+  width: 70%;
+  flex-wrap: wrap;
+  /* margin-left: 15%; */
+  margin-top: 4%;
+}
+
+.submenu {
+  width: 20%;
+  -moz-text-align-last: left;
+       text-align-last: left;
+  margin-bottom: 1%;
+}
+.submenu:hover {
+  background: antiquewhite;
+  color: white !important;
+}
+.submenu:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem antiquewhite !important;
+}
+
+.input-search {
+  width: 50% !important;
+  margin-right: 2%;
+  padding-left: 5% !important;
+}
+
+.button-clear {
+  border: 1px solid antiquewhite;
+}
+
+.container-search {
+  position: relative;
+  margin-bottom: 5%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  font-size: 21px;
+}
+
+.custom-spinner {
+  width: 5rem !important;
+  height: 5rem !important;
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  opacity: 1;
+}
+
+.button-add-material {
+  font-size: 19px;
+}
+
+.box-button {
+  box-shadow: 0 0 0 0rem rgba(52, 144, 220, 0.25) !important;
+  padding: 0px;
+  line-height: 9px !important;
+}
+.box-button:focus {
+  box-shadow: 0 0 0 0rem rgba(52, 144, 220, 0.25) !important;
+}
+
+.name-page {
+  font-size: 20px;
+  line-height: 2;
+  margin-left: 24px;
+}
+
+.loader-size {
+  position: absolute;
+  left: 48%;
+  opacity: 0.5;
+  top: 50%;
+  z-index: 2;
+}
+
+.container-options {
+  position: relative;
+}

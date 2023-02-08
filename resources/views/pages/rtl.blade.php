@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    <div style = "background:#000 !important" class="min-height-300 bg-primary position-absolute w-100"></div>
     <aside
         class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-end me-2 rotate-caret"
         id="sidenav-main">
@@ -11,7 +11,7 @@
             <a class="navbar-brand m-0"
                 href=" https://demos.creative-tim.com/argon-dashboard-pro/pages/dashboards/default.html " target="_blank">
                 <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="me-1 font-weight-bold">Argon Dashboard 2 PRO Laravel</span>
+                <span class="me-1 font-weight-bold">DUHART</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">

@@ -1,5 +1,13 @@
 @extends('layouts.app')
+@section('scriptsMaterial')
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+ <script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
+ <script src="{{ asset('./assets/js/components/Materials/modalCreateFormOptions.js') }}" ></script> 
+  {{-- <script src="{{ asset('js/prueba.js') }}" defer ></script>  --}}
+  {{-- @include('popper::assets') --}}
+@endsection
 @section('content')
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur"
         data-scroll="false">
@@ -142,7 +150,7 @@
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
-                                    <a href="./new-product.html" class="btn bg-gradient-primary btn-sm mb-0"
+                                    <a href="./new-material.html" class="btn bg-gradient-primary btn-sm mb-0"
                                         target="_blank">+&nbsp; Nuevo material</a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
@@ -188,13 +196,15 @@
                             <table class="table table-flush" id="products-list">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>SKU</th>
-                                        <th>Quantity</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Imagen</th>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Categoria</th>
+                                        <th>Inventario</th>
+                                        <th>Unidad</th>
+                                        <th>Stock</th>
+                                        <th>Stock Minimo</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -218,31 +228,48 @@
                                             </div>
                                         </td>
                                         <td>{{$item->idMaterial}}</td>
-                                        <td>{{$item->inventory}}</td>
+                                        {{-- <td>{{$item->nameMaterial}}</td> --}}
+                                        {{-- <td>	<button  onclick="return getInfoMaterial({{$item->idMaterial}});" id= 'btnEditMaterial' data-target="#editModal" data-whatever="@mdo" data-toggle="modal" type="button" class="editMaterial btn btn-edit">{{$item->nameMaterial}}</button> --}}
+                                           
+                                           <td>
+                                            <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
+                                        data-bs-target="#editModal">
+                                        {{$item->nameMaterial}}
+                                    </button>
+                                        </td>
                                         <td>{{$item->category}}</td>
-                                        <td>{{$item->group3}}</td>
-                                        <td>{{$item->group4}}</td>
+                                        <td>{{$item->inventory}}</td>
+                                        <td>{{$item->unity}}</td>
+                                        <td>{{$item->stock}}</td>
+                                        <td>{{$item->stockMinimum}}</td>
+                                    
                                         <td>
-                                            <span class="badge badge-danger badge-sm">Fuera de stock</span>
+                                            @if ($item->stock > $item->stockMinimum )
+                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-success badge-sm">En stock</span>
+                                            
+                                            @else
+                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-danger badge-sm">Fuera de stock</span>
+                                            @endif
+                                            
                                         </td>
                                         <td class="text-sm">
                                             <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Preview product">
+                                                data-bs-original-title="Visualizar material">
                                                 <i class="fas fa-eye text-secondary"></i>
                                             </a>
                                             <a href="javascript:;" class="mx-3" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Edit product">
+                                                data-bs-original-title="Editar material">
                                                 <i class="fas fa-user-edit text-secondary"></i>
                                             </a>
                                             <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Delete product">
+                                                data-bs-original-title="Borrar material">
                                                 <i class="fas fa-trash text-secondary"></i>
                                             </a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
+                                {{-- <tfoot>
                                     <tr>
                                         <th>Product</th>
                                         <th>Category</th>
@@ -252,7 +279,7 @@
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> --}}
                             </table>
                         </div>
                     </div>
@@ -261,6 +288,92 @@
         </div>
         @include('layouts.footers.auth.footer')
     </div>
+{{-- Modal Edit --}}
+
+<div class="modal fade" id="editModasl" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog mt-lg-10">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Import CSV</h5>
+                <i class="fas fa-upload ms-3"></i>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You can browse your computer for a file.</p>
+                <input type="text" placeholder="Browse file..."
+                    class="form-control mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value=""
+                        id="importCheck" checked="">
+                    <label class="custom-control-label" for="importCheck">I accept the
+                        terms and conditions</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary btn-sm"
+                    data-bs-dismiss="modal">Close</button>
+                <button type="button"
+                    class="btn bg-gradient-primary btn-sm">Upload</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div  class="modal-dialog size-modal" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle del material</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<ul class="nav nav-tabs">
+			<li><a class="nav-link active" href="#material-info" data-toggle="tab">Detalles Generales</a></li>
+			<li><a class="nav-link" href="#" data-toggle="tab">Proveedores</a></li>
+			{{-- <li><a class="nav-link" href="#c" data-toggle="tab">Movimiento</a></li> --}}
+			<li><a class="nav-link"  data-toggle="tab">Entradas</a></li>
+            <li><a class="nav-link"  data-toggle="tab">Salidas</a></li>
+		 </ul>
+		 
+		 <div class="tab-content">
+			<div class="tab-pane active" id="material-info">
+				<div class="modal-body">
+					{{-- <form id='form-Material' method="POST" action="{{url('/material')}}" class="needs-validation" novalidate> --}}
+					<form id="form-edit" class="position:relative" id='form-Material' method="PUT"  class="needs-validation" novalidate>
+						  {{csrf_field()}}
+					<div class="box-edit-content">
+						<div class="container-inputs">
+							<div  id= 'selectMaterial' class="form-row container-inputs-material">
+								@if($loading)
+									<div id='loader-edit' class="text-center loader-size">
+										<div class="spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+										</div>
+									</div>
+								@endif	 
+								
+						   </div>
+						</div>
+					</div>
+						<div class="modal-footer row justify-content-center box-button-modal">
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
+							<button  onclick="return test();" type="submit" id= 'addMaterial' class="btn bg-gradient-primary btn-sm">Actualizar</button>
+						</div>
+					</form>
+				</div>
+		
+			</div>
+			
+		 </div>
+		
+	  </div>
+	</div>
+  </div>
+</div>
+
 @endsection
 
 @push('js')

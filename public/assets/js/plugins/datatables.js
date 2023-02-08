@@ -812,10 +812,10 @@
           hiddenHeader: !1,
           footer: !1,
           labels: {
-            placeholder: "Search...",
-            perPage: "{select} entries per page",
-            noRows: "No entries found",
-            info: "Showing {start} to {end} of {rows} entries"
+            placeholder: "Buscar...",
+            perPage: "{select} resultados por página",
+            noRows: "No se encontro resultados",
+            info: "Mostrando {start} a {end} de {rows} resultados"
           },
           layout: {
             top: "{select}{search}",
