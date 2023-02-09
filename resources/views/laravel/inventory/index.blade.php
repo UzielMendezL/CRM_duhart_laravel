@@ -217,14 +217,12 @@
                                                     <input class="form-check-input" type="checkbox" id="customCheck1"
                                                         checked>
                                                 </div>
-                                                
-                                                {{-- {{ isset($item->photo) ? $item->photo : url('/images/video-thumbnail.png') }} --}}
-                                                {{-- @empty($items->photo)
-                                                 <img src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
-                                                 @endempty --}}
-                                                 <img loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
-                                              
-                                                {{-- <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6> --}}
+                                                @isset($item->photo)
+                                                    <img loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
+                                                @else
+                                                    <img loading="lazy" src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
+                                                @endisset
+
                                             </div>
                                         </td>
                                         <td>{{$item->idMaterial}}</td>

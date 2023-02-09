@@ -8,5 +8,10 @@
         <li class="breadcrumb-item text-sm text-white"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">{{ $title }}</li>
     </ol>
-    <h6 class="font-weight-bolder mb-0 text-white">{{ $secondTitle }}</h6>
+    @isset($secondTitle)
+      <h6 class="font-weight-bolder mb-0 text-white">{{ $secondTitle }}</h6>
+     @else
+      <h6 class="font-weight-bolder mb-0 text-white">Inicio</h6>
+    @endisset
+    
 </nav>
