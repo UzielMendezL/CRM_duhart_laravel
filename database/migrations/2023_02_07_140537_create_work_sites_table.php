@@ -14,17 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('work_sites', function (Blueprint $table) {
-            $table->increments('idWorkSite',11);
+            $table->increments('idWorkSite');
             $table->string('nameWorkSite');
-            $table->boolean('Status');
-            $table->string('priority');
+            $table->integer('idClient');
+            $table->boolean('status');
             $table->string('description');
             $table->string('direction');
             $table->string('cologne');
             $table->string('delegation');
-            $table->string('Country');
-            $table->string('State');
-            $table->integer('IdClient');
+            $table->string('country');
+            $table->string('state');
+            $table->string('priority');
         });
     }
 

@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('estimations', function (Blueprint $table) {
             $table->increments('idEstimation');
             $table->string('nameEstimation');
-            $table->string('StatusEstimation');
-            $table->double('total');
-            $table->date('dateValidity');
-            $table->integer('idClient');
+            $table->date('dateEstimation');
+            $table->string('status');
             $table->integer('idWorkSite');
-            $table->string('Country');
-            $table->string('Notes');
-            $table->boolean('EstatusOfAprobation');
+            $table->double('total');
+            $table->string('notes');
+            $table->boolean('statusOfAprobation');
+            $table->date('dateVigency');
+            $table->double('disccount');
         });
     }
 

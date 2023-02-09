@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MaterialSupplier;
+use App\Models\EstimationDetail;
 use Illuminate\Http\Request;
 
-class MaterialSupplierController extends Controller
+class EstimationDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class MaterialSupplierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MaterialSupplier  $materialSupplier
+     * @param  \App\Models\EstimationDetail  $estimationDetail
      * @return \Illuminate\Http\Response
      */
-    public function show(MaterialSupplier $materialSupplier)
+    public function show(EstimationDetail $estimationDetail)
     {
         //
     }
@@ -52,10 +52,10 @@ class MaterialSupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\MaterialSupplier  $materialSupplier
+     * @param  \App\Models\EstimationDetail  $estimationDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit(MaterialSupplier $materialSupplier)
+    public function edit(EstimationDetail $estimationDetail)
     {
         //
     }
@@ -64,10 +64,10 @@ class MaterialSupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MaterialSupplier  $materialSupplier
+     * @param  \App\Models\EstimationDetail  $estimationDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MaterialSupplier $materialSupplier)
+    public function update(Request $request, EstimationDetail $estimationDetail)
     {
         //
     }
@@ -75,10 +75,10 @@ class MaterialSupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MaterialSupplier  $materialSupplier
+     * @param  \App\Models\EstimationDetail  $estimationDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MaterialSupplier $materialSupplier)
+    public function destroy(EstimationDetail $estimationDetail)
     {
         //
     }

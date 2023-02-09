@@ -14,17 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('departures', function (Blueprint $table) {
-            $table->increments('idDeparture',11);
+            $table->increments('idDeparture');
             $table->integer('idMaterial');
             $table->integer('quantity');
             $table->date('departureDate');
             $table->integer('idEmployed');
             $table->integer('idEmployed2');
-            $table->integer('idEstimation');
-            $table->integer('idWorkSite');
             $table->double('priceUnitary');
-            $table->string('Editor');
-            $table->date('dateEditor');
+            $table->integer('idUser');
+            $table->date('publisherDate');
+            $table->integer('idEstimation');
+            $table->integer('idStore');
+            $table->mediumText('receiptOutput');
         });
     }
 
