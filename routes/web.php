@@ -118,18 +118,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::controller(DeparturesController::class)->group(function() {
 
         Route::get('/inventory/departure', 'index')->name('material-departure-management');
-        // Route::get('/inventory/departure', 'create')->name('departure-new');
-        // Route::post('/inventory/new-departure', 'store')->name('departure-new.store');
-        // Route::get('/inventory/departure/edit/{id}', 'edit')->name('departure-edit');
+        Route::get('/inventory/new-departure', 'create')->name('departure-new');
+        Route::post('/inventory/new-departure', 'store')->name('departure-new.store');
+        Route::get('/inventory/departure/edit/{id}', 'edit')->name('departure-edit');
         // Route::post('/inventory/departure-update/edit/{id}', 'update')->name('departure-edit.update');
         // Route::post('/inventory/departure-delete/{id}', 'destroy')->name('departure-destroy');
     });
     Route::controller(EntryController::class)->group(function() {
                 
         Route::get('/inventory/entry', 'index')->name('material-entry-management');
-        // Route::get('/inventory/entry', 'create')->name('entry-new');
-        // Route::post('/inventory/new-entry', 'store')->name('entry-new.store');
-        // Route::get('/inventory/entry/edit/{id}', 'edit')->name('entry-edit');
+        Route::get('/inventory/new-entry', 'create')->name('entry-new');
+         Route::post('/inventory/new-entry', 'store')->name('entry-new.store');
+         Route::get('/inventory/entry/edit/{id}', 'edit')->name('entry-edit');
         // Route::post('/inventory/entry-update/edit/{id}', 'update')->name('entry-edit.update');
         // Route::post('/inventory/entry-delete/{id}', 'destroy')->name('entry-destroy');
     });

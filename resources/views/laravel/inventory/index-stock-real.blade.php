@@ -201,7 +201,7 @@
                                         <th>Unidad</th>
                                         <th>Stock</th>
                                         <th>Stock Minimo</th>
-                                        <th>Acciones</th>
+                                        <th>Estatus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -248,20 +248,6 @@
                                             <span class="{{ $item->stockMinimum > $item->stock }} badge badge-danger badge-sm">Fuera de stock</span>
                                             @endif
                                             
-                                        </td>
-                                        <td class="text-sm">
-                                            <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Visualizar material">
-                                                <i class="fas fa-eye text-secondary"></i>
-                                            </a>
-                                            <a href="javascript:;" class="mx-3" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Editar material">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a>
-                                            <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Borrar material">
-                                                <i class="fas fa-trash text-secondary"></i>
-                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach

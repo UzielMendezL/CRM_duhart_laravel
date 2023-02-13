@@ -4,7 +4,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
  <script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
- <script src="{{ asset('./assets/js/components/Materials/modalCreateFormOptions.js') }}" ></script> 
   {{-- <script src="{{ asset('js/prueba.js') }}" defer ></script>  --}}
   {{-- @include('popper::assets') --}}
 @endsection
@@ -150,6 +149,9 @@
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
+                                    <a href="./inventory/new-departure" class="btn bg-gradient-primary btn-sm mb-0"
+                                        target="_blank">&nbsp; Nueva Salida
+                                    </a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
@@ -194,81 +196,47 @@
                             <table class="table table-flush" id="products-list">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Nombre</th>
-                                        <th>Categoria</th>
+                                        <th>Fecha</th>
+                                        <th>Id Salida</th>
+                                        <th>Obra</th>
+                                        <th>Ptto</th>
+                                        <th>Bodega</th>
                                         <th>Inventario</th>
-                                        <th>Unidad</th>
-                                        <th>Stock</th>
-                                        <th>Stock Minimo</th>
-                                        <th>Acciones</th>
+                                        <th>Material</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio U.</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach ($items as $item)
                                     <tr>
-                                        {{-- <td>
-                                            <div class="d-flex">
-                                                <div class="form-check my-auto">
-                                                    <input class="form-check-input" type="checkbox" id="customCheck1"
-                                                        checked>
-                                                </div>
-                                                
-                                                {{-- {{ isset($item->photo) ? $item->photo : url('/images/video-thumbnail.png') }} --}}
-                                                {{-- @empty($items->photo)
-                                                 <img src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
-                                                 @endempty --}}
-                                                 {{-- <img src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
-                                               --}}
-                                                {{-- <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6> 
-                                            </div>
-                                        </td> --}}
-                                        <td class = "col-md-02">{{$item->idMaterial}}</td>
-                                        {{-- <td>{{$item->nameMaterial}}</td> --}}
-                                        {{-- <td>	<button  onclick="return getInfoMaterial({{$item->idMaterial}});" id= 'btnEditMaterial' data-target="#editModal" data-whatever="@mdo" data-toggle="modal" type="button" class="editMaterial btn btn-edit">{{$item->nameMaterial}}</button> --}}
-                                           
-                                           <td class="col-md-1">
-                                            <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                        data-bs-target="#editModal">
-                                        {{$item->nameMaterial}}
-                                    </button>
+                                        <td class = "col-md-02">{{$item->departureDate}}</td>
+                                        <td class="col-md-1">
+                                            <button data-whatever="@mdo" onclick="return getInfoDeparture({{$item->idDeparture}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
+                                                data-bs-target="#editModalDepartures">
+                                                {{$item->idDeparture}}
+                                            </button>
                                         </td>
-                                        <td class = "col-md-4">{{$item->category}}</td>
+                                        <td class = "col-md-4">{{$item->nameWorkSite}}</td>
+                                        <td class = "col-md-4">{{$item->nameEstimation}}</td>
+                                        <td class = "col-md-4">{{$item->storeName}}</td>
                                         <td class = "col-md-4">{{$item->inventory}}</td>
-                                        <td class = "col-md-4">{{$item->unity}}</td>
-                                        <td class = "col-md-4">{{$item->stock}}</td>
-                                        <td class = "col-md-4">{{$item->stockMinimum}}</td>
-                                    
-                                        <td>
-                                            @if ($item->stock > $item->stockMinimum )
-                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-success badge-sm">En stock</span>
-                                            
-                                            @else
-                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-danger badge-sm">Fuera de stock</span>
-                                            @endif
-                                            
-                                        </td>
-                                        <td class="text-sm">
+                                        <td class = "col-md-4">{{$item->nameMaterial}}</td>
+                                        <td class = "col-md-4">{{$item->quantity}}</td>
+                                        <td class = "col-md-4">{{$item->priceUnitary}}</td>
+                                        <td class = "col-md-4">{{$item->priceUnitary * $item->quantity }}</td>
+
+                                        {{-- <td class="text-sm">
                                             <a href="javascript:;" data-bs-toggle="tooltip"
                                                 data-bs-original-title="Visualizar Salidas">
                                                 <i class="fas fa-eye text-secondary"></i>
                                             </a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                {{-- <tfoot>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>SKU</th>
-                                        <th>Quantity</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot> --}}
                             </table>
                         </div>
                     </div>
@@ -278,55 +246,36 @@
         @include('layouts.footers.auth.footer')
     </div>
 {{-- Modal Edit --}}
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div  class="modal-dialog size-modal" role="document">
-	  <div class="modal-content">
+<div class="modal fade" id="editModalDepartures" tabindex="-1" role="dialog" aria-labelledby="modalDeparture" aria-hidden="true">
+	<div  class="modal-dialog" role="document">
+	  <div class="modal-content modalEditDepartures" >
 		<div class="modal-header">
-		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Salidas</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
+		  <h5 class="modal-title justify-content-center" id="modalDeparture">Detalle del material de salida</h5>
+		  <button type="button" class="btn close close-modal" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
 		</div>
-		<ul class="nav nav-tabs">
-			<li><a class="nav-link active" href="#material-info" data-toggle="tab">Detalles Generales</a></li>
-			<li><a class="nav-link" href="#" data-toggle="tab">Proveedores</a></li>
-			{{-- <li><a class="nav-link" href="#c" data-toggle="tab">Movimiento</a></li> --}}
-			<li><a class="nav-link"  data-toggle="tab">Entradas</a></li>
-            <li><a class="nav-link"  data-toggle="tab">Salidas</a></li>
-		 </ul>
-		 
-		 <div class="tab-content">
-			<div class="tab-pane active" id="material-info">
-				<div class="modal-body">
-					{{-- <form id='form-Material' method="POST" action="{{url('/material')}}" class="needs-validation" novalidate> --}}
-					<form id="form-edit" class="position:relative" id='form-Material' method="PUT"  class="needs-validation" novalidate>
-						  {{csrf_field()}}
-					<div class="box-edit-content">
-						<div class="container-inputs">
-							<div  id= 'selectMaterial' class="form-row container-inputs-material">
-								@if($loading)
-									<div id='loader-edit' class="text-center loader-size">
-										<div class="spinner-border" role="status">
-										<span class="sr-only">Loading...</span>
-										</div>
-									</div>
-								@endif	 
-								
-						   </div>
-						</div>
-					</div>
-						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
-							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
-							<button  onclick="return test();" type="submit" id= 'addMaterial' class="btn bg-gradient-primary btn-sm">Actualizar</button>
-						</div>
-					</form>
+		
+		<div class="modal-body">
+			<form id="form-edit" class="position:relative" id='form-Material' method="PUT"  class="needs-validation" novalidate>
+				  {{csrf_field()}}
+			<div class="box-edit-content">
+				<div class="container-inputs-edit-modal">
+					<div  id= 'selectMaterial' style="width:100%" class="form-row container-inputs-entry">
+
+						<div id='loader-edit-entry' class="text-center loader-size">
+							<div class="spinner-border" role="status">
+							<span class="sr-only">Loading...</span>
+							</div>
+						</div>		
+				   </div>
 				</div>
-		
 			</div>
-			
-		 </div>
-		
+				<div class="modal-footer row justify-content-center box-button-modal btn-back">
+					<button  id = 'close-modal-edit' type="button" class="close-modal btn btn-primary" data-dismiss="modal">Regresar</button>
+				</div>
+			</form>
+		</div>
 	  </div>
 	</div>
   </div>

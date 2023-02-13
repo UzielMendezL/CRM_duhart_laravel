@@ -41,57 +41,7 @@ class MaterialsController extends Controller
      */
     public function store(Request $request)
     {
-        //  $attributes = request()->validate([
-        //      'nameMaterial' => ['required', 'unique:items']
-
-        //  ]);
-
-        // $item = Materials::create([
-        //     'nameMaterial' => $request->get('name'),
-        //     'inventory' => $request->get('inventroy'),
-        //     'category' => $request->get('category'),
-        //     'category_id' => $request->get('choices-category'),
-        //     'group3' => $request->get('group3'),
-        //     'group4' => $request->get('group4'),
-        //     'group5' => $request->get('group5'),
-        //     'group6' => $request->get('group6'),
-        //     'group7' => $request->get('group7'),        
-        //     'mark' => $request->get('mark'),
-        //     'unitaryPrice' => $request->get('unitaryPrice'),
-        //     'stock' => $request->get('stock'),
-        //     'note' => $request->get('note'),
-        //     'stockMinimum' => $request->get('stockMinimum'),
-        //     'unity' => $request->get('unity'),
-        //     'editor' => $request->get('editor'),
-        //     'editionStatus' => $request->get('editionStatus'),
-        //     'alias' => $request->get('alias'),
-        //     'date' => $request->get('date'),
-        //     'providerActual' => $request->get('providerActual')
-        // ]);
-
-        // $newMaterial = new Materials;
-        // $newMaterial->nameMaterial = $request->get('name');
-        // $newMaterial->inventroy = $request->get('inventroy');
-        // $newMaterial->category = $request->get('category');
-        // $newMaterial->choicesCategory = $request->get('choices-category');
-        // $newMaterial->group3 = $request->get('group3');
-        // $newMaterial->group4 = $request->get('group4');
-        // $newMaterial->group5 = $request->get('group5');
-        // $newMaterial->group6 = $request->get('group6');
-        // $newMaterial->group7 = $request->get('group7');
-        // $newMaterial->mark = $request->get('mark');
-        // $newMaterial->stock = $request->get('stock');
-        // $newMaterial->note = $request->get('note');
-        // $newMaterial->unity = $request->get('unity');
-        // $newMaterial->editor = $request->get('editor');
-        // $newMaterial->editionStatus = $request->get('editionStatus');
-        // $newMaterial->alias = $request->get('alias');
-        // $newMaterial->date = $request->get('date');
-        // $newMaterial->providerActual = $request->get('providerActual');
-
-        // $newMaterial->save();
-
-
+    
         $dataProviderSupplier = $request->only('materialCode','supplierPrice','nameCommercial');
         $dataStock = $request->except('_token','materialCode','supplierPrice','nameCommercial');
         $nameMaterial = $dataStock['nameMaterial'];
@@ -100,6 +50,12 @@ class MaterialsController extends Controller
            if($findStock == null){
 
             $newMaterial = Materials::insert($dataStock);
+            // if($request->hasFile('image')){
+            //     $path = $request->image->store('public/img/materials');
+            //       Image::create(['path' => $path]);
+            // }
+
+            
              //Obtengo el ultimo registro 
              //$getLastId = Material::latest('idMaterial')->first();
            //  session()->flash('message', 'Se guardo correctamente');

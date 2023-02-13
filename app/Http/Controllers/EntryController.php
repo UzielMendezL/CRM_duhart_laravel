@@ -15,7 +15,14 @@ class EntryController extends Controller
     public function index(Entry $model)
     {
         $loading = true;
-        return view('laravel.inventory.entry-index', ['items' => $model->all(),'loading' => $loading] );
+
+        $modelFiltered = Entry::select('entries.*','materials.inventory',
+        'materials.category', 'materials.nameMaterial', 'stores.storeName')
+        ->join('materials', 'entries.idMaterial', '=', 'materials.idMaterial')
+        ->join('stores', 'entries.idStore', '=', 'stores.idStore')
+        ->get();
+
+        return view('laravel.inventory.entry-index', ['items' => $modelFiltered->all(),'loading' => $loading] );
     }
 
     /**
@@ -25,7 +32,8 @@ class EntryController extends Controller
      */
     public function create()
     {
-        //
+        $materials = Entry::all();
+        return view('laravel.inventory.entry.create', compact('entry'));
     }
 
     /**
@@ -56,9 +64,14 @@ class EntryController extends Controller
      * @param  \App\Models\Entry  $entry
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entry $entry)
+    public function edit($entryId)
     {
-        //
+        $editMaterial = Entry::select('entries.entryDate','employees.completeName','employees.idEmployee','entries.quantity','materials.stock','entries.quantity','materials.nameMaterial','materials.photo')
+        ->join('employees', 'employees.idEmployee', '=', 'entries.idEmployed')
+        ->join('materials', 'materials.idMaterial', '=', 'entries.idMaterial')
+        ->where( 'entries.idEntry', $entryId)
+        ->first();
+        return $editMaterial;
     }
 
     /**

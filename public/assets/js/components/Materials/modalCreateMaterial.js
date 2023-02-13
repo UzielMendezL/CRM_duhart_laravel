@@ -415,6 +415,170 @@ $(document).ready(function () {
     });
   
   }
+
+//Abrir el modal de editar
+
+function getInfoEntry(id) {
+
+  $('#box-inputs').remove();
+  $("#loader-edit-entry").fadeIn();
+  $.ajax({
+
+     url:'/inventory/entry/edit/' + id,
+     // url: '/entry/' + id + '/edit',
+      method: "GET",
+      headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      },
+      success: function (data) {
+          
+          const format2 = "YYYY-MM-DD";
+
+          var formatDays = moment(data.dateEntry).format(format2);
+
+          console.log(data);
+          setTimeout(() => {
+              actualEditId = data.idMaterial;
+
+              var reltivePath = `./img/materials/${data.photo}`;
+              if(data.photo == undefined){
+                reltivePath =  "./img/materials/image-default.png";
+              }
+
+              $("#loaderEditEntrySearch").fadeOut();
+              var completeInputs = `
+              <div class="row" id= 'box-inputs'>
+              <div class="form-group col-md-12">
+                  <label for="recipient-name" class="col-form-label">
+                      Nombre del material:
+                  </label>
+                  <input value = "${data.nameMaterial}" readonly  type = 'text'  id='entryDate' class ='form-control' name="entryDate" /> 
+              </div>
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                       Fecha:
+                   </label>
+                   <input value = "${formatDays}" readonly  type = 'text'  id='entryDate' class ='form-control' name="entryDate" /> 
+               </div>
+               <div class = "col-md-6">
+               <label for="recipient-name" class="col-form-label">
+               Recibio:
+              </label>
+              <input value = "${data.completeName}" readonly  type = 'text'  id='nameCompleted' class ='form-control' name="nameCompleted" /> 
+               </div>
+               
+              
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                       Cantidad:
+                   </label>
+                   <input  value= "${data.quantity}" readonly  type = 'text'  id='quantity' class ='form-control' name="quantity" /> 
+               </div>
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                       Stock Existente:
+                   </label>
+                   <input value = "${data.stock}" readonly type = 'text'  id='stock' class ='form-control' name="stock" /> 
+               </div>
+
+               <div class="box-img-modal-entry">
+                  <img src="./assets/img/materials/${data.photo}" class="size-img-material" alt="">
+              </div>
+           `;
+
+              $('.container-inputs-entry').append(completeInputs);
+              $("#loader-edit-entry").fadeOut();
+          }, 700);
+
+
+      }
+  });
+
+}
+//Abrir el modal de editar
+
+function getInfoDeparture(id) {
+
+  $('#box-inputs').remove();
+  $("#loader-edit-entry").fadeIn();
+  $.ajax({
+
+      url:"/inventory/departure/edit/" + id,
+      //url: '/departure/' + id + '/edit',
+      method: "GET",
+      headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      },
+      success: function (data) {
+          
+          const format2 = "YYYY-MM-DD";
+
+          var formatDays = moment(data.departureDate).format(format2);
+
+          console.log(data);
+          setTimeout(() => {
+              actualEditId = data.idMaterial;
+              $("#loaderEditEntrySearch").fadeOut();
+              var completeInputs = `
+              <div class="row" id= 'box-inputs'>
+              <div class="col-md-6">
+                  <label for="recipient-name" class="col-form-label">
+                      Nombre de la obra:
+                  </label>
+                  <input value = "${data[0].nameWorkSite}" readonly  type = 'text'  id='constructionName' class ='form-control' name="constructionName" /> 
+              </div>
+              <div class="col-md-6">
+                  <label for="recipient-name" class="col-form-label">
+                    Personal que lo entregó:
+                 </label>
+                 <input  value= "${data[0].completeName}" readonly  type = 'text'  id='quantity' class ='form-control' name="quantity" /> 
+             </div>
+              <div class="col-md-12">
+                  <label for="recipient-name" class="col-form-label">
+                      Nombre del material:
+                  </label>
+                  <input value = "${data[0].nameMaterial}" readonly  type = 'text'  id='entryDate' class ='form-control' name="entryDate" /> 
+              </div>
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                       Fecha:
+                   </label>
+                   <input value = "${formatDays}" readonly  type = 'text'  id='entryDate' class ='form-control' name="entryDate" /> 
+               </div>
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                   Personal que lo recibió:
+                   </label>
+                   <input value = "${data[1].completeName}" readonly  type = 'text'  id='nameCompleted' class ='form-control' name="nameCompleted" /> 
+               </div>
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                       Cantidad:
+                   </label>
+                   <input  value= "${data[0].quantity}" readonly  type = 'text'  id='quantity' class ='form-control' name="quantity" /> 
+               </div>
+               <div class="col-md-6">
+                   <label for="recipient-name" class="col-form-label">
+                       Stock Existente:
+                   </label>
+                   <input value = "${data[0].stock}" readonly type = 'text'  id='stock' class ='form-control' name="stock" /> 
+               </div>
+
+               <div class="box-img-modal-entry">
+                  <img src="./assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
+              </div>
+           `;
+
+              $('.container-inputs-entry').append(completeInputs);
+              $("#loader-edit-entry").fadeOut();
+          }, 700);
+
+
+      }
+  });
+
+}
+
   function updateInfoM() {
     //Se obtiene el valor de los inputs
     var formId = $('#form-edit');

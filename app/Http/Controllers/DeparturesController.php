@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Departures;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Employee;
 
 class DeparturesController extends Controller
 {
@@ -15,7 +17,17 @@ class DeparturesController extends Controller
     public function index(Departures $model)
     {
         $loading = true;
-        return view('laravel.inventory.departures-index', ['items' => $model->all(),'loading' => $loading] );
+        
+        $modelFiltered = Departures::select('departures.*','materials.inventory',
+        'materials.category', 'materials.nameMaterial', 'stores.storeName',"work_sites.nameWorkSite","estimations.nameEstimation","materials.inventory")
+        ->join('estimations', 'departures.idEstimation', '=', 'estimations.idEstimation')
+        ->join('work_sites', 'estimations.idWorkSite', '=', 'work_sites.idWorkSite')
+        ->join('materials', 'departures.idMaterial', '=', 'materials.idMaterial')
+        ->join('stores', 'departures.idStore', '=', 'stores.idStore')
+        ->orderBy("departures.departureDate", "DESC")
+        ->get();
+        return view('laravel.inventory.departures-index', ['items' => $modelFiltered->all(),'loading' => $loading] );
+        
     }
 
     /**
@@ -56,9 +68,39 @@ class DeparturesController extends Controller
      * @param  \App\Models\Departures  $departures
      * @return \Illuminate\Http\Response
      */
-    public function edit(Departures $departures)
+    public function edit($departureId)
     {
-        //
+        $editMaterial = Departures::select(
+            'work_sites.nameWorkSite',
+            'estimations.idEstimation',
+            'departures.departureDate',
+            'employees.completeName',
+            'employees.idEmployee',
+            'departures.quantity',
+            'materials.stock',
+            'departures.quantity',
+            'materials.nameMaterial',
+            // 'departures.idEmployeDelivery',
+            // 'departures.idEmployed2',
+            'departures.idEmployed2',
+            "materials.photo"
+            )
+        ->join('employees', 'employees.idEmployee', '=', 'departures.idEmployed')
+        ->join('materials', 'departures.idMaterial', '=', 'materials.idMaterial')
+        ->join('estimations', 'departures.idEstimation', '=', 'estimations.idEstimation')
+        ->join('work_sites', 'estimations.idWorkSite', '=', 'work_sites.idWorkSite')
+        
+        // ->join('stores', 'departures.idStore', '=', 'stores.idStore')
+        ->where( 'departures.idDeparture', $departureId)
+        ->first();
+        
+        $getEmployees = Employee::select(
+        'completeName',
+        'idEmployee')
+        ->where('idEmployee', $editMaterial->idEmployed2)
+        ->first();
+        
+        return [$editMaterial,$getEmployees];
     }
 
     /**

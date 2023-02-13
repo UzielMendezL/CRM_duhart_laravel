@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png"  href="{{ asset('assets/img/favicon.png') }}"  r/>
     
     <title>DUHART</title>
+    
 
      <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -53,8 +54,8 @@
     <!-- CSS Files -->
     {{-- <link id="pagestyle" href="/assets/css/argon-dashboard.css" rel="stylesheet" /> --}}
     <link href="{{ asset('assets/css/argon-dashboard.css') }}"  rel="stylesheet" />
-    <link rel="stylesheet" href="sweetAlert/sweetalert2.css" />
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     @stack('css')
     @yield('scriptsMaterial')
 
