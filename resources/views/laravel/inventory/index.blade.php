@@ -219,9 +219,9 @@
                                                         checked>
                                                 </div>
                                                 @isset($item->photo)
-                                                    <img loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
+                                                    <img style  = "max-width:55px;"  loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
                                                 @else
-                                                    <img loading="lazy" src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
+                                                    <img style  = "max-width:55px;" loading="lazy" src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
                                                 @endisset
 
                                             </div>
@@ -232,9 +232,9 @@
 
                                            <td>
                                             <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                        data-bs-target="#editModal">
-                                        {{$item->nameMaterial}}
-                                    </button>
+                                                data-bs-target="#editModal">
+                                                {{$item->nameMaterial}}
+                                            </button>
                                         </td>
                                         <td>{{$item->category}}</td>
                                         <td>{{$item->inventory}}</td>
@@ -242,43 +242,39 @@
                                         <td>{{$item->stock}}</td>
                                         <td>{{$item->stockMinimum}}</td>
                                         <td class="text-sm">
-                                            {{-- <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Visualizar material">
-
-                                            </a> --}}
-                                            {{-- <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                                data-bs-target="#editModal">
-                                                <i class="fas fa-eye text-secondary"></i>
+                                            <button  type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal-{{ $item->idMaterial }}">
+                                                <i class="fas fa-trash text-secondary"></i>
                                             </button>
-                                            <a href="javascript:;" class="mx-3" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Editar material">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a> --}}
-                                            {{-- <form action="{{route('material.destroy', $item->idMaterial) }}" method="post"> --}}
-                                             <form action="{{route('material.destroy', ['id' => $item->idMaterial | 0  ]) }}" method="post">
-                                                {{csrf_field()}}
-                                                @method('delete')
-                                                {{-- <a  href="javascript:;" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Borrar material">
-                                                    <i class="fas fa-trash text-secondary"></i>
-                                                </a> --}}
-                                                <button type="submit" class = "btn btn-primary">
-                                                    <i class="fas fa-trash text-secondary"></i>
-                                                </button>
-                                            </form>
-                                        </td>                                   @endforeach
+                                            {{-- Modal delete --}}
+
+                                            <div class="modal fade" id="deleteModal-{{ $item->idMaterial }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Eliminar material</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <form action="{{route('material.destroy', ['id' => $item->idMaterial | 0  ]) }}" method="post">
+                                                    {{csrf_field()}}
+                                                    @method('delete')
+                                                    <div class="modal-body">
+                                                        <span>¿Deseas remover este material?</span>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Eliminar Material</button>
+                                                    </div>  
+                                                    </form> 
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        @endforeach
                                 </tbody>
-                                {{-- <tfoot>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>SKU</th>
-                                        <th>Quantity</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot> --}}
                             </table>
                         </div>
                     </div>
@@ -287,37 +283,9 @@
         </div>
         @include('layouts.footers.auth.footer')
     </div>
-{{-- Modal Edit --}}
 
-<div class="modal fade" id="editModasl" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog mt-lg-10">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Import CSV</h5>
-                <i class="fas fa-upload ms-3"></i>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>You can browse your computer for a file.</p>
-                <input type="text" placeholder="Browse file..."
-                    class="form-control mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=""
-                        id="importCheck" checked="">
-                    <label class="custom-control-label" for="importCheck">I accept the
-                        terms and conditions</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn bg-gradient-secondary btn-sm"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button"
-                    class="btn bg-gradient-primary btn-sm">Upload</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+{{-- Modal Edit --}}
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div  class="modal-dialog size-modal" role="document">
@@ -409,6 +377,8 @@
         };
     </script>
     <script src="../../assets/js/plugins/sweetalert.min.js"></script>
-
+    {{-- @include('sweet::alert') --}}
+    @include('sweetalert::alert')
+    
 @endpush
 

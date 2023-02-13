@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Materials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MaterialsController extends Controller
 {
@@ -102,7 +103,9 @@ class MaterialsController extends Controller
              //Obtengo el ultimo registro 
              //$getLastId = Material::latest('idMaterial')->first();
            //  session()->flash('message', 'Se guardo correctamente');
-             return redirect()->route('material-management')->with('succes', 'Masterial guardado exitosamente');
+            //  return redirect()->route('material-management')->with('succes', 'Masterial guardado exitosamente');
+             Alert::success('Éxito', 'Se ha guardado exitosamente');
+             return redirect()->route('material-management');
            }
 
 
@@ -218,9 +221,14 @@ class MaterialsController extends Controller
      */
      public function destroy($id)
      {
-
          $deleted = Materials::where('idMaterial', $id)->delete();
-         return redirect()->route('material-management');
+        if ($deleted == 1){
+          Alert::success('Éxito', 'Se ha eliminado exitosamente');
+        }
+        else{
+          Alert::danger('Error', 'No se pudo eliminar..');
+        }
+          return redirect()->route('material-management');
      }
 
     // public function destroy( Materials $id)

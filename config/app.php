@@ -150,6 +150,9 @@ return [
          * Laravel Framework Service Providers...
          */
          //Sweet Alert
+        //  App\Providers\EventServiceProvider::class, 
+        //  App\Providers\RouteServiceProvider::class, 
+        //  UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         // UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -183,7 +186,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -239,7 +242,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        // 'Alert'=> UxWeb\SweetAlert\SweetAlertServiceProvider::class
+        //  'Alert'=> UxWeb\SweetAlert\SweetAlertServiceProvider::class
     ])->toArray(),
 
 ];

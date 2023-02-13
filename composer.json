@@ -10,8 +10,8 @@
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^3.0",
-        "uxweb/sweet-alert": "^2.0"
+        "laravel/ui": "^4.2",
+        "realrashid/sweet-alert": "^5.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

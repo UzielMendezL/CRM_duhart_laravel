@@ -24,6 +24,5 @@
         "chart.js": "^4.2.1",
         "perfect-scrollbar": "^1.5.5",
         "sweetalert2": "^11.7.1"
-
     }
 }
