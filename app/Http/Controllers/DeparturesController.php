@@ -12,9 +12,10 @@ class DeparturesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Departures $model)
     {
-        //
+        $loading = true;
+        return view('laravel.inventory.departures-index', ['items' => $model->all(),'loading' => $loading] );
     }
 
     /**

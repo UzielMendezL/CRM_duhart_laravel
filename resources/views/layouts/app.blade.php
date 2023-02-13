@@ -10,6 +10,8 @@
     
     <title>DUHART</title>
 
+     <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (config('app.is_demo'))
         <meta name="keywords"
             content="creative tim, updivision, html dashboard, laravel, argon, html css dashboard laravel, laravel argon dashboard laravel, laravel argon dashboard laravel pro, laravel argon dashboard, laravel argon dashboard pro, argon admin, laravel dashboard, laravel dashboard pro, laravel admin, web dashboard, bootstrap 5 dashboard laravel, bootstrap 5, css3 dashboard, bootstrap 5 admin laravel, argon dashboard bootstrap 5 laravel, frontend, responsive bootstrap 5 dashboard, argon dashboard, argon laravel bootstrap 5 dashboard" />
@@ -51,7 +53,8 @@
     <!-- CSS Files -->
     {{-- <link id="pagestyle" href="/assets/css/argon-dashboard.css" rel="stylesheet" /> --}}
     <link href="{{ asset('assets/css/argon-dashboard.css') }}"  rel="stylesheet" />
-
+    <link rel="stylesheet" href="sweetAlert/sweetalert2.css" />
+    <script src="{{ asset('js/app.js') }}"></script>
     @stack('css')
     @yield('scriptsMaterial')
 

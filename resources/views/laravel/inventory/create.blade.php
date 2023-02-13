@@ -133,12 +133,12 @@
                 <div class="card card-body mt-4">
                     <h6 class="mb-0">Nuevo Material</h6>
                     <hr class="horizontal dark my-3">
-                    <form method="POST" action="{{ route('item-new.store') }}" enctype="multipart/form-data"
+                    <form method="POST" action="{{ route('material-new.store') }}" enctype="multipart/form-data"
                         class="item-form">
                         @csrf
                         <label for="name" class="form-label">Nomnbre</label>
                         <div>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                            <input type="text" class="form-control" id="name" name="nameMaterial" value="{{ old('name') }}">
                             @error('name')
                                 <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -150,15 +150,15 @@
                         </div>
 
                         <label class="mt-4">Descripción</label>
-                        <div class="">
-                            <div data-toggle="quill" id="editor" class="editor-description"
-                                data-quill-placeholder="Description">
+                        {{-- <div class="">
+                            <div  data-toggle="quill" id="editor" class="editor-description"
+                                data-quill-placeholder="note">
                                 {!! old('description') !!}
                             </div>
                             @error('description')
                                 <p class='text-danger text-xs pt-1'> {{ $message }} </p>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div>
                             <label for="choices-category" class="form-label mt-4">Inventario</label>
                             <select class="form-control" name="inventory" id="choices-multiple-remove-buttown">
@@ -184,8 +184,8 @@
                         <div class ="row">
                             <div class="col">
                                     <label class="form-label">Unidad</label>
-                                    <input class="form-control " type="text" name="unitary"
-                                        placeholder="pza">
+                                    {{-- <input class="form-control " type="text" name="unity"
+                                        placeholder="pza"> --}}
                             </div>
                             <div class="col">
                                     <label class="form-label">Stock</label>

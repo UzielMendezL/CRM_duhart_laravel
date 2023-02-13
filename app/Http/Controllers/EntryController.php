@@ -12,9 +12,10 @@ class EntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Entry $model)
     {
-        //
+        $loading = true;
+        return view('laravel.inventory.entry-index', ['items' => $model->all(),'loading' => $loading] );
     }
 
     /**

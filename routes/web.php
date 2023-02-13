@@ -15,6 +15,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaterialsController;
+use App\Http\Controllers\EntryController;
+use App\Http\Controllers\DeparturesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,10 @@ use App\Http\Controllers\MaterialsController;
 Route::get('/', function () {
 	return redirect('/landing');
 })->middleware('auth');
+Route::get('redirect', function () {
+    alert()->info('Exito','try');
+    return redirect('/');
+});
 
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
@@ -95,14 +101,37 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Inventory
     Route::controller(MaterialsController::class)->group(function() {
-        Route::get('/inventory', 'index')->name('material-management');
+        
+        //StockReal
         Route::get('/inventory/stock-real', 'stockReal')->name('material-stock-real-management');
+        //StockMinimum
         Route::get('/inventory/stock-minimum', 'requireMaterial')->name('material-stock-minimum-management');
+        
+        Route::get('/inventory', 'index')->name('material-management');
         Route::get('/inventory/new-material', 'create')->name('material-new');
         Route::post('/inventory/new-material', 'store')->name('material-new.store');
         Route::get('/inventory/material/edit/{id}', 'edit')->name('material-edit');
-        Route::post('/inventory-material-update/edit/{id}', 'update')->name('material-edit.update');
-        Route::post('/inventory-material-delete/{id}', 'destroy')->name('material-destroy');
+        Route::put('/inventory/material-update/edit/{id}', 'update')->name('material-edit.update');
+        Route::delete('/inventory/material-delete/{id}', 'destroy')->name('material.destroy');
+    });
+
+    Route::controller(DeparturesController::class)->group(function() {
+
+        Route::get('/inventory/departure', 'index')->name('material-departure-management');
+        // Route::get('/inventory/departure', 'create')->name('departure-new');
+        // Route::post('/inventory/new-departure', 'store')->name('departure-new.store');
+        // Route::get('/inventory/departure/edit/{id}', 'edit')->name('departure-edit');
+        // Route::post('/inventory/departure-update/edit/{id}', 'update')->name('departure-edit.update');
+        // Route::post('/inventory/departure-delete/{id}', 'destroy')->name('departure-destroy');
+    });
+    Route::controller(EntryController::class)->group(function() {
+                
+        Route::get('/inventory/entry', 'index')->name('material-entry-management');
+        // Route::get('/inventory/entry', 'create')->name('entry-new');
+        // Route::post('/inventory/new-entry', 'store')->name('entry-new.store');
+        // Route::get('/inventory/entry/edit/{id}', 'edit')->name('entry-edit');
+        // Route::post('/inventory/entry-update/edit/{id}', 'update')->name('entry-edit.update');
+        // Route::post('/inventory/entry-delete/{id}', 'destroy')->name('entry-destroy');
     });
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');

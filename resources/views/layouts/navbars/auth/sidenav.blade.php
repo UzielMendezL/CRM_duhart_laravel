@@ -148,31 +148,31 @@
                 <div class="collapse {{ Route::currentRouteName() == 'applications' ? 'show' : '' }}" id="applicationsExamples">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'kanban') == true ? 'active' : '' }}" href="{{ route('applications', ['page' => 'kanban']) }}">
-                                <span class="sidenav-mini-icon"> K </span>
+                            <a class="nav-link {{ str_contains(request()->url(), 'kanban') == true ? 'active' : '' }}"href="{{ route('material-departure-management')}}">
+                                <span class="sidenav-mini-icon"> E </span>
                                 <span class="sidenav-normal">Entradas</span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'wizard') == true ? 'active' : '' }}" href="{{ route('applications', ['page' => 'wizard']) }}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'wizard') == true ? 'active' : '' }}" href="{{ route('material-entry-management')}}">
                                 <span class="sidenav-normal"> Salidas </span>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link  {{ str_contains(request()->url(), 'material') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
-                                <span class="sidenav-mini-icon"> D </span>
+                                <span class="sidenav-mini-icon"> M </span>
                                 <span class="sidenav-normal"> Materiales </span>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link {{ str_contains(request()->url(), 'real') == true ? 'active' : '' }}" href="{{ route('material-stock-real-management') }}">
-                                <span class="sidenav-mini-icon"> C </span>
+                                <span class="sidenav-mini-icon"> S </span>
                                 <span class="sidenav-normal"> Stock Real </span>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link {{ str_contains(request()->url(), 'minimum') == true ? 'active' : '' }}" href="{{ route('material-stock-minimum-management') }}">
-                                <span class="sidenav-mini-icon"> A </span>
+                                <span class="sidenav-mini-icon"> M F </span>
                                 <span class="sidenav-normal"> Materiales faltantes </span>
                             </a>
                         </li>

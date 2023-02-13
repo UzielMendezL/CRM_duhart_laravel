@@ -20,7 +20,10 @@ $(document).ready(function () {
     //   })
     // $('#materials-tab').tab('show')
     // alert('h')
-    $("#addMaterial").attr("disabled", true);
+
+
+// Agregarlo  despues
+  // $("#addMaterial").attr("disabled", false);
   
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.getElementsByClassName("needs-validation");
@@ -412,23 +415,26 @@ $(document).ready(function () {
     });
   
   }
-  function test() {
+  function updateInfoM() {
     //Se obtiene el valor de los inputs
     var formId = $('#form-edit');
     let formValues = {};
     let sendForm = [];
-    var form1Inputs = document.forms[2].getElementsByTagName("input");
-    for (let i = 0; i < form1Inputs.length; i++) {
+    var form1Inputs = document.forms[1].getElementsByTagName("input");
+  // var form1Inputs = document.getElementsByClassName(".container-inputs-material");
+   
+   for (let i = 0; i < form1Inputs.length; i++) {
       if (form1Inputs[i].name != '_token') {
         formValues[form1Inputs[i].name] = form1Inputs[i].value;
       }
     }
   
     //sendForm.push(formValues);
-  
+    console.log(form1Inputs);
     $.ajax({
   
-      url: '/material/' + actualEditId,
+      url:"/inventory/material-update/edit/" + actualEditId,
+      //url: '/material/' + actualEditId,
       method: "PUT",
       headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -441,6 +447,30 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
       }
-    });
-  
+    }).then((result) => {
+      if (result){
+        let timerInterval;
+        Swal.fire({
+          title: 'Se guardo correctamente',
+          timer: 2000,
+          timerProgressBar: true,
+          willClose: () => {
+            clearInterval(timerInterval)
+          }
+        },);
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Al parecer paso algo',
+          timer: 2000,
+          showCloseButton: false,
+          showCancelButton: false,
+          timerProgressBar: true,
+          willClose: () => {
+            clearInterval(timerInterval)
+          }
+        },);
+      }
+    })
   }

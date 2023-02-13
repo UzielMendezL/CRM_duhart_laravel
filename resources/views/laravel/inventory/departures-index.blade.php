@@ -3,17 +3,16 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
- <script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script>
- <script src="{{ asset('./assets/js/components/Materials/modalCreateFormOptions.js') }}" ></script>
+ <script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
+ <script src="{{ asset('./assets/js/components/Materials/modalCreateFormOptions.js') }}" ></script> 
   {{-- <script src="{{ asset('js/prueba.js') }}" defer ></script>  --}}
   {{-- @include('popper::assets') --}}
-
 @endsection
 @section('content')
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur"
         data-scroll="false">
         <div class="container-fluid py-1 px-3">
-            @include('layouts.navbars.auth.topnav', ['title' => 'Inventarios','secondTitle' => 'Lista de materiales'])
+            @include('layouts.navbars.auth.topnav', ['title' => 'Inventarios','secondTitle' => 'Salidas'])
             <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
                 <a href="javascript:;" class="nav-link p-0">
                     <div class="sidenav-toggler-inner">
@@ -144,15 +143,13 @@
                     <div class="card-header pb-0">
                         <div class="d-lg-flex">
                             <div>
-                                <h5 class="mb-0">Materiales</h5>
+                                <h5 class="mb-0">Salidas</h5>
                                 <p class="text-sm mb-0">
-                                   materiales existentes
+                                   Lista de salidas en el inventario
                                 </p>
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
-                                    <a href="./inventory/new-material" class="btn bg-gradient-primary btn-sm mb-0"
-                                        target="_blank">+&nbsp; Nuevo material</a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
@@ -197,7 +194,6 @@
                             <table class="table table-flush" id="products-list">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Imagen</th>
                                         <th>Id</th>
                                         <th>Nombre</th>
                                         <th>Categoria</th>
@@ -212,61 +208,55 @@
 
                                     @foreach ($items as $item)
                                     <tr>
-                                        <td>
+                                        {{-- <td>
                                             <div class="d-flex">
                                                 <div class="form-check my-auto">
                                                     <input class="form-check-input" type="checkbox" id="customCheck1"
                                                         checked>
                                                 </div>
-                                                @isset($item->photo)
-                                                    <img loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
-                                                @else
-                                                    <img loading="lazy" src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
-                                                @endisset
-
+                                                
+                                                {{-- {{ isset($item->photo) ? $item->photo : url('/images/video-thumbnail.png') }} --}}
+                                                {{-- @empty($items->photo)
+                                                 <img src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
+                                                 @endempty --}}
+                                                 {{-- <img src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
+                                               --}}
+                                                {{-- <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6> 
                                             </div>
-                                        </td>
-                                        <td>{{$item->idMaterial}}</td>
+                                        </td> --}}
+                                        <td class = "col-md-02">{{$item->idMaterial}}</td>
                                         {{-- <td>{{$item->nameMaterial}}</td> --}}
                                         {{-- <td>	<button  onclick="return getInfoMaterial({{$item->idMaterial}});" id= 'btnEditMaterial' data-target="#editModal" data-whatever="@mdo" data-toggle="modal" type="button" class="editMaterial btn btn-edit">{{$item->nameMaterial}}</button> --}}
-
-                                           <td>
+                                           
+                                           <td class="col-md-1">
                                             <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
                                         data-bs-target="#editModal">
                                         {{$item->nameMaterial}}
                                     </button>
                                         </td>
-                                        <td>{{$item->category}}</td>
-                                        <td>{{$item->inventory}}</td>
-                                        <td>{{$item->unity}}</td>
-                                        <td>{{$item->stock}}</td>
-                                        <td>{{$item->stockMinimum}}</td>
+                                        <td class = "col-md-4">{{$item->category}}</td>
+                                        <td class = "col-md-4">{{$item->inventory}}</td>
+                                        <td class = "col-md-4">{{$item->unity}}</td>
+                                        <td class = "col-md-4">{{$item->stock}}</td>
+                                        <td class = "col-md-4">{{$item->stockMinimum}}</td>
+                                    
+                                        <td>
+                                            @if ($item->stock > $item->stockMinimum )
+                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-success badge-sm">En stock</span>
+                                            
+                                            @else
+                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-danger badge-sm">Fuera de stock</span>
+                                            @endif
+                                            
+                                        </td>
                                         <td class="text-sm">
-                                            {{-- <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Visualizar material">
-
-                                            </a> --}}
-                                            {{-- <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                                data-bs-target="#editModal">
+                                            <a href="javascript:;" data-bs-toggle="tooltip"
+                                                data-bs-original-title="Visualizar Salidas">
                                                 <i class="fas fa-eye text-secondary"></i>
-                                            </button>
-                                            <a href="javascript:;" class="mx-3" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Editar material">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a> --}}
-                                            {{-- <form action="{{route('material.destroy', $item->idMaterial) }}" method="post"> --}}
-                                             <form action="{{route('material.destroy', ['id' => $item->idMaterial | 0  ]) }}" method="post">
-                                                {{csrf_field()}}
-                                                @method('delete')
-                                                {{-- <a  href="javascript:;" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Borrar material">
-                                                    <i class="fas fa-trash text-secondary"></i>
-                                                </a> --}}
-                                                <button type="submit" class = "btn btn-primary">
-                                                    <i class="fas fa-trash text-secondary"></i>
-                                                </button>
-                                            </form>
-                                        </td>                                   @endforeach
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                                 {{-- <tfoot>
                                     <tr>
@@ -288,42 +278,11 @@
         @include('layouts.footers.auth.footer')
     </div>
 {{-- Modal Edit --}}
-
-<div class="modal fade" id="editModasl" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog mt-lg-10">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Import CSV</h5>
-                <i class="fas fa-upload ms-3"></i>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>You can browse your computer for a file.</p>
-                <input type="text" placeholder="Browse file..."
-                    class="form-control mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value=""
-                        id="importCheck" checked="">
-                    <label class="custom-control-label" for="importCheck">I accept the
-                        terms and conditions</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn bg-gradient-secondary btn-sm"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button"
-                    class="btn bg-gradient-primary btn-sm">Upload</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div  class="modal-dialog size-modal" role="document">
 	  <div class="modal-content">
 		<div class="modal-header">
-		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle del material</h5>
+		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Salidas</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
@@ -335,7 +294,7 @@
 			<li><a class="nav-link"  data-toggle="tab">Entradas</a></li>
             <li><a class="nav-link"  data-toggle="tab">Salidas</a></li>
 		 </ul>
-
+		 
 		 <div class="tab-content">
 			<div class="tab-pane active" id="material-info">
 				<div class="modal-body">
@@ -351,28 +310,28 @@
 										<span class="sr-only">Loading...</span>
 										</div>
 									</div>
-								@endif
-
+								@endif	 
+								
 						   </div>
 						</div>
 					</div>
 						<div class="modal-footer row justify-content-center box-button-modal">
 							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
 							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
-							{{-- Agregar el disabled con el id --}}
-                            <button  onclick="return updateInfoM();" type="button" id= 'addMaterials' class="btn bg-gradient-primary btn-sm">Actualizar</button>
+							<button  onclick="return test();" type="submit" id= 'addMaterial' class="btn bg-gradient-primary btn-sm">Actualizar</button>
 						</div>
 					</form>
 				</div>
-
+		
 			</div>
-
+			
 		 </div>
-
+		
 	  </div>
 	</div>
   </div>
 </div>
+
 @endsection
 
 @push('js')
@@ -383,10 +342,8 @@
                 searchable: true,
                 fixedHeight: false,
                 perPage: 5,
-                serverSide: true,
-              //  deferLoading: [ 10, 100 ]
-                search: {
-                    search: "my_filter"
+                language: {
+                    search: 'buscar'
                 }
             });
 
@@ -408,7 +365,4 @@
             });
         };
     </script>
-    <script src="../../assets/js/plugins/sweetalert.min.js"></script>
-
 @endpush
-

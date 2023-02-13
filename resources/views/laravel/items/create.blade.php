@@ -264,7 +264,7 @@
 
                         <div class="d-flex justify-content-end mt-4">
                             <a href="{{ route('item-management') }}" class="btn btn-light m-0">Back</a>
-                            <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Create</button>
+                            <button type="type" class="btn bg-gradient-primary m-0 ms-2">Create</button>
                         </div>
                     </form>
                 </div>
