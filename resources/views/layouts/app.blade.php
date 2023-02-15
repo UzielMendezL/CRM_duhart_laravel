@@ -48,13 +48,14 @@
     {{-- <link href="/assets/css/nucleo-svg.css" rel="stylesheet" /> --}}
     <link href="{{ asset('assets/css/nucleo-svg.css') }}"  rel="stylesheet" />
     
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.11.5/datatables.min.css"/> --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.11.5/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
     <!-- CSS Files -->
     {{-- <link id="pagestyle" href="/assets/css/argon-dashboard.css" rel="stylesheet" /> --}}
     <link href="{{ asset('assets/css/argon-dashboard.css') }}"  rel="stylesheet" />
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- <script src="{{ asset('../../../js/app.js') }}"></script> --}}
+    <script src="../../assets/js/plugins/sweetalert.min.js"></script>   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     @stack('css')
     @yield('scriptsMaterial')

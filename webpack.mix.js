@@ -18,3 +18,4 @@ const mix = require('laravel-mix');
 //  mix.config.publicPath='public_html';
 //  mix.js('resources/assets/js/app.js', 'public_html/js')
 //    .sass('resources/assets/sass/app.scss', 'public_html/css');
+mix.browserSync('127.0.0.1:8000');

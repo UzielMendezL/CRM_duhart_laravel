@@ -3,7 +3,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
- <script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
   {{-- <script src="{{ asset('js/prueba.js') }}" defer ></script>  --}}
   {{-- @include('popper::assets') --}}
 @endsection
@@ -149,9 +148,11 @@
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
-                                    <a href="./inventory/new-departure" class="btn bg-gradient-primary btn-sm mb-0"
-                                        target="_blank">&nbsp; Nueva Salida
-                                    </a>
+                                    {{-- <button data-bs-toggle="modal"  data-bs-target= "#createModal" data-whatever="@mdo" type="button" class="btn btn-primary btn-sm mb-0">
+                                        <i class="button-add-material fas fa-plus-circle"></i>
+                                        &nbsp; Nueva Salida
+                                    </button>   --}}
+                                    <a  data-bs-toggle="modal" href="#createModal" class="btn btn-primary">Launch modal</a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
@@ -227,13 +228,6 @@
                                         <td class = "col-md-4">{{$item->quantity}}</td>
                                         <td class = "col-md-4">{{$item->priceUnitary}}</td>
                                         <td class = "col-md-4">{{$item->priceUnitary * $item->quantity }}</td>
-
-                                        {{-- <td class="text-sm">
-                                            <a href="javascript:;" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Visualizar Salidas">
-                                                <i class="fas fa-eye text-secondary"></i>
-                                            </a>
-                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -279,12 +273,167 @@
 	  </div>
 	</div>
   </div>
+
+
+
+{{-- Modal create departures --}}
+<div>
+    {{-- @yield('modalForm') --}}
+    <div class="modal fade" id="createModal">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title justify-content-center" id="createEntryModal">Añade nueva salida</h5>
+            <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div class="modal-body">
+               <div id='loader-entry' class="text-center loader-size">
+                  <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                  </div>
+              </div> 
+  
+              <form id='form-create-entry' method="POST" action="{{url('/inventory/new-departure')}}" class="needs-validation" novalidate>
+                    {{csrf_field()}}
+                    <div class="row" id= 'box-entry-inputs'>
+                         <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Almacen:
+                          </label>
+                          <select required name="idStore" id= 'idStore' class="form-control">
+                              <option value="">Selecciona una opción</option>
+                              @foreach ($getStore as $store)
+                                  <option value={{ $store->idStore }}>{{ $store->storeName }}</option>	
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">Escoge el almacén correspondiente</div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Entregado por:
+                          </label>
+                          <select required name="employeeDelivered" id= 'employeeDelivered' class="form-control">
+                              <option value="">Selecciona una opción</option>
+                              @foreach ($getEmployees as $employee)
+                                  <option value={{$employee->idEmployee}}>{{$employee->completeName}}</option>	
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">Escoge la persona que lo entregará</div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Recibido por:
+                          </label>
+                          <select required name="employeeReceived" id= 'employeeReceived' class="form-control">
+                              <option value="">Selecciona una opción</option>
+                              @foreach ($getEmployees as $employee)
+                                  <option value={{$employee->idEmployee}}>{{$employee->completeName}}</option>	
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">Escoge la persona que lo recibirá</div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Fecha de salida:
+                          </label>
+                          <input type = 'date' readonly  id='departureDate' class ='form-control' name="departureDate" /> 
+                      </div>
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Obras:
+                          </label>
+                          <select onchange="return getEstimationDeparture(this.value);" required name="workSite" id= 'form-employed' class="form-control">
+                              <option value="0">Selecciona una obra</option>
+                              @foreach ($getConstructionSites as $construction)
+                                  <option value={{$construction->idWorkSite}}>{{$construction->nameWorkSite}}</option>	
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">Escoge una obra para la salida</div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="recipient-name" class="col-form-label">
+                            Presupuesto:
+                        </label>
+                        <select required name="idEstimation" id= 'inputEstimation' class="form-control">
+                            <option value="0">Selecciona un presupuesto</option>
+                        </select>
+                        <div class="invalid-feedback">Escoge una obra para la salida</div>
+                    </div>
+                      <div  class="col-md-12">
+                          <label for="recipient-name" class="col-form-label">Selecciona el material que deseas darle de salida:</label>
+                          <input id="search-entry-material" aria-label="Search"  type="search" placeholder="Escribe minimo 3 letras para localizar el material" type="text" class="form-control"/>
+                      </div>
+                  </div>
+          
+                    <div id = 'material-selected' class="row">
+                      <div class="col-md-12">
+                          <label for="recipient-name" class="col-form-label">
+                              Seleccionaste:
+                          </label>
+                          <input readonly class="form-control" name="selectMaterial" id="select-Material" type="text" />
+                      </div>
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Stock:
+                          </label>
+                          <input  readonly id='stockMaterial' min="0" type = 'number'   class ='form-control' name="stockEntry" /> 
+                      </div>
+                      
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Cantidad:
+                          </label>
+                          <input required placeholder="Escribe la cant. de salidas"  min="0" type = 'number' id = 'quantityEntry'   class ='form-control' name="quantity" /> 
+                          <div class="invalid-feedback">Escribe la cantidad que deseas dar por salida</div>
+                      </div>
+                      <input  type="hidden"  required  min="0" type = 'number' id = 'priceUnitary' name = "priceUnitary" class ='form-control' x /> 
+                    </div>
+                  <div class="modal-footer row justify-content-center box-button-modal">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+                      <button  type="submit" id= 'addEntry' class="btn btn-primary">Dar salida</button>
+                  </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+{{-- Modal TEST --}}
+  <div class="modal fade rotate" id="imagePhoto">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabels">Remove Image</h5>
+          <button aria-hidden="true" type="btn button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            X
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 @endsection
 
 @push('js')
     <script src="../../assets/js/plugins/datatables.js"></script>
+    <script src="{{ asset('../../assets/js/components/Departures/modalCreateDepartures.js') }}" ></script> 
+    
+    <script src="{{ asset('../../assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
+    {{-- <script src="../../assets/js/plugins/sweetalert.min.js"></script> --}}
     <script>
         if (document.getElementById('products-list')) {
             const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
@@ -294,6 +443,10 @@
                 language: {
                     search: 'buscar'
                 }
+                // searchPanes: {
+                //     columns: [3,2,1]
+                // },
+                // dom: 'Plfrtip'
             });
 
             document.querySelectorAll(".export").forEach(function(el) {
@@ -314,4 +467,5 @@
             });
         };
     </script>
+     @include('sweetalert::alert')
 @endpush
