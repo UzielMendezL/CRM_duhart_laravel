@@ -325,7 +325,7 @@
                       <input  type="hidden"  required  min="0" type = 'number' id = 'priceUnitary' name = "priceUnitary" class ='form-control' x /> 
                     </div>
                   <div class="modal-footer row justify-content-center box-button-modal">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
                       <button  type="submit" id= 'addEntry' class="btn btn-primary">Añadir Entrada</button>
                   </div>
               </form>
@@ -342,7 +342,7 @@
 	  <div class="modal-content modalEditEntry" >
 		<div class="modal-header">
 		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle del material de entrada</h5>
-		  <button type="button" class=" btn close close-modal" data-dismiss="modal" aria-label="Close">
+		  <button type="button" class=" btn close close-modal" data-bs-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
 		</div>

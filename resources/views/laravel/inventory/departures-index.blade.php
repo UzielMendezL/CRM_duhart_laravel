@@ -152,7 +152,7 @@
                                         <i class="button-add-material fas fa-plus-circle"></i>
                                         &nbsp; Nueva Salida
                                     </button>   --}}
-                                    <a  data-bs-toggle="modal" href="#createModal" class="btn btn-primary">Launch modal</a>
+                                    <a  data-bs-toggle="modal" href="#createModal" class="btn btn-primary btn-sm mb-0">Añadir Salida</a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
@@ -245,7 +245,7 @@
 	  <div class="modal-content modalEditDepartures" >
 		<div class="modal-header">
 		  <h5 class="modal-title justify-content-center" id="modalDeparture">Detalle del material de salida</h5>
-		  <button type="button" class="btn close close-modal" data-dismiss="modal" aria-label="Close">
+		  <button type="button" class="btn close close-modal" data-bs-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
 		</div>
@@ -266,7 +266,7 @@
 				</div>
 			</div>
 				<div class="modal-footer row justify-content-center box-button-modal btn-back">
-					<button  id = 'close-modal-edit' type="button" class="close-modal btn btn-primary" data-dismiss="modal">Regresar</button>
+					<button  id = 'close-modal-edit' type="button" class="close-modal btn btn-primary" data-bs-dismiss="modal">Regresar</button>
 				</div>
 			</form>
 		</div>
@@ -284,7 +284,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title justify-content-center" id="createEntryModal">Añade nueva salida</h5>
-            <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -392,7 +392,7 @@
                       <input  type="hidden"  required  min="0" type = 'number' id = 'priceUnitary' name = "priceUnitary" class ='form-control' x /> 
                     </div>
                   <div class="modal-footer row justify-content-center box-button-modal">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
                       <button  type="submit" id= 'addEntry' class="btn btn-primary">Dar salida</button>
                   </div>
               </form>

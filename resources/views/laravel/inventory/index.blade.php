@@ -264,7 +264,7 @@
                                                         <span>¿Deseas remover este material?</span>
                                                     </div>
                                                     <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                                     <button type="submit" class="btn btn-primary">Eliminar Material</button>
                                                     </div>  
                                                     </form> 
@@ -331,7 +331,7 @@
 						</div>
 					</div>
 						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-bs-dismiss="modal">Regresar</button> --}}
 							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
 							{{-- Agregar el disabled con el id --}}
                             <button  onclick="return updateInfoM();" type="button" id= 'addMaterials' class="btn bg-gradient-primary btn-sm">Actualizar</button>
@@ -367,7 +367,7 @@
 						</div>
 					</div>
 						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-bs-dismiss="modal">Regresar</button> --}}
 							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
 						</div>
                     </div>
@@ -400,7 +400,7 @@
 						</div>
 					</div>
 						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-bs-dismiss="modal">Regresar</button> --}}
 							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
 						</div>
 				</div>    
@@ -434,7 +434,7 @@
 						</div>
 					</div>
 						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-bs-dismiss="modal">Regresar</button> --}}
 							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
 						</div>
 				</div>

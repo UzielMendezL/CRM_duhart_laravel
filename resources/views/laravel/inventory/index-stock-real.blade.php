@@ -310,7 +310,7 @@
 						</div>
 					</div>
 						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-bs-dismiss="modal">Regresar</button> --}}
 							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
 							<button  onclick="return test();" type="submit" id= 'addMaterial' class="btn bg-gradient-primary btn-sm">Actualizar</button>
 						</div>
