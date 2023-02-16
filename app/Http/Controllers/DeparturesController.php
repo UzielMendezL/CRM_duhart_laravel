@@ -28,7 +28,7 @@ class DeparturesController extends Controller
         ->where('status' , '=' ,'Activa')
         ->get();
 
-        $getStore = DB::table('Stores')
+        $getStore = DB::table('stores')
         ->get();
         
         
