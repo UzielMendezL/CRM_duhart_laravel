@@ -209,13 +209,16 @@
                         <div class=" row">
                             <div class="col-sm-6">
                                 <label class="mt-4">Notas</label>
+                                @php
+                                    $newNotes = trim($item->notes)
+                                @endphp
                                 <p class="form-text text-muted text-xs ms-1 d-inline">
                                     (opcional)
                                 </p>
                                 {{-- <div id="edit-deschiption-edit" class="h-50"> 
                                 </div> --}}
                                 <textarea  class = "form-control" name="notes">
-                                    {{$item->notes}}
+                                    {{$newNotes}}
                                 </textarea>   
                                 
                                 
@@ -254,9 +257,9 @@
                     </div>
                     <div class="col-sm-12">
                         <div class ="d-flex justify-content-center align-items-center">
-                            <button type = "button" class = "btn btn-secondary">
+                            <a href="{{route('transaction-detail-new')}}"  type = "button" class = "btn btn-secondary">
                                 Agregar Material
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -303,20 +306,20 @@
                                                 <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Eliminar material</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Eliminar concepto</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                     </button>
                                                     </div>
-                                                    <form action="{{route('material.destroy', ['id' => $item->idTransactionDetail | 0  ]) }}" method="post">
+                                                    <form action="{{route('transaction-detail.destroy', ['id' => $item->idTransactionDetail | 0  ]) }}" method="post">
                                                     {{csrf_field()}}
                                                     @method('delete')
                                                     <div class="modal-body">
-                                                        <span>¿Deseas remover este material?</span>
+                                                        <span>¿Deseas remover este concepto?</span>
                                                     </div>
                                                     <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Eliminar Material</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Eliminar concepto</button>
                                                     </div>  
                                                     </form> 
                                                 </div>

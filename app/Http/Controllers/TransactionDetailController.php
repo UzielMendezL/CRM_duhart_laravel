@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 
 class TransactionDetailController extends Controller
 {
@@ -24,7 +26,13 @@ class TransactionDetailController extends Controller
      */
     public function create()
     {
-        //
+        $materials = TransactionDetail::all();
+        $getConstructionSites = DB::table('work_sites')
+        ->select('idWorkSite','nameWorkSite')
+        ->where('status' , '=' ,'Activa')
+        ->get();
+
+        return view('laravel.transaction.add-material-transaction',['workItems' => $getConstructionSites] );
     }
 
     /**
@@ -78,8 +86,17 @@ class TransactionDetailController extends Controller
      * @param  \App\Models\TransactionDetail  $transactionDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TransactionDetail $transactionDetail)
+    public function destroy($id)
     {
-        //
+        
+         $deleted = TransactionDetail::where('idTransactionDetail', $id)->delete();
+        if ($deleted == 1){
+          Alert::success('Éxito', 'Se ha eliminado exitosamente');
+        }
+        else{
+          Alert::danger('Error', 'No se pudo eliminar..');
+        }
+        //   return redirect()->route('material-management');
+        return back()->withInput();
     }
 }

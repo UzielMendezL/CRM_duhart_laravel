@@ -72,19 +72,20 @@ class TransactionController extends Controller
     {
         
         $ediTransaction = null;
-
-        $actualProviders = Provider::select('providers.idProvider','providers.nameProvider')
-        ->where('providers.status',true)
-        ->get();
-        $actualAccounts =  BankAccount::select('bank_accounts.idAccount','bank_accounts.nameAccount')
-        ->where('bank_accounts.status',true)
-        ->get();
-          
+      
         $editTransaction = Transaction::select('transactions.*','bank_accounts.nameAccount','providers.nameProvider')
         ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
         ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
          ->where( 'transactions.idTransaction', $idTrans  )
          ->first(); 
+         $actualProviders = Provider::select('providers.idProvider','providers.nameProvider')
+         ->where('providers.status',true)
+         ->where('providers.nameProvider', '<>',$editTransaction->nameProvider)
+         ->get();
+         $actualAccounts =  BankAccount::select('bank_accounts.idAccount','bank_accounts.nameAccount')
+         ->where('bank_accounts.status',true)
+         ->where('bank_accounts.nameAccount', '<>',$editTransaction->nameAccount)
+         ->get();
          $getTransactionDetail = TransactionDetail::select('transaction_details.*','inventories.nameInventory','estimations.nameEstimation')
         ->join('transactions', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
         ->join('inventories', 'inventories.idInventory', '=', 'transaction_details.idInventory')

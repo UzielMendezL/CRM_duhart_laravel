@@ -676,11 +676,11 @@
                                         <th>Tipo Transacción</th>
                                         <th>Fecha Pagada</th>
                                         <th>Cuenta</th>
+                                        <th>Estatus</th>
                                         <th>Concepto</th>
                                         <th>Factura</th>
                                         <th>Proveedor</th>
                                         <th>Monto</th>
-                                        <th>Estatus</th>
                                         <th>Notas</th>
                                     </tr>
                                 </thead>
@@ -697,6 +697,7 @@
                                         </td>
                                         <td>{{$item->conceptType}}</td>
                                         <td>{{$item->payDay}}</td>
+                                        <td>{{$item->nameAccount}}</td>
                                         <td  class="text-xs font-weight-bold">
                                             
                                             <div class="d-flex align-items-center">
@@ -722,10 +723,11 @@
                                                 {{$item->status}}       
                                            </div>
                                         </td>
-                                        <td>{{$item->nameAccount}}</td>
                                         <td>{{$item->concept}}</td>
                                         <td>{{$item->invoice}}</td>
-                                        <td>{{$item->nameProvider}}</td>
+                                        <td>
+                                            {{ $item->nameProvider }}
+                                        </td>
                                         {{-- text-danger --}}
                                         <td class="text-xs">
                                             <div class="d-flex align-items-center">

@@ -230,6 +230,7 @@ class DeparturesController extends Controller
         $getData = DB::table('estimations')
         ->select('idEstimation',"nameEstimation")
         ->where('idWorkSite', $id)
+        ->where('status', 'Activa')
         ->get();
         
         return $getData;

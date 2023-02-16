@@ -18,6 +18,7 @@ use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\DeparturesController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,8 +145,13 @@ Route::group(['middleware' => 'auth'], function () {
          Route::get('/transaction/edit/{id}', 'edit')->name('transaction-edit');
          Route::post('/transaction/material/search-{id}','search')->name('transaction.search');
          Route::put('/transaction-update/edit/{id}', 'update')->name('transaction-edit.update');
+        // Route::delete('/transaction/concept-delete/{id}', 'destroy')->name('transaction.destroy');
     });
-
+    Route::controller(TransactionDetailController::class)->group(function() {
+         Route::delete('/transaction-detail/concept-delete/{id}', 'destroy')->name('transaction-detail.destroy');
+         Route::get('/transaction-detail/new-transaction', 'create')->name('transaction-detail-new');
+         Route::post('/transaction-detail/new-transaction', 'store')->name('transaction-detail-new.store');
+    });
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
 
