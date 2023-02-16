@@ -6,6 +6,9 @@ use App\Models\Materials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\Provider;
+use App\Models\Departures;
+use App\Models\Entry;
 
 class MaterialsController extends Controller
 {
@@ -97,16 +100,28 @@ class MaterialsController extends Controller
      */
     public function edit($materialId)
     {
-      //  $item = Materials::find($id);
-        //return view('laravel.materials.edit', compact('item'));
 
         $editMaterial = null;
+      
+        // $editMaterialProvider = Provider::select('entries.entryDate','employees.completeName','employees.idEmployee','entries.quantity','materials.stock','entries.quantity','materials.nameMaterial','materials.photo')
+        // ->join('employees', 'employees.idEmployee', '=', 'entries.idEmployed')
+        // ->join('materials', 'materials.idMaterial', '=', 'entries.idMaterial')
+        // ->where( 'entries.idEntry', $entryId)
+        // ->first();
+
+        $editMaterialEntry = Entry::select('entries.quantity','entries.idEntry','entries.quantity','materials.nameMaterial','entries.entryDate')
+        ->join('materials', 'materials.idMaterial', '=', 'entries.idMaterial')
+        ->where( 'materials.idMaterial', $materialId)
+        ->get();
+
+        $editMaterialDeparture = Departures::select('departures.quantity','departures.idDeparture','departures.quantity','materials.nameMaterial','departures.departureDate')
+        ->join('materials', 'materials.idMaterial', '=', 'departures.idMaterial')
+        ->where( 'materials.idMaterial', $materialId)
+        ->get(); 
+      
         $editAllMaterial = Materials::select('materials.*')
-        //$editAllMaterial = Materials::select('materials.*','material_suppliers.materialCode','material_suppliers.supplierPrice','providers.nameCommercial')
-          //   ->join('material_suppliers', 'material_suppliers.idMaterial', '=', 'materials.idMaterial')
-            // ->join('providers', 'material_suppliers.idProvider', '=', 'providers.idProvider')
-             ->where( 'materials.idMaterial', $materialId  )
-             ->first();         
+         ->where( 'materials.idMaterial', $materialId  )
+         ->first();         
 
              if($editAllMaterial == null ){
               $editOnlyMaterial = Materials::select('materials.*')
@@ -120,7 +135,7 @@ class MaterialsController extends Controller
           
            $loading = false;
            view('laravel.inventory.index',compact('loading'));
-           return  $editMaterial;
+           return  [$editMaterial,$editMaterialEntry,$editMaterialDeparture];
     }
 
     /**

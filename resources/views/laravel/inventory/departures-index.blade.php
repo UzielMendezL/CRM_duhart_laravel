@@ -430,8 +430,7 @@
 
 @push('js')
     <script src="../../assets/js/plugins/datatables.js"></script>
-    <script src="{{ asset('../../assets/js/components/Departures/modalCreateDepartures.js') }}" ></script> 
-    
+    <script src="{{ asset('../../assets/js/components/Departures/modalCreateDepartures.js') }}" ></script>     
     <script src="{{ asset('../../assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
     {{-- <script src="../../assets/js/plugins/sweetalert.min.js"></script> --}}
     <script>

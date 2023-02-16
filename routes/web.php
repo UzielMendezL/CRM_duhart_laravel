@@ -132,6 +132,7 @@ Route::group(['middleware' => 'auth'], function () {
         //Route::get('/inventory/new-entry', 'create')->name('entry-new');
          Route::post('/inventory/new-entry', 'store')->name('entry-new.store');
          Route::get('/inventory/entry/edit/{id}', 'edit')->name('entry-edit');
+         Route::post('/inventory/entry/search','search')->name('entry.search');
         // Route::post('/inventory/entry-update/edit/{id}', 'update')->name('entry-edit.update');
         // Route::post('/inventory/entry-delete/{id}', 'destroy')->name('entry-destroy');
     });

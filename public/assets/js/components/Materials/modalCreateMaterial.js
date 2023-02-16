@@ -307,11 +307,54 @@ $(document).ready(function () {
     }
   }
   
+  var getDataMaterialEntry = [];
+  var getDataMaterialDeparture = [];
+
+  function clearInfoMaterialOfInventory(){
+    $('#trEntryMaterial').fadeOut();
+    $('#trDepartureMaterial').fadeOut();
+  }
+  function getInfoMaterialOfInventory(){
+    for (let index = 0; index < getDataMaterialEntry.length; index++) {
+      const element = getDataMaterialEntry[index];
+      let entryMaterial = `
+      <tbody>
+      <tr>
+          <td>${element.idEntry}</td>
+          <td>${element.entryDate}</td>
+          <td>${element.quantity}</td>
+      </tr>
+      </tbody>`;
+      $('#trEntryMaterial').prepend(entryMaterial);                    
+    }
+   
+    for (let index = 0; index < getDataMaterialDeparture.length; index++) {
+      const element = getDataMaterialDeparture[index];
+      let departureMaterial = `
+      <tbody>
+      <tr>
+      <td>${element.idDeparture}</td>
+      <td>${element.departureDate}</td>            
+        <td>${element.quantity}</td>
+      </tr>
+      </tbody>`;
+      $('#trDepartureMaterial').prepend(departureMaterial);
+    }
+    $('#modalEditMaterial').css("width","750px");
+    checkLoaderModalEdit();
+  }
+
+
   function getInfoMaterial(id) {
   
     $('#box-inputs').remove();
-    $("#loader-edit").fadeIn();
-    console.log(id);
+    $("#loader-edit-home").fadeIn();
+    $("#loader-edit-provider").fadeIn();
+    $("#loader-edit-departure").fadeIn();
+    $("#loader-edit-entry").fadeIn();
+
+    clearInfoMaterialOfInventory();
+    
     $.ajax({
       //url: '/material/' + id + '/edit',
       url: ' /inventory/material/edit/' + id,
@@ -321,92 +364,98 @@ $(document).ready(function () {
       },
       success: function (data) {
        
-        $('#code-material').val(data.materialCode);
-        $('#price-provider').val(data.supplierPrice);
-        $('#provider-material').val(data.nameCommercial);
+        $('#code-material').val(data[0].materialCode);
+        $('#price-provider').val(data[0].supplierPrice);
+        $('#provider-material').val(data[0].nameCommercial);
         setTimeout(() => {
-          actualEditId = data.idMaterial;
-          $("#loader-edit").fadeOut();
+          actualEditId = data[0].idMaterial;
+          // $("#loader-edit").fadeOut();
           var completeInputs = `
                   <div class="row" id= 'box-inputs'>
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Inventario:
                        </label>
-                       <input value = "${data.inventory}" disabled  type = 'text'  id='inventory' class ='form-control' name="inventory" /> 
+                       <input value = "${data[0].inventory}" disabled  type = 'text'  id='inventory' class ='form-control' name="inventory" /> 
                    </div>
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Categoría:
                        </label>
-                       <input value = "${data.category}" disabled  type = 'text'  id='category' class ='form-control' name="category" /> 
+                       <input value = "${data[0].category}" disabled  type = 'text'  id='category' class ='form-control' name="category" /> 
                    </div>
                    <div class="form-group col-md-12">
                        <label for="recipient-name" class="col-form-label">
                            Nombre:
                        </label>
-                       <input  value= "${data.nameMaterial}"  type = 'text'  id='nameMaterial' class ='form-control' name="nameMaterial" /> 
+                       <input  value= "${data[0].nameMaterial}"  type = 'text'  id='nameMaterial' class ='form-control' name="nameMaterial" /> 
                    </div>
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            SubCategoría:
                        </label>
-                       <input value = "${data.group3}" disabled type = 'text'  id='group3' class ='form-control' name="group3" /> 
+                       <input value = "${data[0].group3}" disabled type = 'text'  id='group3' class ='form-control' name="group3" /> 
                    </div>
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Tipo (Grupo):
                        </label>
-                       <input value = "${data.group4}" disabled  type = 'text'  id='group4' class ='form-control' name="group4" /> 
+                       <input value = "${data[0].group4}" disabled  type = 'text'  id='group4' class ='form-control' name="group4" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                           Opciones (Grupo2):
                        </label>
-                       <input value = "${data.group5}" disabled  type = 'text'  id='group5' class ='form-control' name="group5" /> 
+                       <input value = "${data[0].group5}" disabled  type = 'text'  id='group5' class ='form-control' name="group5" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                          Grosor (Grupo3):
                        </label>
-                       <input value  = "${data.group6}" disabled type = 'text'  id='group6' class ='form-control' name="group6" /> 
+                       <input value  = "${data[0].group6}" disabled type = 'text'  id='group6' class ='form-control' name="group6" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                          Medidas (Grupo4):
                        </label>
-                       <input value = "${data.group7}" disabled  type = 'text'  id='group7' class ='form-control' name="group7" /> 
+                       <input value = "${data[0].group7}" disabled  type = 'text'  id='group7' class ='form-control' name="group7" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Marca:
                        </label>
-                       <input value = "${data.mark}" disabled type = 'text'  id='mark' class ='form-control' name="mark" /> 
+                       <input value = "${data[0].mark}" disabled type = 'text'  id='mark' class ='form-control' name="mark" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Preio Unitario:
                        </label>
-                       <input value = "${data.unitaryPrice}"  type = 'text'  id='unitaryPrice' class ='form-control' name="unitaryPrice" /> 
+                       <input value = "${data[0].unitaryPrice}"  type = 'text'  id='unitaryPrice' class ='form-control' name="unitaryPrice" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Stock:
                        </label>
-                       <input value = "${data.stock}"  min="0" type = 'number'  id='stock' class ='form-control' name="stock" /> 
+                       <input value = "${data[0].stock}"  min="0" type = 'number'  id='stock' class ='form-control' name="stock" /> 
                    </div>
                    <div class="container-img">
-                      <img src="./assets/img/materials/${data.photo}" class="size-img-material" alt="">
+                      <img src="./assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
                     </div>
                   </div>	`;
-  
+
+          getDataMaterialEntry =  data[1];
+          getDataMaterialDeparture = data[2];       
           $('.container-inputs-material').append(completeInputs);
+          
+          checkLoaderModalEdit();
+          $('#trDepartureMaterial').fadeIn();
+          $('#trEntryMaterial').fadeIn();
   
         }, 700);
   
@@ -416,7 +465,19 @@ $(document).ready(function () {
   
   }
 
+function checkLoaderModalEdit(){
+  
+  let itemsLoader =  ["home","provider","departure","entry"];
+          for (let index = 0; index < itemsLoader.length; index++) {
+            const element = $(`#${itemsLoader[index]}`);
+            if(element.hasClass( "active" )){
+              $(`#loader-edit-${itemsLoader[index]}`).fadeOut();
+            }
+          }
+}
+
 //Abrir el modal de editar
+  // Mover la function al archivo de entradas
 
 function getInfoEntry(id) {
 
@@ -488,6 +549,7 @@ function getInfoEntry(id) {
 
               $('.container-inputs-entry').append(completeInputs);
               $("#loader-edit-entry").fadeOut();
+
           }, 700);
 
 

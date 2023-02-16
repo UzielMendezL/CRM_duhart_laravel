@@ -294,5 +294,6 @@ function selectMaterial(id) {
 
     $('#stockMaterial').val(getFilterData[id].stock);
     $('#priceUnitary').val(getFilterData[id].unitaryPrice);
+    $("#quantityEntry").focus();
 }
 

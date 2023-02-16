@@ -4,13 +4,13 @@ $(document).ready(function () {
     $('#material-selected').hide();
     $('#loaderEditEntrySearch').hide();
      $('#clearButton').click(clear);
-     $('#testClick').click(function(){
-        Swal.fire(
-            'The Internet?',
-            'That thing is still around?',
-            'question'
-          )
-     });
+    //  $('#testClick').click(function(){
+    //     Swal.fire(
+    //         'The Internet?',
+    //         'That thing is still around?',
+    //         'question'
+    //       )
+    //  });
     //Definiendo la el rango de fechas a entregar
     const format2 = "YYYY-MM-DD";
     var date2 = new Date();
@@ -141,7 +141,7 @@ function serviceAjax(){
         $.ajax({
 
            // url: '/entrySearchMaterial/' + inputSearch,
-           url: 'search',
+           url: '/inventory/entry/search',
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -239,5 +239,6 @@ function selectMaterial(id) {
     $('#select-Material').val(materialSelected);
 
     $('#stockMaterial').val(getFilterData[id].stock);
-
+    $('#priceUnitary').val(getFilterData[id].unitaryPrice);
+    $("#quantityEntry").focus();
 }

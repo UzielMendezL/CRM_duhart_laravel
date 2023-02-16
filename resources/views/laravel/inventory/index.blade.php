@@ -159,7 +159,7 @@
                                     </button>
                                     <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog mt-lg-10">
-                                            <div class="modal-content">
+                                            <div  class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="ModalLabel">Import CSV</h5>
                                                     <i class="fas fa-upload ms-3"></i>
@@ -289,24 +289,30 @@
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div  class="modal-dialog size-modal" role="document">
-	  <div class="modal-content">
+	  <div data-bs-spy="scroll" id = "modalEditMaterial" class="scrollspy modal-content">
 		<div class="modal-header">
 		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle del material</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
+          <button type="button" class="btn" data-bs-dismiss="modal"  aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		  </button>
 		</div>
-		<ul class="nav nav-tabs">
-			<li><a class="nav-link active" href="#material-info" data-toggle="tab">Detalles Generales</a></li>
-			<li><a class="nav-link" href="#" data-toggle="tab">Proveedores</a></li>
-			{{-- <li><a class="nav-link" href="#c" data-toggle="tab">Movimiento</a></li> --}}
-			<li><a class="nav-link"  data-toggle="tab">Entradas</a></li>
-            <li><a class="nav-link"  data-toggle="tab">Salidas</a></li>
-		 </ul>
-
-		 <div class="tab-content">
-			<div class="tab-pane active" id="material-info">
-				<div class="modal-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Detealles Generales</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button onclick="getInfoMaterialOfInventory();" class="nav-link" id="provider-tab" data-bs-toggle="tab" data-bs-target="#provider" type="button" role="tab" aria-controls="provider" aria-selected="false">Proovedores</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button  onclick="getInfoMaterialOfInventory();" class="nav-link" id="departure-tab" data-bs-toggle="tab" data-bs-target="#departure" type="button" role="tab" aria-controls="departure" aria-selected="false">Entradas</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button  onclick="getInfoMaterialOfInventory();" class="nav-link" id="entry-tab" data-bs-toggle="tab" data-bs-target="#entry" type="button" role="tab" aria-controls="entry" aria-selected="false">Salidas</button>
+              </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="modal-body">
 					{{-- <form id='form-Material' method="POST" action="{{url('/material')}}" class="needs-validation" novalidate> --}}
 					<form id="form-edit" class="position:relative" id='form-Material' method="PUT"  class="needs-validation" novalidate>
 						  {{csrf_field()}}
@@ -314,7 +320,7 @@
 						<div class="container-inputs">
 							<div  id= 'selectMaterial' class="form-row container-inputs-material">
 								@if($loading)
-									<div id='loader-edit' class="text-center loader-size">
+									<div id='loader-edit-home' class="text-center loader-size">
 										<div class="spinner-border" role="status">
 										<span class="sr-only">Loading...</span>
 										</div>
@@ -332,11 +338,108 @@
 						</div>
 					</form>
 				</div>
+            </div>
+            <div class="tab-pane fade" id="provider" role="tabpanel" aria-labelledby="provider-tab">
+                <div class="modal-body">
+					<div class="box-edit-content">
+						<div class="container-inputs">
+							<div  id= 'selectMaterial' class="form-row container-inputs-material-provider">
+								@if($loading)
+									<div id='loader-edit-provider' class="text-center loader-size">
+										<div class="spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+										</div>
+									</div>
+								@endif
+                              <table id = "trProviderMaterial" class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">First</th>
+                                            <th scope="col">Last</th>
+                                            <th scope="col">Handle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+						   </div>
+						</div>
+					</div>
+						<div class="modal-footer row justify-content-center box-button-modal">
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
+						</div>
+                    </div>
+            </div>
+            <div class="tab-pane fade" id="departure" role="tabpanel" aria-labelledby="departure-tab">
+                <div class="modal-body">
+					<div class="box-edit-content">
+						<div class="container-inputs">
+							<div  id= 'selectMaterial' class="form-row container-inputs-material-departure">
+								@if($loading)
+									<div id='loader-edit-departure' class="text-center loader-size">
+										<div class="spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+										</div>
+									</div>
+								@endif
+                              <table id = "trEntryMaterial" class="table">
+                                    <thead class = "thead-dark">
+                                        <tr >
+                                            <th scope="col">Id Salida</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
-			</div>
+						   </div>
+						</div>
+					</div>
+						<div class="modal-footer row justify-content-center box-button-modal">
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
+						</div>
+				</div>    
+            </div>
+            <div class="tab-pane fade" id="entry" role="tabpanel" aria-labelledby="entry-tab">
+                <div class="modal-body">
+					{{-- <form id='form-Material' method="POST" action="{{url('/material')}}" class="needs-validation" novalidate> --}}
+					<div class="box-edit-content">
+						<div class="container-inputs">
+							<div  id= 'selectMaterial' class="form-row container-inputs-material-entry">
+								@if($loading)
+									<div id='loader-edit-entry' class="text-center loader-size">
+										<div class="spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+										</div>
+									</div>
+								@endif
+                              <table id = "trDepartureMaterial" class="table">
+                                 <thead class = "thead-dark">
+                                        <tr >
+                                            <th scope="col">Id Entrada</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
 
-		 </div>
-
+						   </div>
+						</div>
+					</div>
+						<div class="modal-footer row justify-content-center box-button-modal">
+							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-dismiss="modal">Regresar</button> --}}
+							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
+						</div>
+				</div>
+            </div>
+          </div>
 	  </div>
 	</div>
   </div>
@@ -345,6 +448,10 @@
 
 @push('js')
     <script src="../../assets/js/plugins/datatables.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.4/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js"></script>
+    
     <script>
         if (document.getElementById('products-list')) {
             const dataTableSearch = new simpleDatatables.DataTable("#products-list", {

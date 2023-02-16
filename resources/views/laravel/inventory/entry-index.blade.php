@@ -3,7 +3,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script>
   {{-- <script src="{{ asset('js/prueba.js') }}" defer ></script>  --}}
   {{-- @include('popper::assets') --}}
 @endsection
@@ -148,6 +147,8 @@
                                 </p>
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
+                                
+                                <a  data-bs-toggle="modal" href="#createModalE" class="btn btn-primary">Nueva entrada</a>
                                 <div class="ms-auto my-auto">
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
@@ -240,6 +241,101 @@
         </div>
         @include('layouts.footers.auth.footer')
     </div>
+
+{{-- Modal Create Entry --}}
+<div>
+    <div class="modal fade" id="createModalE" tabindex="-1" role="dialog" aria-labelledby="createEntryModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title justify-content-center" id="createEntryModal">Añade nueva entrada</h5>
+            <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div class="modal-body">
+               <div id='loader-entry' class="text-center loader-size">
+                  <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                  </div>
+              </div> 
+  
+              <form id='form-create-entry' method="POST" action="{{url('/inventory/new-entry')}}" class="needs-validation" novalidate>
+                    {{csrf_field()}}
+                    <div class="row" id= 'box-entry-inputs'>
+                        <div class="col-md-6">
+                            <label for="recipient-name" class="col-form-label">
+                                Almacen:
+                            </label>
+                            <select required name="idStore" id= 'idStore' class="form-control">
+                                <option value="">Selecciona una opción</option>
+                                @foreach ($getStore as $store)
+                                    <option value={{ $store->idStore }}>{{ $store->storeName }}</option>	
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">Escoge el almacén correspondiente</div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Recibio:
+                          </label>
+                          <select required name="employedName" id= 'form-employed' class="form-control">
+                              <option value="">Selecciona una opción</option>
+                              @foreach ($getEmployees as $employee)
+                                  <option value={{$employee->idEmployee}}>{{$employee->completeName}}</option>	
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">Escoge la persona que lo recibió</div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Fecha de entrega:
+                          </label>
+                          <input type = 'date' readonly  id='entryDate' class ='form-control' name="entryDate" /> 
+                      </div>
+                      <div  class="col-md-12">
+                          <label for="recipient-name" class="col-form-label">Selecciona el material que deseas agregar:</label>
+                          <input id="search-entry-material" aria-label="Search"  type="search" placeholder="Escribe minimo 3 letras para localizar el material" type="text" class="form-control"/>
+                      </div>
+                  </div>
+          
+
+                    <div id = 'material-selected' class="row">
+                      <div class="col-md-12">
+                          <label for="recipient-name" class="col-form-label">
+                              Seleccionaste:
+                          </label>
+                          <input readonly class="form-control" name="selectMaterial" id="select-Material" type="text" />
+                      </div>
+                      <div class=" col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Stock:
+                          </label>
+                          <input  readonly id='stockMaterial' min="0" type = 'number'   class ='form-control' name="stockEntry" /> 
+                      </div>
+                      
+                      <div class="col-md-6">
+                          <label for="recipient-name" class="col-form-label">
+                              Cantidad:
+                          </label>
+                          <input required placeholder="Escribe la cant. de entradas"  min="0" type = 'number' id = 'quantityEntry'   class ='form-control' name="quantity" /> 
+                          <div class="invalid-feedback">Escribe la cantidad que deseas agregar</div>
+                      </div>
+                      <input  type="hidden"  required  min="0" type = 'number' id = 'priceUnitary' name = "priceUnitary" class ='form-control' x /> 
+                    </div>
+                  <div class="modal-footer row justify-content-center box-button-modal">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+                      <button  type="submit" id= 'addEntry' class="btn btn-primary">Añadir Entrada</button>
+                  </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+
 {{-- Modal Edit --}}
 <div class="modal fade" id="editModalEntry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div  class="modal-dialog" role="document">
@@ -283,6 +379,8 @@
 
 @push('js')
     <script src="../../assets/js/plugins/datatables.js"></script>
+    <script src="{{ asset('../../assets/js/components/Entries/modalCreateEntry.js') }}" ></script> 
+    <script src="{{ asset('../../assets/js/components/Materials/modalCreateMaterial.js') }}" ></script> 
     <script>
         if (document.getElementById('products-list')) {
             const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
@@ -312,4 +410,5 @@
             });
         };
     </script>
+    @include('sweetalert::alert')
 @endpush
