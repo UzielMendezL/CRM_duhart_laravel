@@ -81,14 +81,15 @@
             </li>
 
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#laravelExamples" class="nav-link active"
+                <a data-bs-toggle="collapse" href="#laravelExamples" class="nav-link"
                     aria-controls="laravelExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
                         <i class="fab fa-laravel" style="color: #f4645f; font-size: large; font-weight: 500 "></i>
                     </div>
                     <span class="nav-link-text ms-1">Laravel Examples </span>
                 </a>
-                <div class="collapse show" id="laravelExamples">
+                {{-- <div class="collapse show" id="laravelExamples"> --}}
+                <div class="collapse" id="laravelExamples">   
                     <ul class="nav ms-4">
                         <li class="nav-item ">
                             <a class="nav-link {{ Route::currentRouteName() == 'user-profile' ? 'active' : '' }}" href="{{ route('user-profile') }}">
@@ -138,23 +139,23 @@
                 <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PAGINAS</h6>
             </li>
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link active {{ Route::currentRouteName() == 'applications' ? 'active' : '' }}"
-                    aria-controls="applicationsExamples" role="button" aria-expanded="false">
+                <a data-bs-toggle="collapse" href="#inventoryMenu" class="nav-link  {{ str_contains(request()->url(), 'inventory') == true ? 'active' : '' }}"
+                    aria-controls="inventoryMenu" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
                         <i class="ni ni-ui-04 text-info text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Inventarios</span>
                 </a>
-                <div class="collapse {{ Route::currentRouteName() == 'applications' ? 'show' : '' }}" id="applicationsExamples">
+                <div class="collapse  {{ str_contains(request()->url(), 'inventory') == true ? 'show' : '' }}" id="inventoryMenu">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'kanban') == true ? 'active' : '' }}"href="{{ route('material-entry-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'entry') == true ? 'active' : '' }}"href="{{ route('material-entry-management')}}">
                                 <span class="sidenav-mini-icon"> E </span>
                                 <span class="sidenav-normal">Entradas</span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'wizard') == true ? 'active' : '' }}" href="{{ route('material-departure-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'departure') == true ? 'active' : '' }}" href="{{ route('material-departure-management')}}">
                                 <span class="sidenav-normal"> Salidas </span>
                             </a>
                         </li>
@@ -180,22 +181,21 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#transactionsMenu" class="nav-link active {{ Route::currentRouteName() == 'applications' ? 'active' : '' }}"
+                <a data-bs-toggle="collapse" href="#transactionsMenu" class="nav-link {{ str_contains(request()->url(), 'transaction') == true ? 'active' : '' }}"
                     aria-controls="transactionsMenu" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-                        <i class="fa-light fa-money-bill-trend-up"></i>
+                        <i class="fa-light fa-money-bill-transfer"></i>
                     </div>
                     <span class="nav-link-text ms-1">Transacciones</span>
                 </a>
-                <div class="collapse {{ Route::currentRouteName() == 'applications' ? 'show' : '' }}" id="applicationsExamples">
+                <div class="collapse {{ str_contains(request()->url(), 'transaction') == true ? 'show' : '' }}" id="transactionsMenu">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'kanban') == true ? 'active' : '' }}"href="{{ route('material-entry-management')}}">
-                                <span class="sidenav-mini-icon"> G </span>
-                                <span class="sidenav-normal">General</span>
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction') == true ? 'active' : '' }}"href="{{ route('transaction-management')}}">
+                                <span class="sidenav-mini-icon"> M </span>
+                                <span class="sidenav-normal">Movimientos</span>
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </li>
@@ -207,7 +207,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Pages</span>
                 </a> --}}
-                <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link active {{ str_contains(request()->url(), 'pages') == true ? 'active' : '' }}"
+                <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link  {{ str_contains(request()->url(), 'pages') == true ? 'active' : '' }}"
                 aria-controls="pagesExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
                         <i class="ni ni-ungroup text-warning text-sm opacity-10" style="color: #f4645f; font-size: large; font-weight: 500 "></i>

@@ -19,7 +19,6 @@ class MaterialsController extends Controller
      */
     public function index(Materials $model)
     {   
-        // Materials->all
         $loading = true;
         return view('laravel.inventory.index', ['items' => $model->orderBy('IdMaterial', 'desc')->get(),'loading' => $loading] );
     }

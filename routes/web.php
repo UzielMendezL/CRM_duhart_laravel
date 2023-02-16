@@ -17,6 +17,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MaterialsController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\DeparturesController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +137,14 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::post('/inventory/entry-update/edit/{id}', 'update')->name('entry-edit.update');
         // Route::post('/inventory/entry-delete/{id}', 'destroy')->name('entry-destroy');
     });
+    Route::controller(TransactionController::class)->group(function() {
+        Route::get('/transaction', 'index')->name('transaction-management');
+        Route::get('/transaction/new-transaction', 'create')->name('transaction-new');
+         Route::post('/inventory/new-transaction', 'store')->name('transaction-new.store');
+         Route::get('/transaction/edit/{id}', 'edit')->name('transaction-edit');
+         Route::post('/transaction/material/search-{id}','search')->name('transaction.search');
+    });
+
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
 
