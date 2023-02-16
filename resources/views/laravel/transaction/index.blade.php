@@ -223,8 +223,9 @@
                     </div>
                 </div>
             </div>
+            
         </div>
-        <div class="row mt-4">
+        {{-- <div class="row mt-4">
             <div class="col-lg-4 col-sm-6">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
@@ -308,8 +309,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-4">
+        </div> --}}
+        {{-- <div class="row mt-4">
             <div class="col-lg-8">
                 <div class="card h-100">
                     <div class="card-header pb-0 p-3">
@@ -441,8 +442,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-4">
+        </div> --}}
+         {{-- <div class="row mt-4">
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
@@ -620,219 +621,367 @@
                     </div>
                 </div>
             </div>
+        </div>  --}}
+
+
+<div class="container-fluid py-4">
+    <div class="d-sm-flex justify-content-between">
+        <div>
+            <a href="javascript:;" class="btn btn-icon btn-outline-white">
+                Nueva transacción
+            </a>
         </div>
+        <div class="d-flex">
+            <div class="dropdown d-inline">
+                <a href="javascript:;" class="btn btn-outline-white dropdown-toggle " data-bs-toggle="dropdown"
+                    id="navbarDropdownMenuLink2">
+                    Filtros
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3" aria-labelledby="navbarDropdownMenuLink2"
+                    data-popper-placement="left-start">
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Pagada</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Pendiente</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Rechazada</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Cancelada</a></li>
+                    <li>
+                        <hr class="horizontal dark my-2">
+                    </li>
+                    <li>
+                        <a class="dropdown-item border-radius-md text-danger" href="javascript:;">Remover
+                            Filtro
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-icon btn-outline-white ms-2 export" data-type="csv" type="button">
+                <span class="btn-inner--icon"><i class="ni ni-archive-2"></i></span>
+                <span class="btn-inner--text">Exportar CSV</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+            <div class="col-12">
+                <div class="card mb-4">
+                <div class="card-header pb-0">
+                    <h6>Tipo de filtro de transacción</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="card-body px-0 pb-0">
+                        <div class="table-responsive">
+                            <table class="table table-flush" id="products-list">
+                                <thead >
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Tipo Transacción</th>
+                                        <th>Fecha Pagada</th>
+                                        <th>Cuenta</th>
+                                        <th>Concepto</th>
+                                        <th>Factura</th>
+                                        <th>Proveedor</th>
+                                        <th>Monto</th>
+                                        <th>Estatus</th>
+                                        <th>Notas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach ($items as $item)
+                                    <tr>
+                                        <td class="text-xs font-weight-bold">
+                                            <div class="d-flex align-items-center">
+                                                <button onclick="return getInfoTransaction({{$item->idTransaction}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
+                                                    data-bs-target="#editModal">
+                                                    {{$item->idTransaction}}
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>{{$item->conceptType}}</td>
+                                        <td>{{$item->payDay}}</td>
+                                        <td  class="text-xs font-weight-bold">
+                                            
+                                            <div class="d-flex align-items-center">
+                                                @if ($item->status == 'Pagada')
+                                                <button   class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">   
+                                                  <i class="fas fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                
+                                                @elseif ($item->status == 'Pendiente')
+                                                
+                                                <button
+                                                  class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                                    <i class="fas fa-undo" aria-hidden="true"></i>
+                                                <button>
+
+                                                @elseif ($item->status == 'Cancelado')
+                                                <button  class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                                  <i class="fas fa-times" aria-hidden="true"></i>
+                                                </button>
+
+                                                @endif  
+                                                
+                                                {{$item->status}}       
+                                           </div>
+                                        </td>
+                                        <td>{{$item->nameAccount}}</td>
+                                        <td>{{$item->concept}}</td>
+                                        <td>{{$item->invoice}}</td>
+                                        <td>{{$item->nameProvider}}</td>
+                                        {{-- text-danger --}}
+                                        <td class="text-xs">
+                                            <div class="d-flex align-items-center">
+                                                @if ($item->concept == 'Costo')
+                                                <button
+                                                    class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2  btn-sm d-flex align-items-center justify-content-center"><i
+                                                            class="fas fa-arrow-down"  aria-hidden="true"></i>
+                                                    </button>
+                                                @else
+                                                    <button
+                                                    class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i
+                                                        class="fas fa-arrow-up"  aria-hidden="true"></i>
+                                                    </button>
+                                                @endif
+                                                {{$item->mount}}
+                                            </div>
+                                        </td>
+                                        <td>{{$item->notes}}</td>
+                                        @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         @include('layouts.footers.auth.footer')
     </div>
 @endsection
 
 @push('js')
+    <script src="../../assets/js/plugins/datatables.js"></script>
     <script src="../assets/js/plugins/chartjs.min.js"></script>
+    
     <script>
-        var ctx1 = document.getElementById("chart-line").getContext("2d");
-        var ctx2 = document.getElementById("chart-pie").getContext("2d");
-        var ctx3 = document.getElementById("chart-bar").getContext("2d");
+        // var ctx1 = document.getElementById("chart-line").getContext("2d");
+        // var ctx2 = document.getElementById("chart-pie").getContext("2d");
+        // var ctx3 = document.getElementById("chart-bar").getContext("2d");
 
-        var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+        // var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
 
-        gradientStroke1.addColorStop(1, 'rgba(94, 114, 228,0.2)');
-        gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228,0.0)');
-        gradientStroke1.addColorStop(0, 'rgba(94, 114, 228,0)'); //purple colors
+        // gradientStroke1.addColorStop(1, 'rgba(94, 114, 228,0.2)');
+        // gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228,0.0)');
+        // gradientStroke1.addColorStop(0, 'rgba(94, 114, 228,0)'); //purple colors
 
-        var gradientStroke2 = ctx1.createLinearGradient(0, 230, 0, 50);
+        // var gradientStroke2 = ctx1.createLinearGradient(0, 230, 0, 50);
 
-        gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-        gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-        gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+        // gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+        // gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        // gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+        
+
+        if (document.getElementById('products-list')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 5,
+                serverSide: true,
+              //  deferLoading: [ 10, 100 ]
+                search: {
+                    search: "my_filter"
+                }
+            });
+        }
 
         // Line chart
-        new Chart(ctx1, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                        label: "Facebook Ads",
-                        tension: 0.4,
-                        borderWidth: 0,
-                        pointRadius: 2,
-                        pointBackgroundColor: "#5e72e4",
-                        borderColor: "#5e72e4",
-                        borderWidth: 3,
-                        backgroundColor: gradientStroke1,
-                        fill: true,
-                        data: [50, 100, 200, 190, 400, 350, 500, 450, 700],
-                        maxBarThickness: 6
-                    },
-                    {
-                        label: "Google Ads",
-                        tension: 0.4,
-                        borderWidth: 0,
-                        pointRadius: 2,
-                        pointBackgroundColor: "#3A416F",
-                        borderColor: "#3A416F",
-                        borderWidth: 3,
-                        backgroundColor: gradientStroke2,
-                        fill: true,
-                        data: [10, 30, 40, 120, 150, 220, 280, 250, 280],
-                        maxBarThickness: 6
-                    }
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            padding: 10,
-                            color: '#9ca2b7'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: true,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#9ca2b7',
-                            padding: 10
-                        }
-                    },
-                },
-            },
-        });
+        // new Chart(ctx1, {
+        //     type: "line",
+        //     data: {
+        //         labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        //         datasets: [{
+        //                 label: "Facebook Ads",
+        //                 tension: 0.4,
+        //                 borderWidth: 0,
+        //                 pointRadius: 2,
+        //                 pointBackgroundColor: "#5e72e4",
+        //                 borderColor: "#5e72e4",
+        //                 borderWidth: 3,
+        //                 backgroundColor: gradientStroke1,
+        //                 fill: true,
+        //                 data: [50, 100, 200, 190, 400, 350, 500, 450, 700],
+        //                 maxBarThickness: 6
+        //             },
+        //             {
+        //                 label: "Google Ads",
+        //                 tension: 0.4,
+        //                 borderWidth: 0,
+        //                 pointRadius: 2,
+        //                 pointBackgroundColor: "#3A416F",
+        //                 borderColor: "#3A416F",
+        //                 borderWidth: 3,
+        //                 backgroundColor: gradientStroke2,
+        //                 fill: true,
+        //                 data: [10, 30, 40, 120, 150, 220, 280, 250, 280],
+        //                 maxBarThickness: 6
+        //             }
+        //         ],
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         plugins: {
+        //             legend: {
+        //                 display: false,
+        //             }
+        //         },
+        //         interaction: {
+        //             intersect: false,
+        //             mode: 'index',
+        //         },
+        //         scales: {
+        //             y: {
+        //                 grid: {
+        //                     drawBorder: false,
+        //                     display: true,
+        //                     drawOnChartArea: true,
+        //                     drawTicks: false,
+        //                     borderDash: [5, 5]
+        //                 },
+        //                 ticks: {
+        //                     display: true,
+        //                     padding: 10,
+        //                     color: '#9ca2b7'
+        //                 }
+        //             },
+        //             x: {
+        //                 grid: {
+        //                     drawBorder: false,
+        //                     display: true,
+        //                     drawOnChartArea: true,
+        //                     drawTicks: true,
+        //                     borderDash: [5, 5]
+        //                 },
+        //                 ticks: {
+        //                     display: true,
+        //                     color: '#9ca2b7',
+        //                     padding: 10
+        //                 }
+        //             },
+        //         },
+        //     },
+        // });
 
 
-        // Pie chart
-        new Chart(ctx2, {
-            type: "pie",
-            data: {
-                labels: ['Facebook', 'Direct', 'Organic', 'Referral'],
-                datasets: [{
-                    label: "Projects",
-                    weight: 9,
-                    cutout: 0,
-                    tension: 0.9,
-                    pointRadius: 2,
-                    borderWidth: 2,
-                    backgroundColor: ['#17c1e8', '#5e72e4', '#3A416F', '#a8b8d8'],
-                    data: [15, 20, 12, 60],
-                    fill: false
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                        },
-                        ticks: {
-                            display: false
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                        },
-                        ticks: {
-                            display: false,
-                        }
-                    },
-                },
-            },
-        });
+        // // Pie chart
+        // new Chart(ctx2, {
+        //     type: "pie",
+        //     data: {
+        //         labels: ['Facebook', 'Direct', 'Organic', 'Referral'],
+        //         datasets: [{
+        //             label: "Projects",
+        //             weight: 9,
+        //             cutout: 0,
+        //             tension: 0.9,
+        //             pointRadius: 2,
+        //             borderWidth: 2,
+        //             backgroundColor: ['#17c1e8', '#5e72e4', '#3A416F', '#a8b8d8'],
+        //             data: [15, 20, 12, 60],
+        //             fill: false
+        //         }],
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         plugins: {
+        //             legend: {
+        //                 display: false,
+        //             }
+        //         },
+        //         interaction: {
+        //             intersect: false,
+        //             mode: 'index',
+        //         },
+        //         scales: {
+        //             y: {
+        //                 grid: {
+        //                     drawBorder: false,
+        //                     display: false,
+        //                     drawOnChartArea: false,
+        //                     drawTicks: false,
+        //                 },
+        //                 ticks: {
+        //                     display: false
+        //                 }
+        //             },
+        //             x: {
+        //                 grid: {
+        //                     drawBorder: false,
+        //                     display: false,
+        //                     drawOnChartArea: false,
+        //                     drawTicks: false,
+        //                 },
+        //                 ticks: {
+        //                     display: false,
+        //                 }
+        //             },
+        //         },
+        //     },
+        // });
 
-        // Bar chart
-        new Chart(ctx3, {
-            type: "bar",
-            data: {
-                labels: ['16-20', '21-25', '26-30', '31-36', '36-42', '42+'],
-                datasets: [{
-                    label: "Sales by age",
-                    weight: 5,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    backgroundColor: '#3A416F',
-                    data: [15, 20, 12, 60, 20, 15],
-                    fill: false
-                }],
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            padding: 10,
-                            color: '#9ca2b7'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: true,
-                            drawTicks: true,
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#9ca2b7',
-                            padding: 10
-                        }
-                    },
-                },
-            },
-        });
+        // // Bar chart
+        // new Chart(ctx3, {
+        //     type: "bar",
+        //     data: {
+        //         labels: ['16-20', '21-25', '26-30', '31-36', '36-42', '42+'],
+        //         datasets: [{
+        //             label: "Sales by age",
+        //             weight: 5,
+        //             borderWidth: 0,
+        //             borderRadius: 4,
+        //             backgroundColor: '#3A416F',
+        //             data: [15, 20, 12, 60, 20, 15],
+        //             fill: false
+        //         }],
+        //     },
+        //     options: {
+        //         indexAxis: 'y',
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         plugins: {
+        //             legend: {
+        //                 display: false,
+        //             }
+        //         },
+        //         scales: {
+        //             y: {
+        //                 grid: {
+        //                     drawBorder: false,
+        //                     display: true,
+        //                     drawOnChartArea: true,
+        //                     drawTicks: false,
+        //                     borderDash: [5, 5]
+        //                 },
+        //                 ticks: {
+        //                     display: true,
+        //                     padding: 10,
+        //                     color: '#9ca2b7'
+        //                 }
+        //             },
+        //             x: {
+        //                 grid: {
+        //                     drawBorder: false,
+        //                     display: false,
+        //                     drawOnChartArea: true,
+        //                     drawTicks: true,
+        //                 },
+        //                 ticks: {
+        //                     display: true,
+        //                     color: '#9ca2b7',
+        //                     padding: 10
+        //                 }
+        //             },
+        //         },
+        //     },
+        // });
     </script>
 @endpush
