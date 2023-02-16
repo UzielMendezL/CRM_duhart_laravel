@@ -149,18 +149,18 @@
                 <div class="collapse  {{ str_contains(request()->url(), 'inventory') == true ? 'show' : '' }}" id="inventoryMenu">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'entry') == true ? 'active' : '' }}"href="{{ route('material-entry-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), '/inventory/entry') == true ? 'active' : '' }}"href="{{ route('material-entry-management')}}">
                                 <span class="sidenav-mini-icon"> E </span>
                                 <span class="sidenav-normal">Entradas</span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'departure') == true ? 'active' : '' }}" href="{{ route('material-departure-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), '/inventory/departure') == true ? 'active' : '' }}" href="{{ route('material-departure-management')}}">
                                 <span class="sidenav-normal"> Salidas </span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link  {{ str_contains(request()->url(), 'inventory') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
+                            <a class="nav-link {{  Route::currentRouteName() == 'material-management' ? 'active' : '' }}"  href="{{ route('material-management')}}">
                                 <span class="sidenav-mini-icon"> M </span>
                                 <span class="sidenav-normal"> Materiales </span>
                             </a>

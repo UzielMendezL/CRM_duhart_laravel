@@ -445,7 +445,7 @@ $(document).ready(function () {
                        <input value = "${data[0].stock}"  min="0" type = 'number'  id='stock' class ='form-control' name="stock" /> 
                    </div>
                    <div class="container-img">
-                      <img src="./assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
+                      <img src="../assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
                     </div>
                   </div>	`;
 
@@ -543,7 +543,7 @@ function getInfoEntry(id) {
                </div>
 
                <div class="box-img-modal-entry">
-                  <img src="./assets/img/materials/${data.photo}" class="size-img-material" alt="">
+                  <img src="../assets/img/materials/${data.photo}" class="size-img-material" alt="">
               </div>
            `;
 
@@ -627,7 +627,7 @@ function getInfoDeparture(id) {
                </div>
 
                <div class="box-img-modal-entry">
-                  <img src="./assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
+                  <img src="../assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
               </div>
            `;
 
