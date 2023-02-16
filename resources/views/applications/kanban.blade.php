@@ -176,7 +176,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="h5 modal-title">Choose your new Board Name</h5>
-                        <button type="button" class="btn close pe-1" data-dismiss="modal" data-target="#new-board-modal"
+                        <button type="button" class="btn close pe-1" data-bs-dismiss="modal" data-target="#new-board-modal"
                             aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -194,7 +194,7 @@
                                 data-target="#new-board-modal">
                                 Save changes
                             </button>
-                            <button class="m-1 btn btn-secondary" data-dismiss="modal" data-target="#new-board-modal">
+                            <button class="m-1 btn btn-secondary" data-bs-dismiss="modal" data-target="#new-board-modal">
                                 Close
                             </button>
                         </div>
@@ -236,7 +236,7 @@
                                 data-target="#jkanban-info-modal">
                                 Save changes
                             </button>
-                            <button class="m-1 btn btn-secondary" data-dismiss="modal" data-target="#jkanban-info-modal">
+                            <button class="m-1 btn btn-secondary" data-bs-dismiss="modal" data-target="#jkanban-info-modal">
                                 Close
                             </button>
                         </div>
