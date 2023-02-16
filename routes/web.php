@@ -143,6 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
          Route::post('/inventory/new-transaction', 'store')->name('transaction-new.store');
          Route::get('/transaction/edit/{id}', 'edit')->name('transaction-edit');
          Route::post('/transaction/material/search-{id}','search')->name('transaction.search');
+         Route::put('/transaction-update/edit/{id}', 'update')->name('transaction-edit.update');
     });
 
 

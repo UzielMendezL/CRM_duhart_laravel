@@ -690,10 +690,9 @@
                                     <tr>
                                         <td class="text-xs font-weight-bold">
                                             <div class="d-flex align-items-center">
-                                                <button onclick="return getInfoTransaction({{$item->idTransaction}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal">
+                                                <a href="transaction/edit/{{$item->idTransaction}}" class="editMaterial btn btn-edi">  
                                                     {{$item->idTransaction}}
-                                                </button>
+                                                 </a>
                                             </div>
                                         </td>
                                         <td>{{$item->conceptType}}</td>

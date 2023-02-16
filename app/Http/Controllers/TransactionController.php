@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\BankAccount;
+use App\Models\Provider;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionController extends Controller
 {
@@ -65,9 +68,44 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction $transaction)
+    public function edit($idTrans)
     {
-        //
+        
+        $ediTransaction = null;
+
+        $actualProviders = Provider::select('providers.idProvider','providers.nameProvider')
+        ->where('providers.status',true)
+        ->get();
+        $actualAccounts =  BankAccount::select('bank_accounts.idAccount','bank_accounts.nameAccount')
+        ->where('bank_accounts.status',true)
+        ->get();
+          
+        $editTransaction = Transaction::select('transactions.*','bank_accounts.nameAccount','providers.nameProvider')
+        ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
+        ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+         ->where( 'transactions.idTransaction', $idTrans  )
+         ->first(); 
+         $getTransactionDetail = TransactionDetail::select('transaction_details.*','inventories.nameInventory','estimations.nameEstimation')
+        ->join('transactions', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
+        ->join('inventories', 'inventories.idInventory', '=', 'transaction_details.idInventory')
+        ->join('estimations', 'estimations.idEstimation', '=', 'transaction_details.idEstimation')
+         ->where( 'transactions.idTransaction', $idTrans  )
+         ->get();         
+
+             if($editTransaction == null ){
+              $editOnlyTransaction = Transaction::select('transactions.*')
+              ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
+             ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+              ->where( 'transactions.idTransaction', $idTrans  )
+              ->first();
+
+              $ediTransaction = $editOnlyTransaction;
+             }else{
+              $ediTransaction = $editTransaction;
+             }
+          
+           $loading = false;
+           return view('laravel.transaction.edit', ['item' => $ediTransaction ,'itemsTDetails' => $getTransactionDetail , 'loading' => $loading, 'providersActive' => $actualProviders, 'accountActives' => $actualAccounts,] );
     }
 
     /**
@@ -77,9 +115,41 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request)
     {
-        //
+        $idTransaction = $request->route('id');
+        $dataStock = $request->except('_token');
+    
+
+        $nameProvider = Provider::select('nameProvider')
+                ->where('idProvider',  $dataStock['idProvider'])
+               ->get();
+         $updateTransaction = array(
+            'elaboratedDate' =>  $dataStock['elaboratedDate'],
+            'concept'=>  $dataStock['concept'],
+            'idAccount'=>  $dataStock['idAccount'],
+            'mount'=>  $dataStock['mount'],
+            //'invoice'=>  $dataStock['group3'],
+            //'invoiceImage'=>  $dataStock['group4'],
+            //'providerQuotes'=>  $dataStock['providerQuotes'],
+            'notes'=>  $dataStock['notes'],
+            'idProvider'=>  $dataStock['idProvider'],
+            'nameProvider'=>  $nameProvider,
+            //'proofOfPayment'=>  $dataStock['proofOfPayment'],
+            //'elaborateEmployee'=>  $dataStock['elaborateEmployee'],
+            'providerType'=>  $dataStock['providerType'],
+            'conceptType'=>  $dataStock['conceptType']
+         );
+
+        $result = Transaction::where('idTransaction', '=',$idTransaction)->update( $updateTransaction);
+          if($result == 1){
+            Alert::success('Éxito', 'Se ha actualizado correctamente');
+          }
+          else{
+            Alert::error('Error', 'Al parecer ocurrio algo.. intentalo más tarde.');
+          }
+          //return redirect()->route('transaction-management');
+          return back()->withInput();
     }
 
     /**

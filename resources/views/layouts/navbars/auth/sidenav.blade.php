@@ -160,7 +160,7 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link  {{ str_contains(request()->url(), 'material') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
+                            <a class="nav-link  {{ str_contains(request()->url(), 'inventory') == true ? 'active' : '' }}" href="{{ route('material-management')}}">
                                 <span class="sidenav-mini-icon"> M </span>
                                 <span class="sidenav-normal"> Materiales </span>
                             </a>

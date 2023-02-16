@@ -646,9 +646,7 @@ function getInfoDeparture(id) {
     var formId = $('#form-edit');
     let formValues = {};
     let sendForm = [];
-    var form1Inputs = document.forms[1].getElementsByTagName("input");
-  // var form1Inputs = document.getElementsByClassName(".container-inputs-material");
-   
+    var form1Inputs = document.forms[6].getElementsByTagName("input");
    for (let i = 0; i < form1Inputs.length; i++) {
       if (form1Inputs[i].name != '_token') {
         formValues[form1Inputs[i].name] = form1Inputs[i].value;
@@ -656,7 +654,6 @@ function getInfoDeparture(id) {
     }
   
     //sendForm.push(formValues);
-    console.log(form1Inputs);
     $.ajax({
   
       url:"/inventory/material-update/edit/" + actualEditId,
