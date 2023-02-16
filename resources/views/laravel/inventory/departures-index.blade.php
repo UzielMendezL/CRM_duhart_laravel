@@ -152,7 +152,7 @@
                                         <i class="button-add-material fas fa-plus-circle"></i>
                                         &nbsp; Nueva Salida
                                     </button>   --}}
-                                    <a  data-bs-toggle="modal" href="#createModal" class="btn btn-primary">Launch modal</a>
+                                    <a  data-bs-toggle="modal" href="#createModal" class="btn btn-primary btn-sm mb-0">Añadir Salida</a>
                                     <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
