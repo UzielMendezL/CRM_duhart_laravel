@@ -260,8 +260,8 @@
                                                     <label for="providerType">Tipo de proveedor</label>
                                                    <select name="providerType" id="providerType" class = "form-control" name="providerType" id="providerType">
                                                         <option value="">Selecciona una opción</option>
-                                                        <option value="Pagada">Distribuidor</option>
-                                                        <option value="Eliminada">Colaborador</option>
+                                                        <option value="Distribuidor">Distribuidor</option>
+                                                        <option value="Colaborador">Colaborador</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
