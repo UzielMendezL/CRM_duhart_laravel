@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProviderController extends Controller
 {
@@ -81,5 +82,16 @@ class ProviderController extends Controller
     public function destroy(Provider $provider)
     {
         //
+    }
+    public function findProvider($id)
+    {
+        // $getMaterial = $request->get('EstimationSearch');
+        $getData = DB::table('providers')
+        ->select('idProvider',"nameProvider")
+        ->where('idProvider', $id)
+        ->where('status', 1)
+        ->get();
+        
+        return $getData;
     }
 }

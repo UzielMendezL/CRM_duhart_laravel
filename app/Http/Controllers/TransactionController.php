@@ -8,6 +8,7 @@ use App\Models\Provider;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionController extends Controller
@@ -37,7 +38,24 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        
+        $getConstructionSites = DB::table('work_sites')
+        ->select('idWorkSite','nameWorkSite')
+        ->where('status' , '=' ,'Activa')
+        ->get();
+                
+        $providerList = DB::table('providers')
+        ->select('idProvider','nameProvider')
+        ->where('status' , '=' , 1)
+        ->get();
+                
+        $bankList = DB::table('bank_accounts')
+        ->select('idAccount','nameAccount')
+        ->where('status' , '=' , 1)
+        ->get();
+
+        return view('laravel.transaction.add-transaction', ['workItems' => $getConstructionSites,'providerItems' => $providerList,'bankItems' => $bankList]);
+        //return view('laravel.transaction.edit', ['item' => $ediTransaction ,'itemsTDetails' => $getTransactionDetail , 'loading' => $loading, 'providersActive' => $actualProviders, 'accountActives' => $actualAccounts,] );
     }
 
     /**
@@ -48,8 +66,62 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+
+        $dataOnlyTransaction = $request->except('_token','$idEstimation','idWorksite',"nameInventory",'unity','quantity','unitaryPrice','idInventory','idConcept','nameConcept');
+        $dataOnlyTransactionDetail = $request->except('_token','idWorksite',"nameInventory",'elaboratedDate','concept','notes','idProvider','nameProvider','providerType','conceptType','invoice','invoiceImage','invoiceProvider',"inoviceImage","idAccount","status");
+
+        //  $newTransactionDetail = TransactionDetail::insert($dataStock);
+        
+        $newTransaction =   Transaction::insert([
+            'elaboratedDate' => $dataOnlyTransaction['elaboratedDate'],
+            'concept' => $dataOnlyTransaction['concept'],
+            'idAccount' => $dataOnlyTransaction['idAccount'],
+            'mount' => $dataOnlyTransaction['mount'],
+            // 'invoice' => $dataOnlyTransaction['invoice'],
+            // 'unity' => $dataOnlyTransaction['invoiceImage'],
+            // 'quantity' => $dataOnlyTransaction['providerQuotes'],
+            // 'payDay' => $dataOnlyTransaction['payDay'],
+            // 'proofOfPayment' => $dataOnlyTransaction['proofOfPayment'],
+            'notes' => $dataOnlyTransaction['notes'],
+            'idProvider' => $dataOnlyTransaction['idProvider'],
+            'nameProvider' => $dataOnlyTransaction['nameProvider'],
+            'elaborateEmployee' => auth()->user()->id,
+            'providerType' => $dataOnlyTransaction['providerType'],
+            'conceptType' => $dataOnlyTransaction['conceptType'],
+            'status' => $dataOnlyTransaction['status']
+        ]);
+
+        //Obtengo el ultimo registro 
+        $getLastId = Transaction::latest('idTransaction')->first();
+        
+        $mewTransactionD =   TransactionDetail::insert([
+            'idTransaction' => $getLastId->idTransaction, 
+            'idEstimation' => $dataOnlyTransactionDetail['idEstimation'],
+            'idInventory' => $dataOnlyTransactionDetail['idInventory'],
+            'idConcept' => $dataOnlyTransactionDetail['idConcept'],
+            'nameConcept' => $dataOnlyTransactionDetail['nameConcept'],
+            'mount' => $dataOnlyTransactionDetail['mount'],
+            'unity' => $dataOnlyTransactionDetail['unity'],
+            'quantity' => $dataOnlyTransactionDetail['quantity'],
+            'unitaryPrice' => $dataOnlyTransactionDetail['unitaryPrice']
+        ]);
+
+         if($mewTransactionD == 1 && $newTransaction == 1){
+           Alert::success('Éxito', 'Se ha creado exitosamente');
+         }else{
+          Alert::error('Error', 'Al parecer ocurrio un error');
+         }
+    
+        $modelJoined = Transaction::select('transactions.*','bank_accounts.nameAccount')
+        ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+        ->orderBy('payDay', 'desc')
+       // ->where('transactions.concept','Pendiente')
+        ->paginate(400);
+        $loading = true;
+
+        return view('laravel.transaction.index', ['items' => $modelJoined ,'loading' => $loading] );
+    }  
+    
 
     /**
      * Display the specified resource.

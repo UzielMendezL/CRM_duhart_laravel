@@ -140,3 +140,9 @@ function getTotalItemTransaction(val){
         $('#mount').val(mountTotal);
     }
 }
+
+function getValueId(nameProvider, listProvider){
+    let getId = listProvider.find((element)=> element.nameProvider == nameProvider );
+    $('#idProvider').val(getId.idProvider);
+}
+

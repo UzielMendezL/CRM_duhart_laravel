@@ -19,6 +19,7 @@ use App\Http\Controllers\EntryController;
 use App\Http\Controllers\DeparturesController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
+use App\Http\Controllers\ProviderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,7 +145,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::controller(TransactionController::class)->group(function() {
         Route::get('/transaction', 'index')->name('transaction-management');
         Route::get('/transaction/new-transaction', 'create')->name('transaction-new');
-         Route::post('/inventory/new-transaction', 'store')->name('transaction-new.store');
+         Route::post('/transaction/new-transaction', 'store')->name('transaction-new.store');
          Route::get('/transaction/edit/{id}', 'edit')->name('transaction-edit');
          Route::post('/transaction/material/search','search')->name('transaction.search');
          Route::put('/transaction-update/edit/{id}', 'update')->name('transaction-edit.update');
@@ -155,6 +156,11 @@ Route::group(['middleware' => 'auth'], function () {
           Route::get('/transaction-detail/new-transaction-to-{id}', 'create')->name('transaction-detail-new');
           Route::post('/transaction-detail/new-transaction-to-{id}', 'store')->name('transaction-detail-new.store');
     });
+    Route::controller(ProviderController::class)->group(function() {
+        
+         Route::get('/list-providers-active/{id}', 'findProvider')->name('provider-active');
+        
+   });
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');
 

@@ -655,16 +655,16 @@
         </div>  --}}
 
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-6">
     <div class="d-sm-flex justify-content-between">
         <div>
-            <a href="javascript:;" class="btn btn-icon btn-outline-white">
+            <a href="{{route('transaction-new')}}" class="btn btn-icon btn-primary">
                 Nueva transacción
             </a>
         </div>
         <div class="d-flex">
             <div class="dropdown d-inline">
-                <a href="javascript:;" class="btn btn-outline-white dropdown-toggle " data-bs-toggle="dropdown"
+                <a href="javascript:;" class="btn btn-outline-secondary dropdown-toggle " data-bs-toggle="dropdown"
                     id="navbarDropdownMenuLink2">
                     Filtros
                 </a>
@@ -684,14 +684,14 @@
                     </li>
                 </ul>
             </div>
-            <button class="btn btn-icon btn-outline-white ms-2 export" data-type="csv" type="button">
+            <button class="btn btn-icon btn-outline-secondary ms-2 export" data-type="csv" type="button">
                 <span class="btn-inner--icon"><i class="ni ni-archive-2"></i></span>
-                <span class="btn-inner--text">Exportar CSV</span>
+                <span class="btn-inner--text btn-outline-secondary">Exportar CSV</span>
             </button>
         </div>
     </div>
 </div>
-<div class="row mt-4">
+<div class="row mt-0">
             <div class="col-12">
                 <div class="card mb-4">
                 <div class="card-header pb-0">
@@ -1015,5 +1015,7 @@
         //         },
         //     },
         // });
+        <script src="../../assets/js/plugins/sweetalert.min.js"></script>
+    @include('sweetalert::alert')
     </script>
 @endpush
