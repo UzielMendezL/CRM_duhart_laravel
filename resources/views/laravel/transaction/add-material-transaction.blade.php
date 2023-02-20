@@ -203,7 +203,8 @@
                         <!--form panels-->
                         <div class="row">
                             <div class="col-12 col-lg-8 m-auto">
-                                <form class="multisteps-form__form mb-8">
+                                <form method="POST" action="{{route('transaction-detail-new.store',$transId) }}" class="multisteps-form__form mb-8 needs-validation"  novalidate>
+                                    @csrf
                                     <!--single form panel-->
                                     <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active"
                                         data-animation="FadeIn">
@@ -212,7 +213,7 @@
                                             <div class="row mt-3">
                                                 <div class="col-12 col-sm-6">
                                                     <label>Obra</label>
-                                                    <select onchange="getEstimationDepartureGlobal(this.value,'pttoTransaction');" class = "form-control" name="" id="workSite">
+                                                    <select onchange="getEstimationDepartureGlobal(this.value,'idEstimation');" class = "form-control" name="idWorksite" id="workSite">
                                                         <option value="0">Escoge una opción</option>
                                                         @foreach ($workItems as $item)
                                                         <option value="{{$item->idWorkSite}}">{{$item->nameWorkSite}}</option>
@@ -222,7 +223,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                                                     <label>Presupuesto</label>
-                                                    <select class = "form-control" id  ="pttoTransaction" name="idPtto" >
+                                                    <select required class = "form-control" id  ="idEstimation" name="idEstimation" >
                                                         <option value="0">Escoge una opción</option>
                                                     </select>
                                                 </div>
@@ -238,47 +239,69 @@
                                         data-animation="FadeIn">
                                         <h5 class="font-weight-bolder">Añade el material</h5>
                                         <div class="col-12 col-sm-12">
-                                            <input onkeyup ="return searchMaterialTransaction();" id = "search-entry-material" class="form-control" type="text" placeholder="busca el material a desear"/>
+                                            <input onkeyup ="return searchMaterialTransaction();" id = "search-entry-material" class="form-control" type="search" placeholder="Busca el material a desear"/>
                                         </div>
                                         <div class = "col-12 col-sm-12" style =  "min-height:50px;" id = "list-materials-transaction">
                                             {{-- List material  --}}
-                                            <div style = "position:relative;justify-content:center;align-items:center; display:flex; flex-direction:column;"  class="text-center ">
+                                            {{-- <div style = "position:relative;justify-content:center;align-items:center; display:flex; flex-direction:column;"  class="text-center ">
                                                 <div id='loader-transaction-material' style = "position:absolute;" class="spinner-border" role="status">
                                                     <span class="sr-only">Loading...</span>
                                                 </div>
-                                                <table id  = "trMaterialTransaction" class="table table-hover">
+                                                {{-- <table id  = "trMaterialTransaction" class="table table-hover">
                                                     <thead class="thead-dark">
                                                       <tr>
                                                         <th scope="col">Material</th>
                                                         <th scope="col">Stock</th>
                                                       </tr>
                                                     </thead>
-                                                </table>
-                                            </div> 
-                                        </div>
-                                
+                                                    <tbody id = "tr-search-trans-material">
+                                                    </tbody>
+                                                </table> 
+                                                <div id = "trMaterialTransaction">
 
+                                                </div>
+                                            </div>  --}}
+                                            <div id = "trMaterialTransaction">
+
+                                            </div>
+                                        </div>
                                         <div id  = "card-material-options" class="row">
                                             <div class="col-md-12">
-                                                <label for="">Material Seleccionada</label>
-                                              <input readonly id = "idSMST" type="text" class="form-control" placeholder="Material">
+                                                <label for="nameConcept">Material Seleccionado</label>
+                                              <input required name="nameConcept" readonly id = "idSMST" type="text" class="form-control" placeholder="Material">
                                             </div>
+                                            <input type="hidden" name="idConcept" readonly id = "idConcept" class="form-control">
                                             <div class="col">
-                                                <label for="">Stock Seleccionado</label>
-                                                <input readonly id = "idStockM" type="text" class="form-control" placeholder="20">
+                                                <label for="unity">Unidad</label>
+                                                <input required readonly name = "unity" id = "unity" type="text" class="form-control" >
+                                             </div>
+                                             <div class="col">
+                                                <label for="idInventory">Inventario</label>
+                                                <input required readonly id = "nameInventory" name = "nameInventory" type="text" class="form-control" >
+                                             </div>
+                                             <input  id = "idInventory" name = "idInventory" type="hidden" class="form-control" >
+                                            <div class="col">
+                                                <label for="unitaryPrice">Precio Unitario</label>
+                                                <input onkeyup="return getTotalItemTransaction(this.value);" required name="unitaryPrice" id = "unitaryPrice" type="text" class="form-control" >
                                              </div>
                                             <div class="col">
-                                                <label for="">Cantidad Seleccionada</label>
-                                              <input id = "idSMST" type="number" class="form-control" placeholder="10">
+                                                <label for="">Cantidad </label>
+                                              <input min ="0" onkeyup="return removeAtrr(this.value);" required id = "quantity" name = "quantity" type="number" class="form-control" placeholder="ej. 10">
                                             </div>
+                                              <div class="col">
+                                                <label for="mount">Total</label>
+                                                <input required name="mount" readonly id = "mount" type="text" class="form-control" >
+                                             </div>
                                         </div>
+                                        {{-- idTransaction --}}
+                                        <input type="hidden" value="{{$transId}}" name="idTrans" id="">
 
                                         <div class="multisteps-form__content">
                                           
                                             <div class="button-row d-flex mt-4">
                                                 <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button"
                                                     title="Prev">Anterior</button>
-                                                    <button class="btn bg-gradient-dark ms-auto mb-0" type="button"
+                                                    <button id = "btn-submit-transaction-material" class="btn bg-gradient-dark ms-auto mb-0" type="submit"
                                                     title="Send">Agregar material</button>
                                             </div>
                                         </div>
@@ -355,4 +378,6 @@
             );
         }
     </script>
+    <script src="../../assets/js/plugins/sweetalert.min.js"></script>
+    @include('sweetalert::alert')
 @endpush

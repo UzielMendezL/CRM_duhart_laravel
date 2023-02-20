@@ -34,10 +34,13 @@ use App\Http\Controllers\TransactionDetailController;
 Route::get('/', function () {
 	return redirect('/landing');
 })->middleware('auth');
-Route::get('redirect', function () {
-    alert()->info('Exito','try');
-    return redirect('/');
-});
+
+
+
+// Route::get('redirect', function () {
+//     alert()->info('Exito','try');
+//     return redirect('/');
+// });
 
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
@@ -149,8 +152,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::controller(TransactionDetailController::class)->group(function() {
          Route::delete('/transaction-detail/concept-delete/{id}', 'destroy')->name('transaction-detail.destroy');
-         Route::get('/transaction-detail/new-transaction', 'create')->name('transaction-detail-new');
-         Route::post('/transaction-detail/new-transaction', 'store')->name('transaction-detail-new.store');
+          Route::get('/transaction-detail/new-transaction-to-{id}', 'create')->name('transaction-detail-new');
+          Route::post('/transaction-detail/new-transaction-to-{id}', 'store')->name('transaction-detail-new.store');
     });
 
     Route::get('/{page}', [PageController::class, 'dashboards'])->name('dashboards');

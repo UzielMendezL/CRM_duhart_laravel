@@ -152,17 +152,17 @@ function serviceAjax(){
             success: function (result) {
                 $('#table-filtered').remove();
                 var table = `
-                <div id='table-filtered' class = 'containerTable table-responsive'>
-                <div id='loaderEditEntrySearch' style="paddingTop:25%" class="container-inputs-edit-modal">
-                <div  id= 'selectMaterial' style="width:100%" class="form-row container-inputs-entry">
+            <div id='table-filtered' class = 'containerTable table-responsive'>
+                 <div id='loaderEditEntrySearch' style="paddingTop:25%" class="container-inputs-edit-modal">
+                 <div  id= 'selectMaterial' style="width:100%" class="form-row container-inputs-entry">
 
-                    <div  class="text-center loader-size">
-                        <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>		
-               </div>
-            </div>
+                        <div  class="text-center loader-size">
+                            <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>		
+                    </div>
+                </div>
                 <table id = 'table-test' class="table table-hover">
                 <thead>
                   <tr>
@@ -172,7 +172,7 @@ function serviceAjax(){
                   </tr>
                 </thead>
               </table>
-              </div>
+            </div>
 
                 `;
 

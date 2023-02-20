@@ -167,7 +167,9 @@ class TransactionController extends Controller
     {
         $getMaterial = $request->get('materialSearch');
         $getData = DB::table('materials')
-        ->select('nameMaterial','stock','idMaterial')
+        ->select('nameMaterial','stock','idMaterial','unitaryPrice','unity','inventory','inventories.idInventory')
+        ->join('inventories', 'inventories.nameInventory', '=', 'materials.inventory')
+
          //->where('materials.nameMaterial' ,'LIKE', '%Cubrecanto Melamina Blanco Frosty  C/P 2 mm 19 mm%')
           
           ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
