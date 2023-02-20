@@ -143,7 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/transaction/new-transaction', 'create')->name('transaction-new');
          Route::post('/inventory/new-transaction', 'store')->name('transaction-new.store');
          Route::get('/transaction/edit/{id}', 'edit')->name('transaction-edit');
-         Route::post('/transaction/material/search-{id}','search')->name('transaction.search');
+         Route::post('/transaction/material/search','search')->name('transaction.search');
          Route::put('/transaction-update/edit/{id}', 'update')->name('transaction-edit.update');
         // Route::delete('/transaction/concept-delete/{id}', 'destroy')->name('transaction.destroy');
     });

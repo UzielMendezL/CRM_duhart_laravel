@@ -238,8 +238,41 @@
                                         data-animation="FadeIn">
                                         <h5 class="font-weight-bolder">Añade el material</h5>
                                         <div class="col-12 col-sm-12">
-                                            <input class="form-control" type="text" placeholder="busca el material a desear"/>
+                                            <input onkeyup ="return searchMaterialTransaction();" id = "search-entry-material" class="form-control" type="text" placeholder="busca el material a desear"/>
                                         </div>
+                                        <div class = "col-12 col-sm-12" style =  "min-height:50px;" id = "list-materials-transaction">
+                                            {{-- List material  --}}
+                                            <div style = "position:relative;justify-content:center;align-items:center; display:flex; flex-direction:column;"  class="text-center ">
+                                                <div id='loader-transaction-material' style = "position:absolute;" class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                <table id  = "trMaterialTransaction" class="table table-hover">
+                                                    <thead class="thead-dark">
+                                                      <tr>
+                                                        <th scope="col">Material</th>
+                                                        <th scope="col">Stock</th>
+                                                      </tr>
+                                                    </thead>
+                                                </table>
+                                            </div> 
+                                        </div>
+                                
+
+                                        <div id  = "card-material-options" class="row">
+                                            <div class="col-md-12">
+                                                <label for="">Material Seleccionada</label>
+                                              <input readonly id = "idSMST" type="text" class="form-control" placeholder="Material">
+                                            </div>
+                                            <div class="col">
+                                                <label for="">Stock Seleccionado</label>
+                                                <input readonly id = "idStockM" type="text" class="form-control" placeholder="20">
+                                             </div>
+                                            <div class="col">
+                                                <label for="">Cantidad Seleccionada</label>
+                                              <input id = "idSMST" type="number" class="form-control" placeholder="10">
+                                            </div>
+                                        </div>
+
                                         <div class="multisteps-form__content">
                                           
                                             <div class="button-row d-flex mt-4">
@@ -250,6 +283,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -262,12 +296,13 @@
 @endsection
 
 @push('js')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('../../assets/js/components/GlobalFunctions/helpers.js') }}" ></script>   
+    <script src="{{ asset('../../assets/js/components/Transactions/TransactionsGeneral.js') }}" ></script>   
     <script src="../../assets/js/plugins/choices.min.js"></script>
     <script src="../../assets/js/plugins/dropzone.min.js"></script>
     <script src="../../assets/js/plugins/quill.min.js"></script>
     <script src="../../assets/js/plugins/multistep-form.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         if (document.getElementById('edit-deschiption')) {
             var quill = new Quill('#edit-deschiption', {

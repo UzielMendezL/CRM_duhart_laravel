@@ -163,4 +163,18 @@ class TransactionController extends Controller
     {
         //
     }
+    public function search(Request $request)
+    {
+        $getMaterial = $request->get('materialSearch');
+        $getData = DB::table('materials')
+        ->select('nameMaterial','stock','idMaterial')
+         //->where('materials.nameMaterial' ,'LIKE', '%Cubrecanto Melamina Blanco Frosty  C/P 2 mm 19 mm%')
+          
+          ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
+          ->orWhere('materials.category' ,'LIKE', '%'.$getMaterial.'%')
+          ->orWhere('materials.inventory' ,'LIKE', '%'.$getMaterial.'%')
+          ->paginate(10);
+        
+        return $getData;
+    }
 }
