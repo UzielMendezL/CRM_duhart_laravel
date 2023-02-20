@@ -257,7 +257,8 @@
                     </div>
                     <div class="col-sm-12">
                         <div class ="d-flex justify-content-center align-items-center">
-                            <a href="{{route('transaction-detail-new')}}"  type = "button" class = "btn btn-secondary">
+                            <a href="{{ route('transaction-detail-new', ['id' => $item->idTransaction ]) }}"  type = "button" class = "btn btn-secondary">
+                                
                                 Agregar Material
                             </a>
                         </div>

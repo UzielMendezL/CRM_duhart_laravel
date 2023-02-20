@@ -6,7 +6,7 @@
         <nav
             class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2 mt-n11">
             <div class="container-fluid py-1">
-                @include('layouts.navbars.auth.topnav', ['title' => 'Nuevo Material','secondTitle' => 'Transacciones'])
+                @include('layouts.navbars.auth.topnav', ['title' => 'Nueva transacción','secondTitle' => 'Transacciones'])
                 <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none">
                     <a href="javascript:;" class="nav-link text-white p-0">
                         <div class="sidenav-toggler-inner">
@@ -193,27 +193,119 @@
                                 <div class="multisteps-form__progress">
                                     <button class="multisteps-form__progress-btn js-active" type="button"
                                         title="Product Info">
-                                        <span>1. Info</span>
+                                        <span>1. Info General</span>
+                                    </button>
+                                    <button class="multisteps-form__progress-btn" type="button"
+                                        title="Product Info">
+                                        <span>1. Info Obras</span>
                                     </button>
                                     <button class="multisteps-form__progress-btn" type="button" title="Media">
                                         <span>2. Material</span>
+                                    </button>
+                                </div>
                                 </div>
                             </div>
                         </div>
                         <!--form panels-->
                         <div class="row">
                             <div class="col-12 col-lg-8 m-auto">
-                                <form method="POST" action="{{route('transaction-detail-new.store',$transId) }}" class="multisteps-form__form mb-8 needs-validation"  novalidate>
+                                <form method="POST" action="{{route('transaction-new.store') }}" class="multisteps-form__form mb-8 needs-validation"  novalidate>
                                     @csrf
-                                    <!--single form panel-->
                                     <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active"
+                                        data-animation="FadeIn">
+                                        <h5 class="font-weight-bolder">Nueva transacción</h5>
+                                        <div class="multisteps-form__content">
+                                            <div class="row mt-3">
+                                                {{-- {{$mytime = Carbon\Carbon::now();}} --}}
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="nameConcept">Concepto</label>
+                                                    <select class = "form-control" name="concept" id="concept">
+                                                        <option selected value="Costo">Costo</option>
+                                                        <option value="Ingreso">Ingreso</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="elaboratedDate">Fecha</label>
+                                                    <input required name="elaboratedDate"  id = "elaboratedDate" type="date" class="form-control" placeholder="">
+                                                  </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="idAccount">Cuenta</label>
+                                                    <select class = "form-control" name="idAccount" id="idAccount">
+                                                        <option value="0">Selecciona una opción</option>
+                                                        @foreach ($bankItems as $item)
+                                                        <option value="{{$item->idAccount}}">{{$item->nameAccount}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="estatus">Estatus</label>
+                                                    <select readonly class = "form-control" name="status" id="status">
+                                                        <option selected value="Pendiente">Pendiente</option>
+                                                        <option value="Pagada">Pagada</option>
+                                                        <option value="Eliminada">Eliminada</option>
+                                                        <option value="Autorizada">Autorizada</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="nameProvider">Proveedor</label>
+                                                    <select onchange= "getValueId(this.value, {{$providerItems }} );" class = "form-control" name="nameProvider" id="nameProvider">
+                                                        <option value="">Selecciona una opción</option>
+                                                        @foreach ($providerItems as $item)
+                                                        <option value="{{$item->nameProvider}}">{{$item->nameProvider}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <input required name="idProvider"  id = "idProvider" type="hidden" class="form-control" placeholder="">
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="providerType">Tipo de proveedor</label>
+                                                   <select name="providerType" id="providerType" class = "form-control" name="providerType" id="providerType">
+                                                        <option value="">Selecciona una opción</option>
+                                                        <option value="Distribuidor">Distribuidor</option>
+                                                        <option value="Colaborador">Colaborador</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <label for="conceptType">Tipo de concepto</label>
+                                                    <select class = "form-control" name="conceptType" id="conceptType">
+                                                        <option selected value="Orden de compra">Orden de compra</option>
+                                                        <option value="Nomina">Nómina</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <label for="notes">Notas</label>
+                                                    <textarea required name="notes"  id = "notes" type="text" class="form-control" placeholder=""></textarea>
+                                                </div>
+                                                <div class = "row mt-4">
+                                                    <p>(Opcional)</p>
+                                                    <div class="col-12 col-sm-4">
+                                                        <label for="invoice">Factura</label>
+                                                        <input  name="invoice"  id = "invoice" type="file" class="form-control" placeholder="">
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <label for="inoviceImage">Factura Imagen</label>
+                                                        <input  name="inoviceImage"  id = "inoviceImage" type="file" class="form-control" placeholder="">
+                                                    </div>
+                                                    <div class="col-12 col-sm-4">
+                                                        <label for="invoiceProvider">Factura Proveedor</label>
+                                                        <input  name="invoiceProvider"  id = "invoiceProvider" type="file" class="form-control" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="button-row d-flex mt-4">
+                                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
+                                                    title="Next">Siguiente</button>
+                                            </div>
+                                        </div>
+                                   </div>
+                                    <!--single form panel-->
+                                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white"
                                         data-animation="FadeIn">
                                         <h5 class="font-weight-bolder">Agregar información para transacción detalles</h5>
                                         <div class="multisteps-form__content">
                                             <div class="row mt-3">
                                                 <div class="col-12 col-sm-6">
                                                     <label>Obra</label>
-                                                    <select onchange="getEstimationDepartureGlobal(this.value,'idEstimation');" class = "form-control" name="idWorksite" id="workSite">
+                                                    <select onchange="getEstimationDepartureGlobal(this.value,'idEstimation','estimation');" class = "form-control" name="idWorksite" id="workSite">
                                                         <option value="0">Escoge una opción</option>
                                                         @foreach ($workItems as $item)
                                                         <option value="{{$item->idWorkSite}}">{{$item->nameWorkSite}}</option>
@@ -229,6 +321,8 @@
                                                 </div>
                                             </div>
                                             <div class="button-row d-flex mt-4">
+                                                <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button"
+                                                title="Prev">Anterior</button>
                                                 <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
                                                     title="Next">Siguiente</button>
                                             </div>
@@ -242,27 +336,7 @@
                                             <input onkeyup ="return searchMaterialTransaction();" id = "search-entry-material" class="form-control" type="search" placeholder="Busca el material a desear"/>
                                         </div>
                                         <div class = "col-12 col-sm-12" style =  "min-height:50px;" id = "list-materials-transaction">
-                                            {{-- List material  --}}
-                                            {{-- <div style = "position:relative;justify-content:center;align-items:center; display:flex; flex-direction:column;"  class="text-center ">
-                                                <div id='loader-transaction-material' style = "position:absolute;" class="spinner-border" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                {{-- <table id  = "trMaterialTransaction" class="table table-hover">
-                                                    <thead class="thead-dark">
-                                                      <tr>
-                                                        <th scope="col">Material</th>
-                                                        <th scope="col">Stock</th>
-                                                      </tr>
-                                                    </thead>
-                                                    <tbody id = "tr-search-trans-material">
-                                                    </tbody>
-                                                </table> 
-                                                <div id = "trMaterialTransaction">
-
-                                                </div>
-                                            </div>  --}}
                                             <div id = "trMaterialTransaction">
-
                                             </div>
                                         </div>
                                         <div id  = "card-material-options" class="row">
@@ -293,16 +367,13 @@
                                                 <input required name="mount" readonly id = "mount" type="text" class="form-control" >
                                              </div>
                                         </div>
-                                        {{-- idTransaction --}}
-                                        <input type="hidden" value="{{$transId}}" name="idTrans" id="">
-
                                         <div class="multisteps-form__content">
                                           
                                             <div class="button-row d-flex mt-4">
                                                 <button class="btn bg-gradient-secondary mb-0 js-btn-prev" type="button"
                                                     title="Prev">Anterior</button>
                                                     <button id = "btn-submit-transaction-material" class="btn bg-gradient-dark ms-auto mb-0" type="submit"
-                                                    title="Send">Agregar material</button>
+                                                    title="Send">Agregar transacción</button>
                                             </div>
                                         </div>
                                     </div>

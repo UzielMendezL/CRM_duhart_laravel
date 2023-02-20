@@ -82,13 +82,16 @@
                     'box' => 'box-shadow-none',
                     'logo' => './assets/img/logo-ct.png',
                 ])
+
+            @elseif (str_contains(request()->url(), 'login'))   
             @elseif (!str_contains(request()->url(), 'vr'))
                 @if (Route::currentRouteName() == 'profiles' || str_contains(request()->url(), 'new-product'))
                     @include('components.headers.image-hero')
                 @else
                     @include('components.headers.hero')
                 @endif
-                @include('layouts.navbars.auth.sidenav', ['bg' => 'bg-white'])
+                
+             @include('layouts.navbars.auth.sidenav', ['bg' => 'bg-white'])
             @endif
 
             <main class="main-content position-relative border-radius-lg">
