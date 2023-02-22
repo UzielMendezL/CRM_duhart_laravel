@@ -1,13 +1,12 @@
 $(document).ready(function () {
     $("#form-type").change(selectInput);
-    $("#loader").hide();
-    
+    $("#loader").hide();    
     //Tab Nav
     $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
       checkLoaderModalEdit();
       getInfoMaterialOfInventory();
     });
-
+alert('Body')
     //Modal pierda su foco en el boton
     // $('.close-modal').click(()=>{
     //     alert('Hola')
@@ -394,10 +393,27 @@ $(document).ready(function () {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
       },
       success: function (data) {
-       
+        // Validar dependiendo de la vista si se edita o no 
+        let getUrl = window.location.href;
+        let statusDisable = false;
+
+        if(getUrl.search('stock-minimum') >= 1 ){
+          statusDisable = true
+        }
+        else if(getUrl.search('stock-real') >= 1 ){
+          statusDisable = true
+        }
+        
         $('#code-material').val(data[0].materialCode);
         $('#price-provider').val(data[0].supplierPrice);
         $('#provider-material').val(data[0].nameCommercial);
+
+        let imgResult = "../assets/img/materials/image-default.png";
+        // imageDefault
+        if (data[0].photo != null ){
+
+          imgResult = `../assets/img/materials/${data[0].photo}`;
+        }
         setTimeout(() => {
           actualEditId = data[0].idMaterial;
           // $("#loader-edit").fadeOut();
@@ -407,76 +423,35 @@ $(document).ready(function () {
                        <label for="recipient-name" class="col-form-label">
                            Inventario:
                        </label>
-                       <input value = "${data[0].inventory}" disabled  type = 'text'  id='inventory' class ='form-control' name="inventory" /> 
+                       <input value = "${data[0].nameInventory}"  ${statusDisable == true ? "disabled" : ""  }    type = 'text'  id='inventory' class ='form-control' name="inventory" /> 
                    </div>
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Categoría:
                        </label>
-                       <input value = "${data[0].category}" disabled  type = 'text'  id='category' class ='form-control' name="category" /> 
+                       <input value = "${data[0].category}"  ${statusDisable == true ? "disabled" : ""  }  type = 'text'  id='category' class ='form-control' name="category" /> 
                    </div>
                    <div class="form-group col-md-12">
                        <label for="recipient-name" class="col-form-label">
                            Nombre:
                        </label>
-                       <input  value= "${data[0].nameMaterial}"  type = 'text'  id='nameMaterial' class ='form-control' name="nameMaterial" /> 
+                       <input  value= "${data[0].nameMaterial}"   ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='nameMaterial' class ='form-control' name="nameMaterial" /> 
                    </div>
-                   <div class="form-group col-md-6">
-                       <label for="recipient-name" class="col-form-label">
-                           SubCategoría:
-                       </label>
-                       <input value = "${data[0].group3}" disabled type = 'text'  id='group3' class ='form-control' name="group3" /> 
-                   </div>
-                   <div class="form-group col-md-6">
-                       <label for="recipient-name" class="col-form-label">
-                           Tipo (Grupo):
-                       </label>
-                       <input value = "${data[0].group4}" disabled  type = 'text'  id='group4' class ='form-control' name="group4" /> 
-                   </div>
-                   
-                   <div class="form-group col-md-6">
-                       <label for="recipient-name" class="col-form-label">
-                          Opciones (Grupo2):
-                       </label>
-                       <input value = "${data[0].group5}" disabled  type = 'text'  id='group5' class ='form-control' name="group5" /> 
-                   </div>
-                   
-                   <div class="form-group col-md-6">
-                       <label for="recipient-name" class="col-form-label">
-                         Grosor (Grupo3):
-                       </label>
-                       <input value  = "${data[0].group6}" disabled type = 'text'  id='group6' class ='form-control' name="group6" /> 
-                   </div>
-                   
-                   <div class="form-group col-md-6">
-                       <label for="recipient-name" class="col-form-label">
-                         Medidas (Grupo4):
-                       </label>
-                       <input value = "${data[0].group7}" disabled  type = 'text'  id='group7' class ='form-control' name="group7" /> 
-                   </div>
-                   
-                   <div class="form-group col-md-6">
-                       <label for="recipient-name" class="col-form-label">
-                           Marca:
-                       </label>
-                       <input value = "${data[0].mark}" disabled type = 'text'  id='mark' class ='form-control' name="mark" /> 
-                   </div>
-                   
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Preio Unitario:
                        </label>
-                       <input value = "${data[0].unitaryPrice}"  type = 'text'  id='unitaryPrice' class ='form-control' name="unitaryPrice" /> 
+                       <input value = "${data[0].unitaryPrice}"   ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='unitaryPrice' class ='form-control' name="unitaryPrice" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Stock:
                        </label>
-                       <input value = "${data[0].stock}"  min="0" type = 'number'  id='stock' class ='form-control' name="stock" /> 
+                       <input value = "${data[0].stock}"  min="0"  ${statusDisable == true ? "disabled" : ""  } type = 'number'  id='stock' class ='form-control' name="stock" /> 
                    </div>
-                   <div class="container-img">
-                      <img src="../assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
+                   <div class="mt-4 my-4 container-img w-100 d-flex justify-content-center">
+                      <img style = "min-width:150px; max-width:150px; " src="${imgResult}" class="size-img-material" alt="">
                     </div>
                   </div>	`;
 
@@ -531,12 +506,13 @@ function getInfoEntry(id) {
           var formatDays = moment(data.dateEntry).format(format2);
 
           console.log(data);
+          
           setTimeout(() => {
               actualEditId = data.idMaterial;
 
-              var reltivePath = `./img/materials/${data.photo}`;
-              if(data.photo == undefined){
-                reltivePath =  "./img/materials/image-default.png";
+              let reltivePath = `../assets/img/materials/${data.photo}`;
+              if(data.photo == undefined || data.photo != null ){
+                reltivePath =  "../assets/img/materials/image-default.png";
               }
 
               $("#loaderEditEntrySearch").fadeOut();
@@ -575,9 +551,9 @@ function getInfoEntry(id) {
                    <input value = "${data.stock}" readonly type = 'text'  id='stock' class ='form-control' name="stock" /> 
                </div>
 
-               <div class="box-img-modal-entry">
-                  <img src="../assets/img/materials/${data.photo}" class="size-img-material" alt="">
-              </div>
+               <div classmt-4 my-4 ="container-img w-100 d-flex justify-content-center">
+               <img style = "min-width:150px; max-width:150px; " src="${reltivePath}" class="size-img-material" alt="">
+             </div>
            `;
 
               $('.container-inputs-entry').append(completeInputs);
@@ -611,6 +587,11 @@ function getInfoDeparture(id) {
           var formatDays = moment(data.departureDate).format(format2);
 
           console.log(data);
+          
+          let reltivePath = `../assets/img/materials/${data.photo}`;
+          if(data[0].photo == undefined || data[0].photo != null ){
+            reltivePath =  "../assets/img/materials/image-default.png";
+          }
           setTimeout(() => {
               actualEditId = data.idMaterial;
               $("#loaderEditEntrySearch").fadeOut();
@@ -658,10 +639,9 @@ function getInfoDeparture(id) {
                    </label>
                    <input value = "${data[0].stock}" readonly type = 'text'  id='stock' class ='form-control' name="stock" /> 
                </div>
-
-               <div class="box-img-modal-entry">
-                  <img src="../assets/img/materials/${data[0].photo}" class="size-img-material" alt="">
-              </div>
+               <div classmt-4 my-4 ="container-img w-100 d-flex justify-content-center">
+                 <img style = "min-width:150px; max-width:150px; " src="${relativePath}" class="size-img-material" alt="">
+             </div>
            `;
 
               $('.container-inputs-entry').append(completeInputs);

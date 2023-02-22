@@ -218,7 +218,7 @@
                                             {{$item->nameMaterial}}
                                         </button>
                                     </td>
-                                    <td class = "col-md-4">{{$item->inventory}}</td>
+                                    <td class = "col-md-4">{{$item->nameInventory}}</td>
                                     <td class = "col-md-4">{{$item->category}}</td>
                                     <td class = "col-md-4">{{$item->storeName}}</td>
                                     <td class = "col-md-4">{{$item->quantity}}</td>

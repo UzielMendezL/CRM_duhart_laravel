@@ -28,9 +28,10 @@ class EntryController extends Controller
         $getStore = DB::table('stores')
         ->get();
 
-        $modelFiltered = Entry::select('entries.*','materials.inventory',
+        $modelFiltered = Entry::select('entries.*','inventories.nameInventory',
         'materials.category', 'materials.nameMaterial', 'stores.storeName')
         ->join('materials', 'entries.idMaterial', '=', 'materials.idMaterial')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
         ->join('stores', 'entries.idStore', '=', 'stores.idStore')
         ->orderBy("entries.entryDate", "DESC")
         ->get();
@@ -141,11 +142,13 @@ class EntryController extends Controller
     {
         $getMaterial = $request->get('materialSearch');
         $getData = DB::table('materials')
+        ->select('materials.*','inventories.nameInventory')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
          //->where('materials.nameMaterial' ,'LIKE', '%Cubrecanto Melamina Blanco Frosty  C/P 2 mm 19 mm%')
-          ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
-          ->orWhere('materials.category' ,'LIKE', '%'.$getMaterial.'%')
-          ->orWhere('materials.inventory' ,'LIKE', '%'.$getMaterial.'%')
-          ->paginate(10);
+        ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
+        ->orWhere('materials.category' ,'LIKE', '%'.$getMaterial.'%')
+        ->orWhere('materials.idInventory' ,'LIKE', '%'.$getMaterial.'%')
+        ->paginate(10);
         
         return $getData;
     }

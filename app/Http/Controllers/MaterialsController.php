@@ -19,8 +19,14 @@ class MaterialsController extends Controller
      */
     public function index(Materials $model)
     {   
+
+      $materials = Materials::select('materials.*',"inventories.nameInventory")
+      ->join('inventories', 'materials.idInventory', '=', 'inventories.idInventory')
+      ->orderBy('idMaterial', 'desc')
+      ->get();
+
         $loading = true;
-        return view('laravel.inventory.index', ['items' => $model->orderBy('IdMaterial', 'desc')->get(),'loading' => $loading] );
+        return view('laravel.inventory.index', ['items' => $materials,'loading' => $loading] );
     }
 
     /**
@@ -124,7 +130,8 @@ class MaterialsController extends Controller
         ->where( 'materials.idMaterial', $materialId)
         ->get(); 
       
-        $editAllMaterial = Materials::select('materials.*')
+        $editAllMaterial = Materials::select('materials.*','inventories.nameInventory')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
          ->where( 'materials.idMaterial', $materialId  )
          ->first();         
 
@@ -158,7 +165,7 @@ class MaterialsController extends Controller
          $updateMaterial = array(
             'stock' =>  $getMatrialToUpdate['stock'],
             'nameMaterial'=>  $getMatrialToUpdate['nameMaterial'],
-            'inventory'=>  $getMatrialToUpdate['inventory'],
+            'idInventory'=>  $getMatrialToUpdate['idInventory'],
             'category'=>  $getMatrialToUpdate['category'],
             'group3'=>  $getMatrialToUpdate['group3'],
             'group4'=>  $getMatrialToUpdate['group4'],
@@ -216,14 +223,20 @@ class MaterialsController extends Controller
     public function stockReal(Materials $model)
     {
         $loading = true;
-        $article = Materials::where('stock','>',0)->get();
+        $article = Materials::select('materials.*','inventories.nameInventory')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
+        ->where('stock','>',0 )->get();
         return view('laravel.inventory.index-stock-real', ['items' => $article,'loading' => $loading] );
     }
     
     public function requireMaterial(Materials $model)
     {
         $loading = true;
-        $article = Materials::where('stockMinimum','>', 'stock')->get();
+      
+        $article = Materials::select('materials.*','inventories.nameInventory')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
+        ->where('stockMinimum','>', 'stock' )->get();
+
         return view('laravel.inventory.index-revisition-material', ['items' => $article,'loading' => $loading] );
     }
 

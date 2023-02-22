@@ -223,7 +223,7 @@
                                         <td class = "col-md-4">{{$item->nameWorkSite}}</td>
                                         <td class = "col-md-4">{{$item->nameEstimation}}</td>
                                         <td class = "col-md-4">{{$item->storeName}}</td>
-                                        <td class = "col-md-4">{{$item->inventory}}</td>
+                                        <td class = "col-md-4">{{$item->nameInventory}}</td>
                                         <td class = "col-md-4">{{$item->nameMaterial}}</td>
                                         <td class = "col-md-4">{{$item->quantity}}</td>
                                         <td class = "col-md-4">{{$item->priceUnitary}}</td>

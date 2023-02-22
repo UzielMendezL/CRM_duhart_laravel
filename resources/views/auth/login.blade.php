@@ -10,8 +10,10 @@
         'ulClass' => 'navbar-nav navbar-nav-hover'
     ])
     <main class="main-content  mt-0">
-        <div class="page-header align-items-start min-vh-30 pt-7 pb-9 m-3 border-radius-lg"
-            style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-cover.jpg');">
+        {{-- <div class="page-header align-items-start min-vh-30 pt-7 pb-9 m-3 border-radius-lg"
+            style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-cover.jpg');"> --}}
+            <div class="page-header align-items-start min-vh-30 pt-7 pb-9 m-3 border-radius-lg"
+            style="background-position: top; background-image: url('/assets/img/wallpapers/banner2.jpg');">
             <span class="mask bg-gradient-dark opacity-6"></span>
         </div>
         <div class="container">

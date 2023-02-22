@@ -212,40 +212,48 @@
 
                                     @foreach ($items as $item)
                                     <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="form-check my-auto">
+                                        <td class="text-sm font-weight-normal">
+                                            <div class="d-flex my-2 text-xs">
+                                                {{-- <div class="form-check my-auto">
                                                     <input class="form-check-input" type="checkbox" id="customCheck1"
                                                         checked>
-                                                </div>
+                                                </div> --}}
                                                 @isset($item->photo)
-                                                    <img style  = "max-width:55px;"  loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="img-fluid">
+                                                    <img style  = "min-width:100; max-width:100px;"  loading="lazy" src="./assets/img/materials/{{$item->photo}}" alt="" class="border-radius-lg shadow-sm height-100 w-auto">
                                                 @else
-                                                    <img style  = "max-width:55px;" loading="lazy" src="./assets/img/materials/image-default.png" alt="" class="img-fluid">
+                                                    <img style  = "min-width:100; max-width:100px;" loading="lazy" src="./assets/img/materials/image-default.png" alt="" class="border-radius-lg shadow-sm height-100 w-auto">
                                                 @endisset
 
                                             </div>
                                         </td>
                                         <td>{{$item->idMaterial}}</td>
-                                        {{-- <td>{{$item->nameMaterial}}</td> --}}
-                                        {{-- <td>	<button  onclick="return getInfoMaterial({{$item->idMaterial}});" id= 'btnEditMaterial' data-target="#editModal" data-whatever="@mdo" data-toggle="modal" type="button" class="editMaterial btn btn-edit">{{$item->nameMaterial}}</button> --}}
-
-                                           <td>
+                                        <td>{{$item->nameMaterial}}</td>
+                                           {{-- <td>
                                             <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
                                                 data-bs-target="#editModal">
                                                 {{$item->nameMaterial}}
                                             </button>
-                                        </td>
+                                        </td> --}}
                                         <td>{{$item->category}}</td>
-                                        <td>{{$item->inventory}}</td>
+                                        <td>{{$item->nameInventory}}</td>
                                         <td>{{$item->unity}}</td>
                                         <td>{{$item->stock}}</td>
                                         <td>{{$item->stockMinimum}}</td>
                                         <td class="text-sm">
-                                            <button  type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal-{{ $item->idMaterial }}">
-                                                <i class="fas fa-trash text-secondary"></i>
-                                            </button>
+                                            <span data-bs-placement="top" data-bs-original-title="Editar material"  data-bs-toggle="tooltip" >
+                                                <a data-bs-placement="bottom" class="mx-3" onclick="return getInfoMaterial({{$item->idMaterial}});" data-bs-toggle="modal"
+                                                    data-bs-target="#editModal">
+                                                    <i class="fas fa-eye text-secondary"></i>
+                                                </a>
+                                            </span>
+                                            <span data-bs-placement="top" data-bs-original-title="Eliminar material"  data-bs-toggle="tooltip" >
+                                                <a class="mx-3" data-bs-toggle="modal"
+                                                data-bs-placement="bottom"
+                                                   data-bs-target="#deleteModal-{{ $item->idMaterial }}">
+                                                        <i class="fas fa-trash text-secondary"></i>
+                                                </a>
+                                            </span>
+                                            
                                             {{-- Modal delete --}}
 
                                             <div class="modal fade" id="deleteModal-{{ $item->idMaterial }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

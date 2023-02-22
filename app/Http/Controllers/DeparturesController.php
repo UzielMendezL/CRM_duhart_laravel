@@ -32,9 +32,10 @@ class DeparturesController extends Controller
         ->get();
         
         
-        $modelFiltered = Departures::select('departures.*','materials.inventory',
+        $modelFiltered = Departures::select('departures.*','inventories.nameInventory',
         'materials.category', 'materials.nameMaterial', 'stores.storeName',"work_sites.nameWorkSite","estimations.nameEstimation","materials.inventory")
         ->join('estimations', 'departures.idEstimation', '=', 'estimations.idEstimation')
+        ->join("inventories, inventories.idInventory", '=', 'materials.idInventory')
         ->join('work_sites', 'estimations.idWorkSite', '=', 'work_sites.idWorkSite')
         ->join('materials', 'departures.idMaterial', '=', 'materials.idMaterial')
         ->join('stores', 'departures.idStore', '=', 'stores.idStore')
@@ -219,7 +220,7 @@ class DeparturesController extends Controller
          //->where('materials.nameMaterial' ,'LIKE', '%Cubrecanto Melamina Blanco Frosty  C/P 2 mm 19 mm%')
           ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
           ->orWhere('materials.category' ,'LIKE', '%'.$getMaterial.'%')
-          ->orWhere('materials.inventory' ,'LIKE', '%'.$getMaterial.'%')
+          ->orWhere('materials.idInventory' ,'LIKE', '%'.$getMaterial.'%')
           ->paginate(10);
         
         return $getData;
