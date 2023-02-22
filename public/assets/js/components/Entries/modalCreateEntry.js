@@ -74,8 +74,11 @@ function getInfoEntry(id) {
             const format2 = "YYYY-MM-DD";
 
             var formatDays = moment(data.dateEntry).format(format2);
-
-            console.log(data);
+            let relativePath = `../assets/img/materials/${data.photo}`;
+            
+            if(data.photo == undefined || data.photo != null ){
+              reltivePath =  "../assets/img/materials/image-default.png";
+            }
             setTimeout(() => {
                 actualEditId = data.idMaterial;
                 $("#loaderEditEntrySearch").fadeOut();
@@ -112,9 +115,9 @@ function getInfoEntry(id) {
                      <input value = "${data.stock}" readonly type = 'text'  id='stock' class ='form-control' name="stock" /> 
                  </div>
 
-                 <div class="box-img-modal-entry">
-                     <img src="../../../img/PruebaTest.jpg" class="size-img-edit-modal">
-                </div>
+                 <div class = "mt-4 my-4 container-img w-100 d-flex justify-content-center">
+                       <img style = "min-width:150px; max-width:150px; " src="${relativePath}" class="size-img-material" alt="">
+                 </div>
            	`;
 
                 $('.container-inputs-entry').append(completeInputs);

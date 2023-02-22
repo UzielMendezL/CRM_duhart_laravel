@@ -6,7 +6,7 @@ $(document).ready(function () {
       checkLoaderModalEdit();
       getInfoMaterialOfInventory();
     });
-alert('Body')
+
     //Modal pierda su foco en el boton
     // $('.close-modal').click(()=>{
     //     alert('Hola')
@@ -409,10 +409,25 @@ alert('Body')
         $('#provider-material').val(data[0].nameCommercial);
 
         let imgResult = "../assets/img/materials/image-default.png";
+        let priceUnitaryResult = 0;
+        let stockResult = 0;
+        let stockMinimumResult = 0;
+
         // imageDefault
         if (data[0].photo != null ){
 
           imgResult = `../assets/img/materials/${data[0].photo}`;
+        }
+
+        //Validation
+        if(data[0].unitaryPrice != null){
+          priceUnitaryResult =  data[0].unitaryPrice;
+        }
+        if(data[0].stock != null){
+          stockResult =  data[0].stock;
+        }
+        if(data[0].stockMinimum != null){
+          stockMinimumResult =  data[0].stockMinimum;
         }
         setTimeout(() => {
           actualEditId = data[0].idMaterial;
@@ -439,17 +454,43 @@ alert('Body')
                    </div>
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
-                           Preio Unitario:
+                           Precio Unitario:
                        </label>
-                       <input value = "${data[0].unitaryPrice}"   ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='unitaryPrice' class ='form-control' name="unitaryPrice" /> 
+                       <input value = "${ priceUnitaryResult}"   ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='unitaryPrice' class ='form-control' name="unitaryPrice" /> 
                    </div>
                    
                    <div class="form-group col-md-6">
                        <label for="recipient-name" class="col-form-label">
                            Stock:
                        </label>
-                       <input value = "${data[0].stock}"  min="0"  ${statusDisable == true ? "disabled" : ""  } type = 'number'  id='stock' class ='form-control' name="stock" /> 
+                       <input value = "${stockResult}"  min="0"  ${statusDisable == true ? "disabled" : ""  } type = 'number'  id='stock' class ='form-control' name="stock" /> 
                    </div>
+                   <div class="form-group col-md-12">
+                       <label for="recipient-name" class="col-form-label">
+                           Inventario:
+                       </label>
+                       <select ${statusDisable == true ? "disabled" : ""  } class ='form-control' name="idInventory" id="idInventory">
+                          <option selected value = "${data[0].idInventory}">${data[0].nameInventory}</option>
+                       </select>
+                   </div>
+                   <div class="form-group col-md-6">
+                      <label for="recipient-name" class="col-form-label">
+                          Unidad:
+                      </label>
+                      <input value = "${data[0].unity}"  ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='unity' class ='form-control' name="unity" /> 
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="recipient-name" class="col-form-label">
+                          Stock Mínimo:
+                      </label>
+                      <input value = "${stockMinimumResult}"  ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='stockMinimum' class ='form-control' name="stockMinimum" /> 
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="recipient-name" class="col-form-label">
+                          Categoría:
+                      </label>
+                      <input value = "${data[0].category}"  ${statusDisable == true ? "disabled" : ""  } type = 'text'  id='category' class ='form-control' name="category" /> 
+                  </div>
                    <div class="mt-4 my-4 container-img w-100 d-flex justify-content-center">
                       <img style = "min-width:150px; max-width:150px; " src="${imgResult}" class="size-img-material" alt="">
                     </div>
@@ -459,7 +500,21 @@ alert('Body')
           getDataMaterialDeparture = data[2]; 
           getDataMaterialProvider  = data[3]      
           $('.container-inputs-material').append(completeInputs);
-          
+
+          // Set value list inventories
+          // $.each(data[4], function(key,value) {
+          //   $('#idInventory').append($("<option></option>")
+          //   .attr("value", value).text(key));
+          // });
+          for (let j = 0; j < data[4].length; j++ ) {
+            const element = data[4][j];
+              if(element.idInventory != data[0].idInventory ){
+                $('#idInventory').append(
+                  $("<option></option>").attr("value",  element.idInventory).text(element.nameInventory)
+                );
+              }
+          }
+
           checkLoaderModalEdit();
           $('#trDepartureMaterial').fadeIn();
           $('#trEntryMaterial').fadeIn();
@@ -588,7 +643,7 @@ function getInfoDeparture(id) {
 
           console.log(data);
           
-          let reltivePath = `../assets/img/materials/${data.photo}`;
+          let relativePath = `../assets/img/materials/${data[0].photo}`;
           if(data[0].photo == undefined || data[0].photo != null ){
             reltivePath =  "../assets/img/materials/image-default.png";
           }
@@ -636,10 +691,10 @@ function getInfoDeparture(id) {
                <div class="col-md-6">
                    <label for="recipient-name" class="col-form-label">
                        Stock Existente:
-                   </label>
+                   </labsel>
                    <input value = "${data[0].stock}" readonly type = 'text'  id='stock' class ='form-control' name="stock" /> 
                </div>
-               <div classmt-4 my-4 ="container-img w-100 d-flex justify-content-center">
+               <div class = "mt-4 my-4 container-img w-100 d-flex justify-content-center">
                  <img style = "min-width:150px; max-width:150px; " src="${relativePath}" class="size-img-material" alt="">
              </div>
            `;

@@ -11,4 +11,4 @@ class Inventory extends Model
     protected $table = 'inventories';
     public $timestamps = false;
 }
-}
+

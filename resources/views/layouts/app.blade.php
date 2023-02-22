@@ -39,7 +39,14 @@
     @endif
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    
+
+
     <!-- Nucleo Icons -->
+    
+    {{-- <link rel="stylesheet" href="../assets/scss/argon.scss" />
+    <link rel="stylesheet" href="../assetsfont-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="./assets/vendor/nucleo/css/nucleo.css" /> --}}
     {{-- <link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="/assets/css/nucleo-svg.css" rel="stylesheet" /> --}}
     <link href="{{ asset('assets/css/nucleo-icons.css') }}"  rel="stylesheet" />
@@ -64,6 +71,7 @@
 </head>
 
 <body class="g-sidenav-show bg-gray-100 {{ $class ?? '' }}">
+    {{-- {{$this->app->isProduction()}} --}}
     @guest
         @yield('content')
     @endguest

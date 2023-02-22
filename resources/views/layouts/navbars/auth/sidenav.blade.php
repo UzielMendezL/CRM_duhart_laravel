@@ -184,7 +184,7 @@
                 <a data-bs-toggle="collapse" href="#transactionsMenu" class="nav-link {{ str_contains(request()->url(), 'transaction') == true ? 'active' : '' }}"
                     aria-controls="transactionsMenu" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
-                        <i class="fa-light fa-money-bill-transfer"></i>
+                        <i class="ni ni-chart-bar-32 text-success text-sm opacity-10"></i>
                     </div>
                         <span class="nav-link-text ms-1">Finanzas</span>
                 </a>
@@ -194,6 +194,49 @@
                             <a class="nav-link {{ str_contains(request()->url(), 'transaction') == true ? 'active' : '' }}"href="{{ route('transaction-management')}}">
                                 <span class="sidenav-mini-icon"> M </span>
                                 <span class="sidenav-normal">Movimientos</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#employeeMenu" class="nav-link {{ str_contains(request()->url(), 'employee') == true ? 'active' : '' }}"
+                    aria-controls="employeeMenu" role="button" aria-expanded="false">
+                    <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+                        <i class="ni ni-circle-08 text-info text-sm opacity-10"></i>
+                    </div>
+                        <span class="nav-link-text ms-1">Colaboradores</span>
+                </a>
+                <div class="collapse {{ str_contains(request()->url(), 'dashboard-employee') == true ? 'show' : '' }}" id="employeeMenu">
+                    <ul class="nav ms-4">
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'assist') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                                <span class="sidenav-mini-icon"> A </span>
+                                <span class="sidenav-normal">Asistencias</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                                <span class="sidenav-mini-icon"> F </span>
+                                <span class="sidenav-normal">Faltas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'payroll') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                                <span class="sidenav-mini-icon"> N </span>
+                                <span class="sidenav-normal">Nomina</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'employees-list') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                                <span class="sidenav-mini-icon"> E </span>
+                                <span class="sidenav-normal">Empleados</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'birthday') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                                <span class="sidenav-mini-icon"> C </span>
+                                <span class="sidenav-normal">Cumpleaños</span>
                             </a>
                         </li>
                     </ul>

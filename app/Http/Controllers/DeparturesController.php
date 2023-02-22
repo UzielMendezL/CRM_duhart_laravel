@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
 use App\Models\Materials;
+use App\Models\Inventory;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,15 +33,17 @@ class DeparturesController extends Controller
         ->get();
         
         
-        $modelFiltered = Departures::select('departures.*','inventories.nameInventory',
-        'materials.category', 'materials.nameMaterial', 'stores.storeName',"work_sites.nameWorkSite","estimations.nameEstimation","materials.inventory")
+        $modelFiltered = Departures::select('departures.*','inventories.nameInventory','work_sites.nameWorkSite','estimations.nameEstimation',
+        'materials.category', 'materials.nameMaterial', 'stores.storeName')
         ->join('estimations', 'departures.idEstimation', '=', 'estimations.idEstimation')
-        ->join("inventories, inventories.idInventory", '=', 'materials.idInventory')
         ->join('work_sites', 'estimations.idWorkSite', '=', 'work_sites.idWorkSite')
         ->join('materials', 'departures.idMaterial', '=', 'materials.idMaterial')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
         ->join('stores', 'departures.idStore', '=', 'stores.idStore')
         ->orderBy("departures.departureDate", "DESC")
-        ->paginate(5);
+        ->paginate(100);
+
+
         return view('laravel.inventory.departures-index', ['items' => $modelFiltered->all(),'loading' => $loading, "getEmployees" => $getEmployees,"getConstructionSites" => $getConstructionSites,"getStore" => $getStore] );
         
     }

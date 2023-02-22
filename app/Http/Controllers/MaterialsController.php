@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Provider;
 use App\Models\Departures;
 use App\Models\Entry;
+use App\Models\Inventory;
 
 class MaterialsController extends Controller
 {
@@ -130,10 +131,12 @@ class MaterialsController extends Controller
         ->where( 'materials.idMaterial', $materialId)
         ->get(); 
       
-        $editAllMaterial = Materials::select('materials.*','inventories.nameInventory')
+        $editAllMaterial = Materials::select('materials.*','inventories.nameInventory','inventories.idInventory')
         ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
          ->where( 'materials.idMaterial', $materialId  )
-         ->first();         
+         ->first(); 
+         
+         $getInventories = Inventory::all();
 
              if($editAllMaterial == null ){
               $editOnlyMaterial = Materials::select('materials.*')
@@ -147,7 +150,7 @@ class MaterialsController extends Controller
           
            $loading = false;
            view('laravel.inventory.index',compact('loading'));
-           return  [$editMaterial,$editMaterialEntry,$editMaterialDeparture,$editMaterialProviders];
+           return  [$editMaterial,$editMaterialEntry,$editMaterialDeparture,$editMaterialProviders, $getInventories];
     }
 
     /**
