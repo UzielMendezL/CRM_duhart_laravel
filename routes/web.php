@@ -144,6 +144,12 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::post('/inventory/entry-delete/{id}', 'destroy')->name('entry-destroy');
     });
     Route::controller(TransactionController::class)->group(function() {
+        
+        //Dashboard
+        Route::get('/transaction-dashboard', 'transactionDasboard')->name('transaction-dahsboard-management');
+        //Estado de cuenta
+        Route::get('/transaction-account-status', 'indexAccountStatus')->name('transaction-account-status-management');
+        
         Route::get('/transaction', 'index')->name('transaction-management');
         Route::get('/transaction/new-transaction', 'create')->name('transaction-new');
          Route::post('/transaction/new-transaction', 'store')->name('transaction-new.store');

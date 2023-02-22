@@ -207,6 +207,7 @@
                                         <th>Cantidad</th>
                                         <th>Precio U.</th>
                                         <th>Total</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,12 +215,13 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td class = "col-md-02">{{$item->departureDate}}</td>
-                                        <td class="col-md-1">
+                                        {{-- <td class="col-md-1">
                                             <button data-whatever="@mdo" onclick="return getInfoDeparture({{$item->idDeparture}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
                                                 data-bs-target="#editModalDepartures">
                                                 {{$item->idDeparture}}
                                             </button>
-                                        </td>
+                                        </td> --}}
+                                        <td class="col-md-4">{{$item->idDeparture}}</td>
                                         <td class = "col-md-4">{{$item->nameWorkSite}}</td>
                                         <td class = "col-md-4">{{$item->nameEstimation}}</td>
                                         <td class = "col-md-4">{{$item->storeName}}</td>
@@ -228,6 +230,17 @@
                                         <td class = "col-md-4">{{$item->quantity}}</td>
                                         <td class = "col-md-4">{{$item->priceUnitary}}</td>
                                         <td class = "col-md-4">{{$item->priceUnitary * $item->quantity }}</td>
+                                        <td class="text-sm">
+                                            <span  data-bs-toggle="tooltip"
+                                                data-bs-original-title="Visualizar salida">
+                                                <a onclick="return getInfoDeparture({{$item->idDeparture}});"
+                                                    data-whatever="@mdo"  type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#editModalDepartures"
+                                                >
+                                                    <i class="fas fa-eye text-secondary"></i>
+                                                </a>
+                                            </span>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

@@ -202,7 +202,7 @@
                                         <th>Categoría</th>
                                         <th>Nombre de la bodega</th>
                                         <th>Cantidad</th>
-                                        {{-- <th>Acciones</th> --}}
+                                        <th>Acciones</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -212,23 +212,30 @@
                                         <td class = "col-md-02">{{$item->entryDate}}</td>
                                     </td>
                                     <td class = "col-md-4">{{$item->idEntry}}</td>
-                                    <td class="col-md-1">
+                                    {{-- <td class="col-md-1">
                                         <button onclick="return getInfoEntry({{$item->idEntry}});" data-whatever="@mdo"  type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
                                         data-bs-target="#editModalEntry">
                                             {{$item->nameMaterial}}
                                         </button>
+                                    </td> --}}
+                                    <td class="col-md-4">
+                                        {{$item->nameMaterial}}
                                     </td>
                                     <td class = "col-md-4">{{$item->nameInventory}}</td>
                                     <td class = "col-md-4">{{$item->category}}</td>
                                     <td class = "col-md-4">{{$item->storeName}}</td>
                                     <td class = "col-md-4">{{$item->quantity}}</td>
-                                    {{-- <td class="text-sm">
-                                        <a href="javascript:;" data-bs-toggle="tooltip"
-                                            data-bs-original-title="Visualizar entradas">
-                                            <i class="fas fa-eye text-secondary"></i>
-                                        </a>
-                                    
-                                    </td> --}}
+                                     <td class="text-sm">
+                                        <span  data-bs-toggle="tooltip"
+                                            data-bs-original-title="Visualizar entrada">
+                                            <a onclick="return getInfoEntry({{$item->idEntry}});"
+                                                data-whatever="@mdo"  type="button" data-bs-toggle="modal"
+                                                data-bs-target="#editModalEntry"
+                                            >
+                                                <i class="fas fa-eye text-secondary"></i>
+                                            </a>
+                                        </span>
+                                    </td>
 
                                     </tr>
                                     @endforeach

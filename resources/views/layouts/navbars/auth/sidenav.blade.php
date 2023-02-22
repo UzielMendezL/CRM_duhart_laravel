@@ -191,9 +191,17 @@
                 <div class="collapse {{ str_contains(request()->url(), 'transaction') == true ? 'show' : '' }}" id="transactionsMenu">
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'transaction') == true ? 'active' : '' }}"href="{{ route('transaction-management')}}">
-                                <span class="sidenav-mini-icon"> M </span>
-                                <span class="sidenav-normal">Movimientos</span>
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction-dashboard') == true ? 'active' : '' }}"href="{{ route('transaction-dahsboard-management')}}">
+                                <span class="sidenav-mini-icon"> D </span>
+                                <span class="sidenav-normal">Dashborad Finanzas</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav ms-4">
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction-account-status') == true ? 'active' : '' }}"href="{{ route('transaction-account-status-management')}}">
+                                <span class="sidenav-mini-icon"> E </span>
+                                <span class="sidenav-normal">Estado de cuenta</span>
                             </a>
                         </li>
                     </ul>

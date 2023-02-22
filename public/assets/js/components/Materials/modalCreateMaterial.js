@@ -6,7 +6,6 @@ $(document).ready(function () {
       checkLoaderModalEdit();
       getInfoMaterialOfInventory();
     });
-
     //Modal pierda su foco en el boton
     // $('.close-modal').click(()=>{
     //     alert('Hola')

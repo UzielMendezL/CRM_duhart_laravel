@@ -24,12 +24,34 @@ class TransactionController extends Controller
        
         $modelJoined = Transaction::select('transactions.*','bank_accounts.nameAccount')
         ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
-        ->orderBy('payDay', 'desc')
+        // ->orderBy('payDay', 'desc')
+        ->orderBy('idTransaction', 'desc')
        // ->where('transactions.concept','Pendiente')
         ->paginate(400);
 
         return view('laravel.transaction.index', ['items' => $modelJoined ,'loading' => $loading] );
     }
+
+    /**bank_accounts
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAccountStatus(Transaction $model)
+    {
+        $loading = true;
+       
+        $modelJoined = Transaction::select('transactions.*','bank_accounts.nameAccount')
+        ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+        // ->orderBy('payDay', 'desc')
+        ->orderBy('idTransaction', 'desc')
+        ->where('transactions.status','Pagada')
+        ->paginate(400);
+
+        return view('laravel.transaction.index', ['items' => $modelJoined ,'loading' => $loading] );
+    }
+
+   
 
     /**
      * Show the form for creating a new resource.

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $("#loader-entry").hide();
     $('#loaderEditEntrySearch').hide();
     $('#material-selected').hide();
