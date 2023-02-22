@@ -3,33 +3,24 @@
 @section('content')
     @include('layouts.navbars.guest.topnav', [
         'classes' => 'top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4',
-        'container' => 'container',
+        'container' => 'container d-flex justify-content-end',
+        // 'containerSecondary' => 'noneClass',
         'text' => 'text-white',
         'arrow' => '/assets/img/down-arrow-white.svg',
+        'ulClass' => 'navbar-nav navbar-nav-hover'
     ])
     <main class="main-content  mt-0">
-        <div class="page-header align-items-start min-vh-50 pt-7 pb-9 m-3 border-radius-lg"
+        <div class="page-header align-items-start min-vh-30 pt-7 pb-9 m-3 border-radius-lg"
             style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-cover.jpg');">
             <span class="mask bg-gradient-dark opacity-6"></span>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 text-center mx-auto">
-                        <ul style="list-style: none;">
-                            <li class="text-white text-sm"><strong>admin@argon.com</strong> with password <strong>secret</strong></li>
-                            <li class="text-white text-sm"><strong>creator@argon.com</strong> with password <strong>secret</strong></li>
-                            <li class="text-white text-sm"><strong>member@argon.com</strong> with password <strong>secret</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="container">
             <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
                 <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-                    <div class="card mt-5">
+                    <div class="card mt-4">
                         <div class="card-header pb-0 text-start">
-                            <h3 class="font-weight-bolder">Login</h3>
-                            <p class="mb-0">Ingresa tu usario y contraseña</p>
+                            <h3 class="font-weight-bolder text-center y-4">Bienvenido</h3>
+                            <p class="mb-2 mt-4">Ingresa tu usario y contraseña</p>
                         </div>
                         <div class="card-body">
                             <form role="form" method="POST" action="{{route('login.perform') }}" class="text-start">
@@ -70,5 +61,4 @@
             </div>
         </div>
     </main>
-    @include('layouts.footers.auth.desc-footer')
 @endsection

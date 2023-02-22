@@ -10,8 +10,8 @@
                 <span class="navbar-toggler-bar bar3"></span>
             </span>
         </button>
-        <div class="custom-nav-login collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
-            <ul class="navbar-nav navbar-nav-hover mx-auto">
+        <div class="{{$containerSecondary ?? 'custom-nav-login collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0' }} " id="navigation">
+            <ul class=" {{$ulClass ?? 'navbar-nav navbar-nav-hover mx-auto'}} ">
                 <li class="nav-item dropdown dropdown-hover mx-2">
                     <a href="{{ route('register') }}"
                         class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center">

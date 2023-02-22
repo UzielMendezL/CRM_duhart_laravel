@@ -117,6 +117,12 @@ class MaterialsController extends Controller
         ->join('materials', 'materials.idMaterial', '=', 'departures.idMaterial')
         ->where( 'materials.idMaterial', $materialId)
         ->get(); 
+
+        $editMaterialProviders = Materials::select('transactions.payDay','transaction_details.unitaryPrice','transactions.nameProvider',)
+        ->join('transaction_details', 'transaction_details.idConcept', '=', 'materials.idMaterial')
+        ->join('transactions', 'transaction_details.idTransaction', '=', 'transactions.idTransaction')
+        ->where( 'materials.idMaterial', $materialId)
+        ->get(); 
       
         $editAllMaterial = Materials::select('materials.*')
          ->where( 'materials.idMaterial', $materialId  )
@@ -134,7 +140,7 @@ class MaterialsController extends Controller
           
            $loading = false;
            view('laravel.inventory.index',compact('loading'));
-           return  [$editMaterial,$editMaterialEntry,$editMaterialDeparture];
+           return  [$editMaterial,$editMaterialEntry,$editMaterialDeparture,$editMaterialProviders];
     }
 
     /**

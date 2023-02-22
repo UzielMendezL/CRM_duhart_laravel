@@ -301,13 +301,13 @@
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Detealles Generales</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button onclick="getInfoMaterialOfInventory();" class="nav-link" id="provider-tab" data-bs-toggle="tab" data-bs-target="#provider" type="button" role="tab" aria-controls="provider" aria-selected="false">Proovedores</button>
+              <button  class="nav-link" id="provider-tab" data-bs-toggle="tab" data-bs-target="#provider" type="button" role="tab" aria-controls="provider" aria-selected="false">Proovedores</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button  onclick="getInfoMaterialOfInventory();" class="nav-link" id="departure-tab" data-bs-toggle="tab" data-bs-target="#departure" type="button" role="tab" aria-controls="departure" aria-selected="false">Entradas</button>
+              <button   class="nav-link" id="departure-tab" data-bs-toggle="tab" data-bs-target="#departure" type="button" role="tab" aria-controls="departure" aria-selected="false">Entradas</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button  onclick="getInfoMaterialOfInventory();" class="nav-link" id="entry-tab" data-bs-toggle="tab" data-bs-target="#entry" type="button" role="tab" aria-controls="entry" aria-selected="false">Salidas</button>
+                <button   class="nav-link" id="entry-tab" data-bs-toggle="tab" data-bs-target="#entry" type="button" role="tab" aria-controls="entry" aria-selected="false">Salidas</button>
               </li>
           </ul>
           <div class="tab-content" id="myTabContent">
@@ -354,10 +354,9 @@
                               <table id = "trProviderMaterial" class="table ">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Proveedor</th>
+                                            <th scope="col">Precio Unitario</th>
                                         </tr>
                                     </thead>
                                     <tbody>

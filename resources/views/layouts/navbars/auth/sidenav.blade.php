@@ -13,7 +13,7 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link {{ Route::currentRouteName() == 'dashboards' ? 'active' : '' }}"
                     aria-controls="dashboardsExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -78,9 +78,9 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#laravelExamples" class="nav-link"
                     aria-controls="laravelExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
@@ -88,7 +88,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Laravel Examples </span>
                 </a>
-                {{-- <div class="collapse show" id="laravelExamples"> --}}
+                {{-- <div class="collapse show" id="laravelExamples"> 
                 <div class="collapse" id="laravelExamples">   
                     <ul class="nav ms-4">
                         <li class="nav-item ">
@@ -133,11 +133,11 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
-            <li class="nav-item mt-3">
+            {{-- <li class="nav-item mt-3">
                 <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder opacity-6">PAGINAS</h6>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#inventoryMenu" class="nav-link  {{ str_contains(request()->url(), 'inventory') == true ? 'active' : '' }}"
                     aria-controls="inventoryMenu" role="button" aria-expanded="false">
@@ -186,7 +186,7 @@
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
                         <i class="fa-light fa-money-bill-transfer"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Transacciones</span>
+                        <span class="nav-link-text ms-1">Finanzas</span>
                 </a>
                 <div class="collapse {{ str_contains(request()->url(), 'transaction') == true ? 'show' : '' }}" id="transactionsMenu">
                     <ul class="nav ms-4">
@@ -199,14 +199,14 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 {{-- <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link {{ str_contains(request()->url(), 'pages') == true ? 'active' : '' }}"
                     aria-controls="pagesExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
                         <i class="ni ni-ungroup text-warning text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Pages</span>
-                </a> --}}
+                </a> --
                 <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link  {{ str_contains(request()->url(), 'pages') == true ? 'active' : '' }}"
                 aria-controls="pagesExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-end justify-content-center">
@@ -371,8 +371,10 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+
+
+            {{-- <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link {{ Route::currentRouteName() == 'applications' ? 'active' : '' }}"
                     aria-controls="applicationsExamples" role="button" aria-expanded="false">
                     <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
@@ -497,7 +499,9 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
+
+{{--             
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#authExamples" class="nav-link {{ str_contains(request()->url(), 'authentication') == true ? 'active' : '' }}" aria-controls="authExamples"
                     role="button" aria-expanded="false">
@@ -676,7 +680,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </li>

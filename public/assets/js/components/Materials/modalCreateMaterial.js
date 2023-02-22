@@ -1,6 +1,13 @@
 $(document).ready(function () {
     $("#form-type").change(selectInput);
     $("#loader").hide();
+    
+    //Tab Nav
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+      checkLoaderModalEdit();
+      getInfoMaterialOfInventory();
+    });
+
     //Modal pierda su foco en el boton
     // $('.close-modal').click(()=>{
     //     alert('Hola')
@@ -309,25 +316,37 @@ $(document).ready(function () {
   
   var getDataMaterialEntry = [];
   var getDataMaterialDeparture = [];
+  var getDataMaterialProvider = [];
 
   function clearInfoMaterialOfInventory(){
     $('#trEntryMaterial').fadeOut();
     $('#trDepartureMaterial').fadeOut();
+    $('#trProviderMaterial').fadeOut();
   }
   function getInfoMaterialOfInventory(){
-    for (let index = 0; index < getDataMaterialEntry.length; index++) {
-      const element = getDataMaterialEntry[index];
-      let entryMaterial = `
-      <tbody>
-      <tr>
-          <td>${element.idEntry}</td>
-          <td>${element.entryDate}</td>
-          <td>${element.quantity}</td>
-      </tr>
-      </tbody>`;
-      $('#trEntryMaterial').prepend(entryMaterial);                    
+    $('#modalEditMaterial').css("width","750px");
+
+   checkLoaderModalEdit();
+    //Provider
+    for (let index = 0; index < getDataMaterialProvider.length; index++) {
+    const element = getDataMaterialProvider[index];
+    let payD =  element.payDay ;
+    
+    if(element.payDay == null){
+      payD = "N/A"
     }
-   
+    let departureMaterialProvider = `
+    <tbody>
+    <tr>
+    <td>${payD}</td>
+    <td>${element.nameProvider}</td>            
+      <td>${element.unitaryPrice}</td>
+    </tr>
+    </tbody>`;
+    $('#trProviderMaterial').prepend(departureMaterialProvider);
+    }
+    
+    //Departure
     for (let index = 0; index < getDataMaterialDeparture.length; index++) {
       const element = getDataMaterialDeparture[index];
       let departureMaterial = `
@@ -340,8 +359,20 @@ $(document).ready(function () {
       </tbody>`;
       $('#trDepartureMaterial').prepend(departureMaterial);
     }
-    $('#modalEditMaterial').css("width","750px");
-    checkLoaderModalEdit();
+    //Entry
+    for (let index = 0; index < getDataMaterialEntry.length; index++) {
+      const element = getDataMaterialEntry[index];
+      let entryMaterial = `
+      <tbody>
+      <tr>
+          <td>${element.idEntry}</td>
+          <td>${element.entryDate}</td>
+          <td>${element.quantity}</td>
+      </tr>
+      </tbody>`;
+      $('#trEntryMaterial').prepend(entryMaterial);                    
+    }
+
   }
 
 
@@ -450,12 +481,14 @@ $(document).ready(function () {
                   </div>	`;
 
           getDataMaterialEntry =  data[1];
-          getDataMaterialDeparture = data[2];       
+          getDataMaterialDeparture = data[2]; 
+          getDataMaterialProvider  = data[3]      
           $('.container-inputs-material').append(completeInputs);
           
           checkLoaderModalEdit();
           $('#trDepartureMaterial').fadeIn();
           $('#trEntryMaterial').fadeIn();
+          $('#trProviderMaterial').fadeIn();
   
         }, 700);
   
