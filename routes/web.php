@@ -148,7 +148,9 @@ Route::group(['middleware' => 'auth'], function () {
         //Dashboard
         Route::get('/transaction-dashboard', 'transactionDasboard')->name('transaction-dahsboard-management');
         //Estado de cuenta
-        Route::get('/transaction-account-status', 'indexAccountStatus')->name('transaction-account-status-management');
+        Route::get('/transaction-account-status-paid', 'indexAccountStatus')->name('transaction-account-status-management');
+        Route::get('/transaction-account-status-wait', 'indexAccountStatus')->name('transaction-account-status-wait-management');
+        Route::get('/transaction-account-status-authorized', 'indexAccountStatus')->name('transaction-account-status-authorized-management');
         
         Route::get('/transaction', 'index')->name('transaction-management');
         Route::get('/transaction/new-transaction', 'create')->name('transaction-new');

@@ -199,9 +199,25 @@
                     </ul>
                     <ul class="nav ms-4">
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'transaction-account-status') == true ? 'active' : '' }}"href="{{ route('transaction-account-status-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction-account-status-paid') == true ? 'active' : '' }}"href="{{ route('transaction-account-status-management')}}">
                                 <span class="sidenav-mini-icon"> E </span>
                                 <span class="sidenav-normal">Estado de cuenta</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav ms-4">
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction-account-status-authorized') == true ? 'active' : '' }}"href="{{ route('transaction-account-status-authorized-management')}}">
+                                <span class="sidenav-mini-icon"> PP</span>
+                                <span class="sidenav-normal">Por pagar</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav ms-4">
+                        <li class="nav-item ">
+                            <a class="nav-link {{ str_contains(request()->url(), 'transaction-account-status-wait') == true ? 'active' : '' }}"href="{{ route('transaction-account-status-wait-management')}}">
+                                <span class="sidenav-mini-icon"> P </span>
+                                <span class="sidenav-normal">Pendientes</span>
                             </a>
                         </li>
                     </ul>

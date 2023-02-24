@@ -4,7 +4,7 @@
     <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur"
         data-scroll="false">
         <div class="container-fluid py-1 px-3">
-            @include('layouts.navbars.auth.topnav', ['title' => 'Automotive'])
+            @include('layouts.navbars.auth.topnav', ['title' => 'Estado de cuenta','titleSecondary' => 'Dashboard'])
             <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
                 <a href="javascript:;" class="nav-link p-0">
                     <div class="sidenav-toggler-inner">
@@ -126,6 +126,147 @@
             </div>
         </div>
     </nav>
+
+
+    <div class="row mt-4">
+        <div class="col-lg-7 col-md-12">
+            <div class="card">
+                <div class="card-header pb-0 p-3">
+                    <h6 class="mb-0">Flujo de efectivo</h6>
+                    <div class="d-flex align-items-center">
+                        <span class="badge badge-md badge-dot me-4">
+                            <i class="bg-dark"></i>
+                            <span class="text-dark text-xs">Ingreso</span>
+                        </span>
+                        <span class="badge badge-md badge-dot me-4">
+                            <i class="bg-info"></i>
+                            <span class="text-dark text-xs">Egreso</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body p-3">
+                    <div class="chart">
+                        <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
+            <div class="card h-100">
+                <div class="card-header pb-0 p-3">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Obras</h6>
+                        <button type="button"
+                            class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="See which websites are sending traffic to your website">
+                            <i class="fas fa-info"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-lg-5 col-12 text-center">
+                            <div class="chart mt-5">
+                                <canvas id="chart-doughnut" class="chart-canvas" height="200"></canvas>
+                            </div>
+                            <a class="btn btn-sm bg-gradient-secondary mt-4">See all referrals</a>
+                        </div>
+                        <div class="col-lg-7 col-12">
+                            <div class="table-responsive">
+                                <table class="table align-items-center mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="../assets/img/small-logos/logo-xd.svg"
+                                                            class="avatar avatar-sm me-2" alt="logo_xd">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Adobe</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold"> 25% </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="../assets/img/small-logos/logo-atlassian.svg"
+                                                            class="avatar avatar-sm me-2" alt="logo_atlassian">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Atlassian</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold"> 3% </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="../assets/img/small-logos/logo-slack.svg"
+                                                            class="avatar avatar-sm me-2" alt="logo_slack">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Slack</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold"> 12% </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="../assets/img/small-logos/logo-spotify.svg"
+                                                            class="avatar avatar-sm me-2" alt="logo_spotify">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Spotify</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold"> 7% </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div>
+                                                        <img src="../assets/img/small-logos/logo-jira.svg"
+                                                            class="avatar avatar-sm me-2" alt="logo_jira">
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">Jira</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold"> 10% </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{-- End Custom Test --}}
+    
     <!-- End Navbar -->
     <div class="container-fluid py-4">
         <div class="row mt-4">
@@ -253,9 +394,10 @@
                             <div class="col-8">
                                 <div class="numbers">
                                     <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Music
-                                        Volume</p>
+                                        BBVA</p>
                                     <h5 class="text-white font-weight-bolder mb-0">
-                                        15/100
+                                        $2,3000
+
                                     </h5>
                                 </div>
                             </div>
@@ -272,8 +414,13 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card mb-4">
-                <div class="card-header pb-0">
-                    <h6>Tipo de filtro de transacción</h6>
+                <div class = "d-flex justify-content-between">
+                    <div class="card-header pb-0">
+                        <h6>Tipo de filtro de transacción</h6>
+                    </div>
+                    <div class="card-header pb-0">
+                        <a target="blank" href="{{ route('transaction-new') }} " type="button" class = "btn btn-primary">+ Añadir concepto</a>
+                    </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="card-body px-0 pb-0">
@@ -314,13 +461,16 @@
                                                 <button   class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">   
                                                   <i class="fas fa-check" aria-hidden="true"></i>
                                                 </button>
+                                                @elseif ($item->status == 'Autorizada')
+                                                <button   class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">   
+                                                  <i class="fas fa-check" aria-hidden="true"></i>
+                                                </button>
                                                 
                                                 @elseif ($item->status == 'Pendiente')
                                                 
-                                                <button
-                                                  class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                                <button   class="btn btn-icon-only btn-rounded btn-outline-black mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">   
                                                     <i class="fas fa-undo" aria-hidden="true"></i>
-                                                <button>
+                                                  </button>
 
                                                 @elseif ($item->status == 'Cancelado')
                                                 <button  class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
@@ -372,6 +522,7 @@
     <script src="../../assets/js/plugins/datatables.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
     <script>
         if (document.getElementById('products-list')) {
             const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
@@ -385,7 +536,162 @@
                 }
             });
         };
+        var ctx1 = document.getElementById("chart-line").getContext("2d");
+        var ctx2 = document.getElementById("chart-doughnut").getContext("2d");
+
+        var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
+        gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+
+        var gradientStroke2 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+        gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+        gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+        var jobs =  {!! json_encode($items) !!};
+        console.log(jobs);
+
+             // Line chart
+             new Chart(ctx1, {
+            type: "line",
+            data: {
+                labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agos", "Sep","Oct","Nov","Dic"],
+                datasets: [{
+                        label: "Ingreso",
+                        tension: 0.4,
+                        borderWidth: 0,
+                        pointRadius: 2,
+                        pointBackgroundColor: "#5e72e4",
+                        borderColor: "#5e72e4",
+                        borderWidth: 3,
+                        backgroundColor: gradientStroke1,
+                        data: [50, 40, 300, 220, 500, 250, 400, 230, 1200],
+                        maxBarThickness: 6
+                    },
+                    {
+                        label: "Egreso",
+                        tension: 0.4,
+                        borderWidth: 0,
+                        pointRadius: 2,
+                        pointBackgroundColor: "#3A416F",
+                        borderColor: "#3A416F",
+                        borderWidth: 3,
+                        backgroundColor: gradientStroke2,
+                        data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+                        maxBarThickness: 6
+                    }
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: true,
+                            padding: 10,
+                            color: '#9ca2b7'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: true,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#9ca2b7',
+                            padding: 10
+                        }
+                    },
+                },
+            },
+        });
+
+
+        // Doughnut chart
+        new Chart(ctx2, {
+            type: "doughnut",
+            data: {
+                labels: ['Creative Tim', 'Github', 'Bootsnipp', 'Dev.to', 'Codeinwp'],
+                datasets: [{
+                    label: "Projects",
+                    weight: 9,
+                    cutout: 60,
+                    tension: 0.9,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    backgroundColor: ['#2152ff', '#3A416F', '#f53939', '#a8b8d8', '#5e72e4'],
+                    data: [15, 20, 12, 60, 20],
+                    fill: false
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                        },
+                        ticks: {
+                            display: false,
+                        }
+                    },
+                },
+            },
+        });
+
+
+
     </script>
+
+
+
     <script src="../../assets/js/plugins/sweetalert.min.js"></script>
     {{-- @include('sweet::alert') --}}
     @include('sweetalert::alert')

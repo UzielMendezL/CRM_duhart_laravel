@@ -136,7 +136,7 @@
             <div class="col-lg-6 text-right d-flex flex-column justify-content-center">
                 {{-- <button type="button"
                     class="btn btn-outline-white mb-0 ms-lg-auto me-lg-0 me-auto mt-lg-0 mt-2">Editar transacción</button> --}}
-                <a href="#" class="btn btn-outline-white mb-0 ms-lg-auto me-lg-0 me-auto mt-lg-0 mt-2">  
+                <a  href="#" class="btn btn-outline-white mb-0 ms-lg-auto me-lg-0 me-auto mt-lg-0 mt-2">  
                     Editar transacción
                 </a>
             </div>
@@ -229,7 +229,7 @@
                             </div>
                             <div class="col-3">
                                 <label class="mt-4">Estatus</label>
-                                <select class="form-control" name="" id="" value="{{$item->status}}">
+                                <select class="form-control" name="status" id="status" value="{{$item->status}}">
                                     <option value="Pagado">Pagado</option>
                                     <option value="Cancelado">Cancelado</option>
                                     <option value="Rechazado">Rechazado</option>
@@ -239,7 +239,7 @@
                     </div>
                      <div class="col-sm-12">
                         <div class ="d-flex justify-content-center align-items-center">
-                            <button type = "submit" class = "mt-4 btn btn-primary">
+                            <button id="editT" type = "submit" class = "mt-4 btn btn-primary">
                                 Editar Transacción
                             </button>
                         </div>
@@ -257,7 +257,7 @@
                     </div>
                     <div class="col-sm-12">
                         <div class ="d-flex justify-content-center align-items-center">
-                            <a href="{{ route('transaction-detail-new', ['id' => $item->idTransaction ]) }}"  type = "button" class = "btn btn-secondary">
+                            <a id="agreeM" href="{{ route('transaction-detail-new', ['id' => $item->idTransaction ]) }}"  type = "button" class = "btn btn-secondary">
                                 
                                 Agregar Material
                             </a>
@@ -297,7 +297,7 @@
                                             {{-- <button     onclick="argon.showSwal('warning-message-and-confirmation')"  type="button" class="editMaterial btn btn-edi">
                                                 <i class="fas fa-trash text-secondary"></i>
                                             </button> --}}
-                                            <button  type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
+                                            <button  type="button" class="trash-trans-d editMaterial btn btn-edi" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal-{{ $item->idTransactionDetail }}">
                                                 <i class="fas fa-trash text-secondary"></i>
                                             </button>
@@ -342,12 +342,17 @@
 @endsection
 
 @push('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../../assets/js/plugins/sweetalert.min.js"></script>
     <script src="../../assets/js/plugins/datatables.js"></script>
     <script src="../../assets/js/plugins/choices.min.js"></script>
     <script src="../../assets/js/plugins/quill.min.js"></script>
     <script>
-
+        if ($('#status').val() == 'Pagado') {
+            $('#editT').hide();
+            $('#agreeM').hide();
+            $('.trash-trans-d').prop('disabled', true);
+        }
 
         if (document.getElementById('products-list')) {
             const dataTableSearch = new simpleDatatables.DataTable("#products-list", {

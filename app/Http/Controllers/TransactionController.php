@@ -40,12 +40,24 @@ class TransactionController extends Controller
     public function indexAccountStatus(Transaction $model)
     {
         $loading = true;
+
+        $currenturl = url()->current();
+        $statusTr = "";
+        if (str_contains($currenturl, 'status-paid')){
+            $statusTr = "Pagada";
+        }
+        else if (str_contains($currenturl, 'status-wait')){
+            $statusTr = "Pendiente";
+        }
+        else if (str_contains($currenturl, 'status-authorized')){
+            $statusTr = "Autorizada";
+        }
        
         $modelJoined = Transaction::select('transactions.*','bank_accounts.nameAccount')
         ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
         // ->orderBy('payDay', 'desc')
         ->orderBy('idTransaction', 'desc')
-        ->where('transactions.status','Pagada')
+        ->where('transactions.status',$statusTr)
         ->paginate(400);
 
         return view('laravel.transaction.index', ['items' => $modelJoined ,'loading' => $loading] );
@@ -261,14 +273,14 @@ class TransactionController extends Controller
     {
         $getMaterial = $request->get('materialSearch');
         $getData = DB::table('materials')
-        ->select('nameMaterial','stock','idMaterial','unitaryPrice','unity','inventory','inventories.idInventory')
-        ->join('inventories', 'inventories.nameInventory', '=', 'materials.inventory')
+        ->select('nameMaterial','stock','idMaterial','unitaryPrice','unity','inventories.nameInventory','inventories.idInventory')
+        ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
 
          //->where('materials.nameMaterial' ,'LIKE', '%Cubrecanto Melamina Blanco Frosty  C/P 2 mm 19 mm%')
           
           ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
           ->orWhere('materials.category' ,'LIKE', '%'.$getMaterial.'%')
-          ->orWhere('materials.inventory' ,'LIKE', '%'.$getMaterial.'%')
+          ->orWhere('inventories.nameInventory' ,'LIKE', '%'.$getMaterial.'%')
           ->paginate(10);
         
         return $getData;

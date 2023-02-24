@@ -111,7 +111,7 @@ function selectMaterialTransaction(id){
         selectedMaterial.val(objMaterial.nameMaterial);
         selectedunitaryPrice.val(objMaterial.unitaryPrice);
         selectedIdMaterial.val(objMaterial.idMaterial);
-        selectedNameInventory.val(objMaterial.inventory);
+        selectedNameInventory.val(objMaterial.nameInventory);
         selectedinventory.val(objMaterial.idInventory);
         selectedUnity.val(objMaterial.unity);
     }

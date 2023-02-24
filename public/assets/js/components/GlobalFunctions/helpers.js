@@ -4,7 +4,7 @@ $(document).ready(function () {
 function getEstimationDepartureGlobal(idWorkSite,html, typeAjax ){
     // idObra, idHtml
 let dynamicUrl = "";
-switch (provider) {
+switch (typeAjax) {
   case 'provider':
     dynamicUrl= '/list-providers-active/'
     break;

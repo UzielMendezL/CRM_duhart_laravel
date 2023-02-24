@@ -331,7 +331,7 @@
                                     <!--single form panel-->
                                     <div class="card multisteps-form__panel p-3 border-radius-xl bg-white"
                                         data-animation="FadeIn">
-                                        <h5 class="font-weight-bolder">Añade el material</h5>
+                                        <h5 class=" my-4 font-weight-bolder">Añade el material</h5>
                                         <div class="col-12 col-sm-12">
                                             <input onkeyup ="return searchMaterialTransaction();" id = "search-entry-material" class="form-control" type="search" placeholder="Busca el material a desear"/>
                                         </div>

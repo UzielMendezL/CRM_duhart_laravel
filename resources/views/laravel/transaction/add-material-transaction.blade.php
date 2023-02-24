@@ -213,7 +213,7 @@
                                             <div class="row mt-3">
                                                 <div class="col-12 col-sm-6">
                                                     <label>Obra</label>
-                                                    <select onchange="getEstimationDepartureGlobal(this.value,'idEstimation');" class = "form-control" name="idWorksite" id="workSite">
+                                                    <select onchange="getEstimationDepartureGlobal(this.value,'idEstimation','estimation');" class = "form-control" name="idWorksite" id="workSite">
                                                         <option value="0">Escoge una opción</option>
                                                         @foreach ($workItems as $item)
                                                         <option value="{{$item->idWorkSite}}">{{$item->nameWorkSite}}</option>
