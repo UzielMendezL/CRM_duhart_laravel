@@ -170,9 +170,9 @@ Route::group(['middleware' => 'auth'], function () {
          Route::get('/list-providers-active/{id}', 'findProvider')->name('provider-active');
         
    });
-   Route::controller(Employee::class)->group(function() {
+   Route::controller(EmployeeController::class)->group(function() {
          
-    Route::get('/employee', 'index')->name('employee-management');
+    Route::get('/employee-list', 'index')->name('employee-management');
     // Route::get('/inventory/new-material', 'create')->name('material-new');
     // Route::post('/inventory/new-material', 'store')->name('material-new.store');
     // Route::get('/inventory/material/edit/{id}', 'edit')->name('material-edit');

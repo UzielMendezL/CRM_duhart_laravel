@@ -14,7 +14,13 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employee = Employee::select('employees.*','inventories.nameInventory')
+        ->join('inventories', 'employees.idInventory', '=', 'inventories.idInventory')
+        ->orderBy('completeName', 'asc')
+        ->get();
+  
+          $loading = true;
+          return view('laravel.employee.index', ['items' => $employee,'loading' => $loading] );
     }
 
     /**
@@ -33,6 +39,7 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
         //

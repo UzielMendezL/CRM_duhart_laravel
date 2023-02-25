@@ -6,7 +6,7 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0"
             href="{{ route('dashboards', ['page' => 'default']) }}">
-            <img src="{{ $logo ?? '../assets/img/logo-ct-dark.png'}}" class="navbar-brand-img h-100" alt="main_logo">
+            <img src="{{ $logo ?? '../assets/img/logos/duhart/isotipo.jpg'}}" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold">DUHART</span>
         </a>
     </div>
@@ -252,7 +252,7 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'employees-list') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'employee-list') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
                                 <span class="sidenav-mini-icon"> E </span>
                                 <span class="sidenav-normal">Empleados</span>
                             </a>

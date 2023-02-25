@@ -177,21 +177,35 @@ class TransactionController extends Controller
     public function edit($idTrans)
     {
         
-        $ediTransaction = null;
-      
+        $editTransaction = null;
+
         $editTransaction = Transaction::select('transactions.*','bank_accounts.nameAccount','providers.nameProvider')
-        ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
-        ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+        ->leftjoin('providers', 'providers.idProvider', '=', 'transactions.idProvider')
+        ->leftjoin('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
          ->where( 'transactions.idTransaction', $idTrans  )
          ->first(); 
-         $actualProviders = Provider::select('providers.idProvider','providers.nameProvider')
-         ->where('providers.status',true)
-         ->where('providers.nameProvider', '<>',$editTransaction->nameProvider)
-         ->get();
-         $actualAccounts =  BankAccount::select('bank_accounts.idAccount','bank_accounts.nameAccount')
-         ->where('bank_accounts.status',true)
-         ->where('bank_accounts.nameAccount', '<>',$editTransaction->nameAccount)
-         ->get();
+         if( !is_null($editTransaction) ){
+            $actualProviders = Provider::select('providers.idProvider','providers.nameProvider')
+            ->where('providers.status',true)
+            ->where('providers.nameProvider', '<>',$editTransaction->nameProvider)
+            ->get();
+            $actualAccounts =  BankAccount::select('bank_accounts.idAccount','bank_accounts.nameAccount')
+            ->where('bank_accounts.status',true)
+            ->where('bank_accounts.nameAccount', '<>',$editTransaction->nameAccount)
+            ->get();
+         }else{
+            $actualProviders = [];
+            $actualAccounts = [];
+            $editOnlyTransaction = Transaction::select('transactions.*')
+            ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
+           ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+            ->where( 'transactions.idTransaction', $idTrans  )
+            ->first();
+
+            $editTransaction = $editOnlyTransaction;
+         }
+         
+       
          $getTransactionDetail = TransactionDetail::select('transaction_details.*','inventories.nameInventory','estimations.nameEstimation')
         ->join('transactions', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
         ->join('inventories', 'inventories.idInventory', '=', 'transaction_details.idInventory')
@@ -199,20 +213,20 @@ class TransactionController extends Controller
          ->where( 'transactions.idTransaction', $idTrans  )
          ->get();         
 
-             if($editTransaction == null ){
-              $editOnlyTransaction = Transaction::select('transactions.*')
-              ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
-             ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
-              ->where( 'transactions.idTransaction', $idTrans  )
-              ->first();
+            //  if($editTransaction == null ){
+            //   $editOnlyTransaction = Transaction::select('transactions.*')
+            //   ->join('providers', 'providers.idProvider', '=', 'transactions.idProvider')
+            //  ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
+            //   ->where( 'transactions.idTransaction', $idTrans  )
+            //   ->first();
 
-              $ediTransaction = $editOnlyTransaction;
-             }else{
-              $ediTransaction = $editTransaction;
-             }
+            //   $ediTransaction = $editOnlyTransaction;
+            //  }else{
+            //   $ediTransaction = $editTransaction;
+            //  }
           
            $loading = false;
-           return view('laravel.transaction.edit', ['item' => $ediTransaction ,'itemsTDetails' => $getTransactionDetail , 'loading' => $loading, 'providersActive' => $actualProviders, 'accountActives' => $actualAccounts,] );
+           return view('laravel.transaction.edit', ['item' => $editTransaction ,'itemsTDetails' => $getTransactionDetail , 'loading' => $loading, 'providersActive' => $actualProviders, 'accountActives' => $actualAccounts,] );
     }
 
     /**
