@@ -242,5 +242,29 @@ class MaterialsController extends Controller
 
         return view('laravel.inventory.index-revisition-material', ['items' => $article,'loading' => $loading] );
     }
+    public function stockRealStore()
+    {
+        $loading = true;
+        
+        $currenturl = url()->current();
+        $statusSt = "";
+        if (str_contains($currenturl, 'real-b')){
+            $statusSt = 2;
+        }
+        else if (str_contains($currenturl, 'real-f')){
+          $statusSt = 1;
+        }
+        
+        $entryListMaterials = Entry::select('entries.*','materials.nameMaterial',
+        'materials.category','materials.idInventory',
+        'materials.unity','materials.stock', 'stores.storeName','materials.idMaterial','inventories.nameInventory','entries.entryDate','materials.photo')
+        ->join('materials', 'entries.idMaterial', '=', 'materials.idMaterial')
+        ->join('stores', 'entries.idStore', '=', 'stores.idStore')
+        ->join('inventories', 'materials.idInventory', '=', 'inventories.idInventory')
+        ->where('entries.idStore', '=',  $statusSt)
+        ->get();
+
+        return view('laravel.inventory.index-stock-store', ['items' => $entryListMaterials,'loading' => $loading] );
+    }
 
 }

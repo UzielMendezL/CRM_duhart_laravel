@@ -165,12 +165,40 @@
                                 <span class="sidenav-normal"> Materiales </span>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'real') == true ? 'active' : '' }}" href="{{ route('material-stock-real-management') }}">
-                                <span class="sidenav-mini-icon"> S </span>
-                                <span class="sidenav-normal"> Stock Real </span>
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#stockSubMenu" class="nav-link {{ str_contains(request()->url(), 'real') == true ? 'active' : '' }}"
+                                aria-controls="stockSubMenu" role="button" aria-expanded="false">
+                                {{-- <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
+                                    <i class="ni ni-chart-bar-32 text-success text-sm opacity-10"></i>
+                                </div> --}}
+                                    <span class="nav-link-text ms-1">Stock</span>
                             </a>
+                                <ul class="nav ms-4">
+                                    <li class="nav-item ">
+                                        <a class="nav-link  {{  Route::currentRouteName() == 'material-stock-real-management' ? 'active' : '' }}" href="{{ route('material-stock-real-management')}}">
+                                            <span class="sidenav-mini-icon"> S </span>
+                                            <span class="sidenav-normal">Stock Real</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav ms-4">
+                                    <li class="nav-item ">
+                                        <a class="nav-link {{ str_contains(request()->url(), 'real-b') == true ? 'active' : '' }}"href="{{ route('material-stock-real-b-management')}}">
+                                            <span class="sidenav-mini-icon"> B </span>
+                                            <span class="sidenav-normal">Bodega 14</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav ms-4">
+                                    <li class="nav-item ">
+                                        <a class="nav-link {{ str_contains(request()->url(), 'real-f') == true ? 'active' : '' }}"href="{{ route('material-stock-real-f-management')}}">
+                                            <span class="sidenav-mini-icon"> F </span>
+                                            <span class="sidenav-normal">Fábrica</span>
+                                        </a>
+                                    </li>
+                                </ul>
                         </li>
+                        
                         <li class="nav-item ">
                             <a class="nav-link {{ str_contains(request()->url(), 'minimum') == true ? 'active' : '' }}" href="{{ route('material-stock-minimum-management') }}">
                                 <span class="sidenav-mini-icon"> M F </span>
@@ -252,7 +280,7 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link {{ str_contains(request()->url(), 'employee-list') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
+                            <a class="nav-link {{ str_contains(request()->url(), 'employees-list') == true ? 'active' : '' }}"href="{{ route('employee-management')}}">
                                 <span class="sidenav-mini-icon"> E </span>
                                 <span class="sidenav-normal">Empleados</span>
                             </a>

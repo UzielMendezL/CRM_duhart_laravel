@@ -111,6 +111,8 @@ Route::group(['middleware' => 'auth'], function () {
         
         //StockReal
         Route::get('/inventory/stock-real', 'stockReal')->name('material-stock-real-management');
+        Route::get('/inventory/stock-real-f', 'stockRealStore')->name('material-stock-real-f-management');
+        Route::get('/inventory/stock-real-b', 'stockRealStore')->name('material-stock-real-b-management');
         //StockMinimum
         Route::get('/inventory/stock-minimum', 'requireMaterial')->name('material-stock-minimum-management');
         

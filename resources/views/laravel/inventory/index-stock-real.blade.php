@@ -200,8 +200,7 @@
                                         <th>Inventario</th>
                                         <th>Unidad</th>
                                         <th>Stock</th>
-                                        <th>Stock Minimo</th>
-                                        <th>Estatus</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -225,29 +224,24 @@
                                             </div>
                                         </td> --}}
                                         <td class = "col-md-02">{{$item->idMaterial}}</td>
-                                        {{-- <td>{{$item->nameMaterial}}</td> --}}
-                                        {{-- <td>	<button  onclick="return getInfoMaterial({{$item->idMaterial}});" id= 'btnEditMaterial' data-target="#editModal" data-whatever="@mdo" data-toggle="modal" type="button" class="editMaterial btn btn-edit">{{$item->nameMaterial}}</button> --}}
-                                           
-                                           <td class="col-md-1">
+                                        <td>{{$item->nameMaterial}}</td>     
+                                           {{-- <td class="col-md-1">
                                             <button onclick="return getInfoMaterial({{$item->idMaterial}});" type="button" class="editMaterial btn btn-edi" data-bs-toggle="modal"
-                                        data-bs-target="#editModal">
-                                        {{$item->nameMaterial}}
-                                    </button>
-                                        </td>
+                                                data-bs-target="#editModal">
+                                                {{$item->nameMaterial}}
+                                            </button>
+                                        </td> --}}
                                         <td class = "col-md-4">{{$item->category}}</td>
                                         <td class = "col-md-4">{{$item->nameInventory}}</td>
                                         <td class = "col-md-4">{{$item->unity}}</td>
                                         <td class = "col-md-4">{{$item->stock}}</td>
-                                        <td class = "col-md-4">{{$item->stockMinimum}}</td>
-                                    
-                                        <td>
-                                            @if ($item->stock > $item->stockMinimum )
-                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-success badge-sm">En stock</span>
-                                            
-                                            @else
-                                            <span class="{{ $item->stockMinimum > $item->stock }} badge badge-danger badge-sm">Fuera de stock</span>
-                                            @endif
-                                            
+                                        <td class="text-sm">
+                                            <span data-bs-placement="top" data-bs-original-title="Ver material"  data-bs-toggle="tooltip" >
+                                                <a data-bs-placement="bottom" class="mx-3" onclick="return getInfoMaterial({{$item->idMaterial}});" data-bs-toggle="modal"
+                                                    data-bs-target="#editModal">
+                                                    <i class="fas fa-eye text-secondary"></i>
+                                                </a>
+                                            </span>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -271,6 +265,8 @@
         </div>
         @include('layouts.footers.auth.footer')
     </div>
+
+
 {{-- Modal Edit --}}
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div  class="modal-dialog size-modal" role="document">
@@ -286,13 +282,13 @@
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Detealles Generales</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button onclick="getInfoMaterialOfInventory();" class="nav-link" id="provider-tab" data-bs-toggle="tab" data-bs-target="#provider" type="button" role="tab" aria-controls="provider" aria-selected="false">Proovedores</button>
+              <button  class="nav-link" id="provider-tab" data-bs-toggle="tab" data-bs-target="#provider" type="button" role="tab" aria-controls="provider" aria-selected="false">Proovedores</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button  onclick="getInfoMaterialOfInventory();" class="nav-link" id="departure-tab" data-bs-toggle="tab" data-bs-target="#departure" type="button" role="tab" aria-controls="departure" aria-selected="false">Entradas</button>
+              <button   class="nav-link" id="departure-tab" data-bs-toggle="tab" data-bs-target="#departure" type="button" role="tab" aria-controls="departure" aria-selected="false">Entradas</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button  onclick="getInfoMaterialOfInventory();" class="nav-link" id="entry-tab" data-bs-toggle="tab" data-bs-target="#entry" type="button" role="tab" aria-controls="entry" aria-selected="false">Salidas</button>
+                <button   class="nav-link" id="entry-tab" data-bs-toggle="tab" data-bs-target="#entry" type="button" role="tab" aria-controls="entry" aria-selected="false">Salidas</button>
               </li>
           </ul>
           <div class="tab-content" id="myTabContent">
@@ -339,10 +335,9 @@
                               <table id = "trProviderMaterial" class="table ">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Proveedor</th>
+                                            <th scope="col">Precio Unitario</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -428,56 +423,6 @@
 	  </div>
 	</div>
   </div>
-	<div  class="modal-dialog size-modal" role="document">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title justify-content-center" id="exampleModalLabel">Detalle de stock real</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<ul class="nav nav-tabs">
-			<li><a class="nav-link active" href="#material-info" data-toggle="tab">Detalles Generales</a></li>
-			<li><a class="nav-link" href="#" data-toggle="tab">Proveedores</a></li>
-			{{-- <li><a class="nav-link" href="#c" data-toggle="tab">Movimiento</a></li> --}}
-			<li><a class="nav-link"  data-toggle="tab">Entradas</a></li>
-            <li><a class="nav-link"  data-toggle="tab">Salidas</a></li>
-		 </ul>
-		 
-		 <div class="tab-content">
-			<div class="tab-pane active" id="material-info">
-				<div class="modal-body">
-					{{-- <form id='form-Material' method="POST" action="{{url('/material')}}" class="needs-validation" novalidate> --}}
-					<form id="form-edit" class="position:relative" id='form-Material' method="PUT"  class="needs-validation" novalidate>
-						  {{csrf_field()}}
-					<div class="box-edit-content">
-						<div class="container-inputs">
-							<div  id= 'selectMaterial' class="form-row container-inputs-material">
-								@if($loading)
-									<div id='loader-edit' class="text-center loader-size">
-										<div class="spinner-border" role="status">
-										<span class="sr-only">Loading...</span>
-										</div>
-									</div>
-								@endif	 
-								
-						   </div>
-						</div>
-					</div>
-						<div class="modal-footer row justify-content-center box-button-modal">
-							{{-- <button onclick="return Test();" id = 'close-modal-edit' type="button" class="close-modal btn btn-secondary" data-bs-dismiss="modal">Regresar</button> --}}
-							<button  id = 'close-modal-edit' type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">Regresar</button>
-							<button  onclick="return test();" type="submit" id= 'addMaterial' class="btn bg-gradient-primary btn-sm">Actualizar</button>
-						</div>
-					</form>
-				</div>
-		
-			</div>
-			
-		 </div>
-		
-	  </div>
-	</div>
   </div>
 </div>
 

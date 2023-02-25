@@ -317,14 +317,27 @@ $(document).ready(function () {
   var getDataMaterialProvider = [];
 
   function clearInfoMaterialOfInventory(){
+
+   let trMaterial =  $('#trEntryMaterial').fadeOut();
+   let trDeparture = $('#trDepartureMaterial').fadeOut();
+   let trProvider = $('#trProviderMaterial').fadeOut();
+
     $('#trEntryMaterial').fadeOut();
     $('#trDepartureMaterial').fadeOut();
     $('#trProviderMaterial').fadeOut();
   }
+
+
   function getInfoMaterialOfInventory(){
     $('#modalEditMaterial').css("width","750px");
 
    checkLoaderModalEdit();
+
+    //Clear Tables
+    $('#trProviderMaterial > tbody').empty();
+    $('#trDepartureMaterial > tbody').empty();
+    $('#trEntryMaterial > tbody').empty();
+
     //Provider
     for (let index = 0; index < getDataMaterialProvider.length; index++) {
     const element = getDataMaterialProvider[index];
@@ -334,7 +347,7 @@ $(document).ready(function () {
       payD = "N/A"
     }
     let departureMaterialProvider = `
-    <tbody>
+    <tbody class = "table-info-provider">
     <tr>
     <td>${payD}</td>
     <td>${element.nameProvider}</td>            
