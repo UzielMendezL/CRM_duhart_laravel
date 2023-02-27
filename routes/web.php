@@ -122,6 +122,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/inventory/material/edit/{id}', 'edit')->name('material-edit');
         Route::put('/inventory/material-update/edit/{id}', 'update')->name('material-edit.update');
         Route::delete('/inventory/material-delete/{id}', 'destroy')->name('material.destroy');
+        //Reports
+        // Route::post('/inventory/material-build-report', 'makeReports')->name('material-make-report-management');
+        Route::get('/inventory/material-report', 'reports')->name('material-report-management');
+        Route::get('/inventory/download-material-report/{statusPreview}', 'downloadReports')->name('material-download-report-management');
+
     });
 
     Route::controller(DeparturesController::class)->group(function() {
@@ -215,4 +220,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/authentication/errors/{page}', [PageController::class, 'errors'])->name('errors');
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+
+    //Test Routes
+    Route::get('/inventory/test-report', [MaterialsController::class, 'testViewReport'])->name('testing-Report');
 });

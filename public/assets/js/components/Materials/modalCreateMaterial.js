@@ -775,5 +775,18 @@ function getInfoDeparture(id) {
           }
         },);
       }
-    })
+    });
   }
+  function makeReport(actionToBtn){
+      let filterName  =  $('.dataTable-input').val();
+      actionToBtn.href = "/inventory/material-report" + `?filterName=${filterName}`;
+    } 
+  function goToDownloadReport(actionToBtn,statusPreview){
+      
+      let params  =  window.location.href;
+      let findPositionLetter = params.indexOf('?');
+      let sub = params.substr(findPositionLetter);
+      
+      actionToBtn.href = "/inventory/download-material-report/"+ `${statusPreview}` + sub;
+  } 
+  

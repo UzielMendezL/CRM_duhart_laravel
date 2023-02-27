@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   });
 function getEstimationDepartureGlobal(idWorkSite,html, typeAjax ){
     // idObra, idHtml
@@ -32,3 +31,21 @@ switch (typeAjax) {
        });
     }
   }
+
+
+// function sendParamsToPdf(url,params = null){
+//     $.ajax({
+//          url,
+//          method: "POST",
+//          headers: {
+//              "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+//          },
+//          data:{
+//              materialSearch:params
+//          },
+//          success: function (result) {
+//           //return to ViewPdf
+//             window.location.href = result.url;
+//          }
+//      });
+//   }

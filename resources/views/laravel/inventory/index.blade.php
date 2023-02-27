@@ -3,8 +3,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script src="{{ asset('./assets/js/components/GlobalFunctions/helpers.js') }}" ></script>
  <script src="{{ asset('./assets/js/components/Materials/modalCreateMaterial.js') }}" ></script>
  <script src="{{ asset('./assets/js/components/Materials/modalCreateFormOptions.js') }}" ></script>
+
   {{-- <script src="{{ asset('js/prueba.js') }}" defer ></script>  --}}
   {{-- @include('popper::assets') --}}
 
@@ -153,7 +155,11 @@
                                 <div class="ms-auto my-auto">
                                     <a href="./inventory/new-material" class="btn bg-gradient-primary btn-sm mb-0"
                                         target="_blank">+&nbsp; Nuevo material</a>
-                                    <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
+                                    
+                                    <a href="javascript:;" onclick="return makeReport(this);" type="button" class="btn btn-outline-primary btn-sm mb-0">
+                                        Generar reporte
+                                    </a>
+                                        <button type="button" class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#import">
                                         Importar
                                     </button>

@@ -10,6 +10,7 @@ use App\Models\Provider;
 use App\Models\Departures;
 use App\Models\Entry;
 use App\Models\Inventory;
+use PDF;
 
 class MaterialsController extends Controller
 {
@@ -265,6 +266,90 @@ class MaterialsController extends Controller
         ->get();
 
         return view('laravel.inventory.index-stock-store', ['items' => $entryListMaterials,'loading' => $loading] );
+    }
+
+    // Ajax
+    // public function  makeReports(Request $request){
+    //    $getMaterial = $request->get('materialSearch');
+    //   // $getData = DB::table('materials')
+    //   // ->select('materials.*','inventories.nameInventory')
+    //   // ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
+    //   // ->where('materials.nameMaterial' ,'LIKE', '%'.$getMaterial.'%')
+    //   // ->orWhere('materials.category' ,'LIKE', '%'.$getMaterial.'%')
+    //   // ->orWhere('materials.idInventory' ,'LIKE', '%'.$getMaterial.'%')
+    //   // ->paginate(10);
+    //   //return MaterialsController::reports($getData);
+    //   //return view('laravel.inventory.report-material', ['items' => $getData] );
+    //   return response()->json(['url'=>url("/inventory/material-report/$getMaterial")]);
+    // }
+     public function  reports(Request $request)
+     {
+      $makeFilter =  $request->get('filterName');
+
+       $getData = DB::table('materials')
+       ->select('materials.*','inventories.nameInventory')
+       ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
+       ->where('materials.nameMaterial' ,'LIKE', '%'.$makeFilter.'%')
+       ->orWhere('materials.category' ,'LIKE', '%'.$makeFilter.'%')
+       ->orWhere('inventories.nameInventory' ,'LIKE', '%'.$makeFilter.'%')
+       ->paginate(10);
+        // ->get();
+      return view('laravel.inventory.report-material', ['items' => $getData, 'makeFilter' => $makeFilter] );
+
+     }
+    public function  downloadReports(Request $request)
+    {
+      $params =  $request->get('filterName');
+      //Test
+     // $params =  'mdf';
+      $currenturl = url()->current();
+      $statusSt = "";
+      
+      $article = DB::table('materials')
+      ->select('materials.*','inventories.nameInventory')
+      ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
+      ->where('materials.nameMaterial' ,'LIKE', '%'.$params.'%')
+      ->orWhere('materials.category' ,'LIKE', '%'.$params.'%')
+      ->orWhere('inventories.nameInventory' ,'LIKE', '%'.$params.'%')
+      //->paginate(50);
+      ->get();
+
+      
+      $data = [
+        'title' => 'Test',
+        'content' => '23',
+
+        'materialList' => $article,
+        'makeFilter' => $params
+    ]; 
+      
+      $pdf = PDF::loadView('laravel.report.view-report-material-list', $data)
+      ->set_option("isPhpEnabled", true)
+      ->set_option('defaultFont', 'sans-serif');
+      // ->render();
+    
+      if (str_contains($currenturl, 'preview')){
+         return $pdf->stream('material-reports-test .pdf');
+      }
+      
+      return $pdf->download('material-reports-test.pdf');
+      
+    }
+
+    public function  testViewReport()
+    {
+      
+      $params = "mdf";
+      $article = DB::table('materials')
+      ->select('materials.*','inventories.nameInventory')
+      ->join('inventories', 'inventories.idInventory', '=', 'materials.idInventory')
+      ->where('materials.nameMaterial' ,'LIKE', '%'.$params.'%')
+      ->orWhere('materials.category' ,'LIKE', '%'.$params.'%')
+      ->orWhere('inventories.nameInventory' ,'LIKE', '%'.$params.'%')
+      // ->paginate(10);
+      ->get();
+      
+     return view('laravel.report.view-report-material-list', ['materialList' => $article] );
     }
 
 }
