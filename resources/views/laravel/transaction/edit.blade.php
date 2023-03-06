@@ -171,7 +171,7 @@
                             </div>
                             <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                                 <label>Fecha elaborada</label>
-                                <input name = "elaboratedDate" class="form-control" type="date" value= "{{$item->elaboratedDate}}" />
+                                <input name = "elaboratedDate" class="form-control" type="date" value= "{{Carbon\Carbon::parse($item->elaboratedDate)->format('Y-m-d')}}" />
                             </div>
                         </div>
                         <div class="row">
@@ -236,6 +236,48 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row d-flex justify-content-center mt-4">
+                            {{-- Validation --}}
+                            @php
+                             $iconsPayment = 'fa-file';
+                             $iconsInvoiceImage = 'fa-file';
+                             $iconsInvoice = 'fa-file';
+                            @endphp
+                            @if ($item->proofOfPayment == null || $item->proofOfPayment == "")
+                                @php ($iconsPayment = "fa-file-excel")
+                            @endif
+                            <div class="col-3 d-flex flex-column align-center">
+                                <label class="mt-4 text-center">Proveedor Cotización</label>
+                                <span data-bs-placement="top" data-bs-original-title={{$iconsPayment == "fa-file-excel" ? "N/A" : "Ver pdf" }}  data-bs-toggle="tooltip" >
+                                    <a data-bs-placement="bottom" class="pe-auto d-flex justify-content-center" href="#">
+                                        <i style="font-size:50px;" class="fas {{$iconsPayment}} text-secondary text-center w-50 h-50"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="col-3 d-flex flex-column align-center">
+                                @if ($item->invoiceImage == null || $item->invoiceImage == "")  
+                                    @php ($iconsInvoiceImage = "fa-file-excel")
+                                @endif
+                                <label class="mt-4 text-center">Imagen Factura</label>
+                                {{-- <input name="providerType" class="form-control" type="file" value="" /> --}}
+                                <span data-bs-placement="top" data-bs-original-title={{$iconsInvoiceImage == "fa-file-excel" ? "N/A" : "Ver pdf" }}  data-bs-toggle="tooltip" >
+                                    <a data-bs-placement="bottom" class="pe-auto d-flex justify-content-center" href="#">
+                                        <i style="font-size:50px;" class="fas {{$iconsInvoiceImage }} text-secondary text-center w-50 h-50"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="col-3 d-flex flex-column align-center">
+                                @if ($item->invoice == null || $item->invoice == "")
+                                    @php ($iconsInvoice = "fa-file-excel")
+                                @endif
+                                <label class="mt-4 text-center">Factura</label>
+                                <span data-bs-placement="top" data-bs-original-title={{$iconsInvoice == "fa-file-excel" ? "N/A" : "Ver pdf" }}  data-bs-toggle="tooltip" >
+                                    <a data-bs-placement="bottom" class="pe-auto d-flex justify-content-center" href="#">
+                                        <i style="font-size:50px;" class="fas {{$iconsInvoice }} text-secondary text-center w-50 h-50"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                      <div class="col-sm-12">
                         <div class ="d-flex justify-content-center align-items-center">
@@ -297,10 +339,12 @@
                                             {{-- <button     onclick="argon.showSwal('warning-message-and-confirmation')"  type="button" class="editMaterial btn btn-edi">
                                                 <i class="fas fa-trash text-secondary"></i>
                                             </button> --}}
-                                            <button  type="button" class="trash-trans-d editMaterial btn btn-edi" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal-{{ $item->idTransactionDetail }}">
-                                                <i class="fas fa-trash text-secondary"></i>
-                                            </button>
+                                            <span data-bs-placement="top" data-bs-original-title="Borrar concepto"  data-bs-toggle="tooltip" >
+                                                <button  type="button" class="trash-trans-d editMaterial btn btn-edi" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal-{{ $item->idTransactionDetail }}">
+                                                    <i class="fas fa-trash text-secondary"></i>
+                                                </button>
+                                            <span>
                                             {{-- Modal delete --}}
 
                                             <div class="modal fade" id="deleteModal-{{ $item->idTransactionDetail }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

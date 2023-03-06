@@ -16,10 +16,10 @@
             </div>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                    <div class="input-group">
+                    {{-- <div class="input-group">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
                         <input type="text" class="form-control" placeholder="Type here...">
-                    </div>
+                    </div> --}}
                 </div>
                 <ul class="navbar-nav  justify-content-end">
                     <li class="nav-item d-flex align-items-center">
@@ -128,9 +128,39 @@
     </nav>
 
 
-    <div class="row mt-4">
-        <div class="col-lg-7 col-md-12">
-            <div class="card">
+    <div class="row mt-4 w-100 d-flex justify-content-around">
+        <div class="d-sm-flex justify-content-between">
+            <div>
+                <a href="javascript:;" class="btn btn-icon btn-outline-white">
+                    New order
+                </a>
+            </div>
+            <div class="d-flex">
+                <div class="dropdown d-inline">
+                    <a href="javascript:;" class="btn btn-outline-white dropdown-toggle " data-bs-toggle="dropdown"
+                        id="navbarDropdownMenuLink2">
+                        Filters
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3" aria-labelledby="navbarDropdownMenuLink2"
+                        data-popper-placement="left-start">
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Status: Paid</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Status: Refunded</a></li>
+                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Status: Canceled</a></li>
+                        <li>
+                            <hr class="horizontal dark my-2">
+                        </li>
+                        <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Remove
+                                Filter</a></li>
+                    </ul>
+                </div>
+                <button class="btn btn-icon btn-outline-white ms-2 export" data-type="csv" type="button">
+                    <span class="btn-inner--icon"><i class="ni ni-archive-2"></i></span>
+                    <span class="btn-inner--text">Export CSV</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card h-100">
                 <div class="card-header pb-0 p-3">
                     <h6 class="mb-0">Flujo de efectivo</h6>
                     <div class="d-flex align-items-center">
@@ -145,117 +175,60 @@
                     </div>
                 </div>
                 <div class="card-body p-3">
-                    <div class="chart">
+                    <div class="chart h-100">
                         <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-5 col-md-12 mt-4 mt-lg-0">
+        <div class="col-sm-4">
             <div class="card h-100">
                 <div class="card-header pb-0 p-3">
                     <div class="d-flex align-items-center">
-                        <h6 class="mb-0">Obras</h6>
+                        <h6 class="mb-0">Listado de Obras</h6>
                         <button type="button"
                             class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto"
                             data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="See which websites are sending traffic to your website">
+                            title="Obras activas durante el período seleccionado">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
                 </div>
                 <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-lg-5 col-12 text-center">
+                    <div class="row flex-column">
+                        <div class="col-lg-12 col-12 text-center">
                             <div class="chart mt-5">
                                 <canvas id="chart-doughnut" class="chart-canvas" height="200"></canvas>
                             </div>
-                            <a class="btn btn-sm bg-gradient-secondary mt-4">See all referrals</a>
+                            <a class="btn btn-sm bg-gradient-secondary mt-4">Ir a obras</a>
                         </div>
-                        <div class="col-lg-7 col-12">
+                        <div style= "height:220px;" class="col-lg-12 col-12 overflow-auto">
                             <div class="table-responsive">
                                 <table class="table align-items-center mb-0">
                                     <tbody>
+                                        @foreach ($listWorkSite as $item)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <div>
+                                                    {{-- <div>
                                                         <img src="../assets/img/small-logos/logo-xd.svg"
                                                             class="avatar avatar-sm me-2" alt="logo_xd">
-                                                    </div>
+                                                    </div> --}}
+                                                    <div style="width: 20px;
+                                                    height: 20px;
+                                                    margin-right: 10px;
+                                                    border-radius: 5px;"
+                                                     id="color-workSite-{{$item->idWorkSite}}" ></div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Adobe</h6>
+                                                        <a onclick=" return detailToWorkSite(this);" style = "cursor: pointer;" href="#" class="mb-0 text-sm">{{$item->nameWorkSite}}</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold"> 25% </span>
+                                                <span class="text-xs font-weight-bold"> ${{$item->total}}</span>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/small-logos/logo-atlassian.svg"
-                                                            class="avatar avatar-sm me-2" alt="logo_atlassian">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Atlassian</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold"> 3% </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/small-logos/logo-slack.svg"
-                                                            class="avatar avatar-sm me-2" alt="logo_slack">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Slack</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold"> 12% </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/small-logos/logo-spotify.svg"
-                                                            class="avatar avatar-sm me-2" alt="logo_spotify">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Spotify</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold"> 7% </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/small-logos/logo-jira.svg"
-                                                            class="avatar avatar-sm me-2" alt="logo_jira">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Jira</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold"> 10% </span>
-                                            </td>
-                                        </tr>
+                                        </tr>        
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -269,7 +242,7 @@
     
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-        <div class="row mt-4">
+        <div class="row mt-7">
             <div class="col-12">
                 <div class="card shadow-lg">
                     <img src="./assets/img/shapes/pattern-left.png" alt="pattern-lines"
@@ -293,11 +266,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 text-center">
-                                <img class="w-75 w-lg-100 mt-n7 mt-lg-n8 d-none d-md-block" src="./assets/img/tesla.png"
+                                <img class="w-75 w-lg-100 mt-n7 mt--lg-n8 d-none d-md-block" src="./assets/img/tesla.png"
                                     alt="car image">
-                                <div class="d-flex align-items-center">
-                                    <h4 class="text-body opacity-7 ms-0 ms-md-auto">Available Range</h4>
-                                    <h2 class="text-body ms-2 me-auto">47<small class="text-sm align-top"> %</small></h2>
+                                <div id="containerWorkSite" class="d-flex align-items-center flex-column">
+                                    <h4 class="text-body opacity-7">Obra Seleccionada</h4>
+                                    {{-- <h2 class="text-body ms-2 me-auto">47<small class="text-sm align-top"> %</small></h2> --}}
+                                    <h2 id="workSiteSelected" class="text-body"></h2>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-12 my-auto">
@@ -309,9 +283,14 @@
                                         <h6 class="mb-0 text-body">891 Limarenda road</h6>
                                     </div>
                                     <div class="ms-lg-6 ms-4">
-                                        <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 py-0">
-                                            <i class="ni ni-map-big" aria-hidden="true"></i>
-                                        </button>
+                                        {{-- <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 py-0">
+                                            <i class="ni ni-bold-right" aria-hidden="true"></i
+                                        </button> --}}
+                                        <span data-bs-placement="top" data-bs-original-title="Ir a Obra"  data-bs-toggle="tooltip" >
+                                            <button type="button" id = "goToWorkSite" class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 py-2">
+                                               <i class="ni ni-bold-right" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -523,6 +502,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js"></script>
     <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="{{ asset('./assets/js/components/Transactions/transactionsGeneral.js') }}" ></script>
     <script>
         if (document.getElementById('products-list')) {
             const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
@@ -550,14 +530,45 @@
         gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
         gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
         gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
-        var jobs =  {!! json_encode($items) !!};
-        console.log(jobs);
+        // var jobs =  {!! json_encode($items) !!};
+        // console.log(jobs);
+        
+        var listLabelMonth =[];
+        var listLabelMountI =[];
+        var listLabelMountE =[];
+        var cahsFlowList =  {!! json_encode($cashFlow) !!};
+        cahsFlowList.reverse().forEach(element => {
+            // listLabelMonth.push(element.nameMonth);
+            var t = moment(element.nameMonth).format("LL"); 
+            
+            // Label Validation
+            // if(listLabelMonth.length > 0 ){
+            //     for (let index = 0; index < listLabelMonth.length; index++) {
+            //         const elementM = listLabelMonth[index];
 
+            //         if(moment(elementM).format("LL") == t ){
+            //             listLabelMonth.push(t);    
+            //         }
+            //     }
+                
+            // }else{
+            //     listLabelMonth.push(t);
+            // }
+
+            listLabelMonth.push(t);
+            if(element.concept == 'Costo'){
+                listLabelMountE.push(element.total);
+            }else{
+                listLabelMountI.push(element.total);
+            }
+        });
+        
              // Line chart
              new Chart(ctx1, {
             type: "line",
             data: {
-                labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agos", "Sep","Oct","Nov","Dic"],
+                // labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Agos", "Sep","Oct","Nov","Dic"],
+                labels:listLabelMonth,
                 datasets: [{
                         label: "Ingreso",
                         tension: 0.4,
@@ -567,7 +578,8 @@
                         borderColor: "#5e72e4",
                         borderWidth: 3,
                         backgroundColor: gradientStroke1,
-                        data: [50, 40, 300, 220, 500, 250, 400, 230, 1200],
+                        // data: [50, 40, 300, 220, 500, 250, 400, 230, 1200],
+                        data:listLabelMountI,
                         maxBarThickness: 6
                     },
                     {
@@ -579,7 +591,7 @@
                         borderColor: "#3A416F",
                         borderWidth: 3,
                         backgroundColor: gradientStroke2,
-                        data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+                        data:listLabelMountE,
                         maxBarThickness: 6
                     }
                 ],
@@ -629,12 +641,33 @@
             },
         });
 
+        
+        var workSiteList =  {!! json_encode($listWorkSite) !!};
+        var listLabel = [];
+        var listValueWork = [];
+        let hexRef = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+        let result = [];
+        let colorGrafic = [];
+
+        workSiteList.forEach(element => {
+            result = [];
+            for (let n = 0; n < 3; n ++) {
+                result.push(hexRef[Math.floor(Math.random() * 16)]);
+            }
+            listLabel.push(element.nameWorkSite);
+            listValueWork.push(element.total);
+            let randomHEX = result.join('');
+            $(`#color-workSite-${element.idWorkSite}`).css({ 'background': `#${randomHEX}` });
+            colorGrafic.push(`#${randomHEX}`);
+        });
+        
 
         // Doughnut chart
         new Chart(ctx2, {
             type: "doughnut",
             data: {
-                labels: ['Creative Tim', 'Github', 'Bootsnipp', 'Dev.to', 'Codeinwp'],
+                //labels: ['Creative Tim', 'Github', 'Bootsnipp', 'Dev.to', 'Codeinwp'],
+                labels: listLabel,
                 datasets: [{
                     label: "Projects",
                     weight: 9,
@@ -642,8 +675,10 @@
                     tension: 0.9,
                     pointRadius: 2,
                     borderWidth: 2,
-                    backgroundColor: ['#2152ff', '#3A416F', '#f53939', '#a8b8d8', '#5e72e4'],
-                    data: [15, 20, 12, 60, 20],
+                    // backgroundColor: ['#2152ff', '#3A416F', '#f53939', '#a8b8d8', '#5e72e4'],
+                    backgroundColor: colorGrafic,
+                    //data: [15, 20, 12, 60, 20],
+                    data: listValueWork,
                     fill: false
                 }],
             },

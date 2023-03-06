@@ -84,11 +84,12 @@
                 ['signins', 'signups', 'resets', 'locks', 'verifications', 'errors']))
             @yield('content')
         @else
+            {{-- @if (str_contains(request()->url(), 'landing')) --}}
             @if (str_contains(request()->url(), 'landing'))
                 @include('components.headers.hero', ['height' => 'h-100'])
                 @include('layouts.navbars.auth.sidenav', [
                     'box' => 'box-shadow-none',
-                    'logo' => './assets/img/logo-ct.png',
+                    'logo' => './assets/img/logos/duhart/isotipo.jpg',
                 ])
 
             @elseif (str_contains(request()->url(), 'login'))   

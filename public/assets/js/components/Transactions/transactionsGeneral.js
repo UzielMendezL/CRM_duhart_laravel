@@ -146,3 +146,12 @@ function getValueId(nameProvider, listProvider){
     $('#idProvider').val(getId.idProvider);
 }
 
+function detailToWorkSite(elementA){
+    console.log(elementA);
+
+    $('#workSiteSelected').text(elementA.text);
+    $('#containerWorkSite').focus();
+    $('#goToWorkSite').attr('href', '/test');
+
+}
+

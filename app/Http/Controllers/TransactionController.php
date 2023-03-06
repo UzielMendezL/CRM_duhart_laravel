@@ -18,6 +18,7 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // DashBoard
     public function index(Transaction $model)
     {
         $loading = true;
@@ -53,6 +54,60 @@ class TransactionController extends Controller
             $statusTr = "Autorizada";
         }
        
+        //$users = DB::select('SELECT ');
+        $queryWorkSite = TransactionDetail::select('work_sites.idWorkSite','work_sites.nameWorkSite','work_sites.status'  ,DB::raw('SUM(transaction_details.mount) as total'))
+        ->join('estimations', 'transaction_details.idEstimation', '=', 'estimations.idEstimation')
+        ->rightJoin('work_sites', 'estimations.idWorkSite', '=', 'work_sites.idWorkSite')
+        ->leftJoin('transactions', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
+        // ->orderBy('payDay', 'desc')
+        ->groupBy('work_sites.idWorkSite','work_sites.nameWorkSite','work_sites.status')
+        ->having('work_sites.idWorkSite', ">", 0)
+        ->having('total', ">", "0")
+        ->having('work_sites.status', "=", 'Activa')
+        ->orderBy('nameWorkSite', 'asc')
+        ->get();
+
+        $actualYear = date("Y");
+       
+    //    query DashBoard
+        // $queryTransactionByStatus = Transaction::select( DB::raw('SUM(transactions.mount) as total'),'transactions.concept',DB::raw('MONTHNAME(transactions.payDay) as nameMonth'),DB::raw('YEAR(transactions.payDay) as year'))
+        // ->leftJoin('transaction_details', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
+        // ->groupBy('transactions.concept','transactions.status','nameMonth','year')
+        // ->having('transactions.status', "=", 'Pagada')
+        // ->having('year', "=", $actualYear)
+        // ->get();
+
+        //View transactions normal
+        $queryTransactionByStatus = Transaction::select( DB::raw('transactions.mount as total'),'transactions.concept',DB::raw('transactions.payDay as nameMonth'),DB::raw('YEAR(transactions.payDay) as year'))
+        ->leftJoin('transaction_details', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
+        ->groupBy( 'total','transactions.concept','transactions.status','nameMonth','year')
+       // ->having('transactions.status', "=", 'Pagada')
+        ->having('year', "=", $actualYear)
+        ->orderBy("nameMonth" ,"Desc")
+        ->get();
+
+        //  return $queryTransactionByStatus;
+        // $queryTEST = Transaction::select('transactions.mount as total','transactions.concept',DB::raw('MONTHNAME(transactions.payDay) as nameMonth'),DB::raw('YEAR(transactions.payDay) as year'))
+        // ->leftJoin('transaction_details', 'transactions.idTransaction', '=', 'transaction_details.idTransaction')
+        // ->groupBy('total','transactions.concept','transactions.status','nameMonth','year','transactions.payDay')
+        // ->having('transactions.status', "=", 'Pagada')
+        // ->having('nameMonth', "=", 'January')
+        // // ->having('year', "=", $actualYear)
+        // ->orderBy('total','asc')
+        // ->get();
+
+       // return $queryTransactionByStatus;
+
+        // return $queryTransactionByStatus;
+
+        // return     $modelJoined;    
+
+        // foreach ($modelJoined as $sector) {
+        //     $postQuery = $postQuery->havingRaw('SUM(transaction_details.mount)', [$sector]);
+        // }
+        // return $postQuery;
+
+
         $modelJoined = Transaction::select('transactions.*','bank_accounts.nameAccount')
         ->join('bank_accounts', 'bank_accounts.idAccount', '=', 'transactions.idAccount')
         // ->orderBy('payDay', 'desc')
@@ -60,7 +115,7 @@ class TransactionController extends Controller
         ->where('transactions.status',$statusTr)
         ->paginate(400);
 
-        return view('laravel.transaction.index', ['items' => $modelJoined ,'loading' => $loading] );
+        return view('laravel.transaction.index', ['items' => $modelJoined ,'loading' => $loading,"listWorkSite"=> $queryWorkSite, "cashFlow" => $queryTransactionByStatus] );
     }
 
    

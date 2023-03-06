@@ -20,11 +20,11 @@ return new class extends Migration
             $table->integer('idInventory')->nullable();
             $table->integer('idConcept')->nullable();
             $table->string("nameConcept",250)->nullable();
-            $table->double('mount')->nullable();
+            $table->decimal('mount')->nullable();
             $table->string('note',250)->nullable();
             $table->string('unity',50)->nullable();
-            $table->double('quantity')->nullable();
-            $table->double('unitaryPrice')->nullable();
+            $table->decimal('quantity')->nullable();
+            $table->decimal('unitaryPrice')->nullable();
         });
     }
 

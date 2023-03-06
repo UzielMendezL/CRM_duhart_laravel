@@ -34,7 +34,8 @@ use App\Http\Controllers\EmployeeController;
 */
 
 Route::get('/', function () {
-	return redirect('/landing');
+	// return redirect('/landing');
+    return redirect('/inventory');
 })->middleware('auth');
 
 
